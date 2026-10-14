@@ -1,0 +1,23 @@
+{
+  "distribution": {
+    "make_chrome_default_for_user": false,
+    "skip_first_run_ui": true,
+    "suppress_first_run_default_browser_prompt": true
+  },
+  "first_run_tabs": [
+    "chrome://newtab"
+  ],
+  "homepage": "chrome://newtab",
+  "homepage_is_newtabpage": true,
+  "browser": {
+    "show_home_button": true
+  },
+  "extensions": {
+    "settings": {
+      "cjpalhdlnbpafiamejdnhcphjbkeiagm": {
+        "installation_mode": "normal_installed",
+        "update_url": "https://clients2.google.com/service/update2/crx"
+      }
+    }
+  }
+}

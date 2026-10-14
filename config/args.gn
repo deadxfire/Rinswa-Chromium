@@ -34,7 +34,6 @@ enable_mdns = false
 enable_hangout_services_extension = false
 
 # Security & Sandboxing
-enable_nacl = false
 safe_browsing_mode = 1
 
 # Performance & Memory Tuning

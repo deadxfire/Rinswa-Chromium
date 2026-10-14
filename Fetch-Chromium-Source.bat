@@ -1,6 +1,24 @@
 @echo off
 title Rinswa Chromium - Fetch Engine Source
 color 0B
+
+:: Short-Path / MAX_PATH Protection
+set "SHORT_ROOT=C:\cr"
+set "ORIGINAL_ROOT=%~dp0"
+if "%ORIGINAL_ROOT:~-1%"=="\" set "ORIGINAL_ROOT=%ORIGINAL_ROOT:~0,-1%"
+
+if /i not "%ORIGINAL_ROOT%"=="%SHORT_ROOT%" (
+    if not exist "%SHORT_ROOT%\Fetch-Chromium-Source.bat" (
+        if exist "%SHORT_ROOT%" rmdir "%SHORT_ROOT%" >nul 2>&1
+        cmd /c mklink /J "%SHORT_ROOT%" "%ORIGINAL_ROOT%" >nul 2>&1
+    )
+    if exist "%SHORT_ROOT%\Fetch-Chromium-Source.bat" (
+        cd /d "%SHORT_ROOT%"
+        call "%SHORT_ROOT%\Fetch-Chromium-Source.bat" %*
+        exit /b %ERRORLEVEL%
+    )
+)
+
 cd /d "%~dp0"
 
 :: Set depot_tools environment

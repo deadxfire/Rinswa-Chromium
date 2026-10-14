@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Rinswa AdShield",
+  "version": "1.0.6",
+  "description": "Native built-in adblocker and YouTube ad defuser for Rinswa Browser. Blocks pre-rolls, banners, and trackers.",
+  "author": "Arindam Makar",
+  "permissions": [
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://*.youtube-nocookie.com/*"
+      ],
+      "js": ["youtube_defuser.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    }
+  ]
+}

@@ -79,7 +79,7 @@ def prepare_overlay(chromium_src_dir):
         print("   Deployed all 8 native theme color packages.")
 
     # 5. Stamp Version Metadata
-    print(f">> [5/5] Stamping Rinswa v{version} Stable metadata...")
+    print(f">> [5/6] Stamping Rinswa v{version} Stable metadata...")
     version_header = os.path.join(chromium_src_dir, "chrome", "common", "chrome_version.h.in")
     if os.path.exists(version_header):
         with open(version_header, "r", encoding="utf-8") as f:
@@ -89,6 +89,23 @@ def prepare_overlay(chromium_src_dir):
             with open(version_header, "w", encoding="utf-8") as f:
                 f.write(content)
             print("   Stamped version header.")
+
+    # 6. Deploy Native Adblock Data, Rinswa AdShield Extension & initial_preferences
+    print(">> [6/6] Deploying Rinswa AdShield, YouTube Defuser & initial_preferences...")
+    # Deploy initial_preferences
+    init_prefs_src = os.path.join(PROJECT_DIR, "config", "initial_preferences")
+    if os.path.exists(init_prefs_src):
+        shutil.copy2(init_prefs_src, os.path.join(out_dir, "initial_preferences"))
+        print("   Deployed initial_preferences (uBlock Origin auto-installed by default).")
+
+    # Deploy full adblock directory (including rinswa-adshield extension)
+    adblock_src = os.path.join(PROJECT_DIR, "config", "adblock")
+    adblock_dest = os.path.join(out_dir, "adblock")
+    if os.path.isdir(adblock_src):
+        if os.path.exists(adblock_dest):
+            shutil.rmtree(adblock_dest)
+        shutil.copytree(adblock_src, adblock_dest)
+        print("   Deployed Rinswa AdShield extension & 250,000+ domain blocklist.")
 
     print("\nSUCCESS: Rinswa customizations applied cleanly to Chromium source tree!")
     return True
