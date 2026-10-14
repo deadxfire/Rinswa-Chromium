@@ -1,0 +1,83 @@
+/* Rinswa Browser - Universal Cyber-Glass Video Popout (PiP) Styles */
+
+.rinswa-pip-overlay-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2147483647;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    background: rgba(10, 15, 26, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(0, 210, 255, 0.35);
+    border-radius: 9999px;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 12px rgba(0, 210, 255, 0.2);
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-4px) scale(0.96);
+}
+
+.rinswa-pip-overlay-btn.rinswa-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+.rinswa-pip-overlay-btn:hover {
+    background: rgba(15, 23, 42, 0.92);
+    border-color: rgba(0, 210, 255, 0.75);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.6), 0 0 18px rgba(0, 210, 255, 0.45);
+    transform: translateY(-1px) scale(1.03);
+    color: #38bdf8;
+}
+
+.rinswa-pip-overlay-btn:active {
+    transform: scale(0.97);
+}
+
+.rinswa-pip-overlay-btn svg {
+    width: 15px;
+    height: 15px;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
+/* Hide overlay button when player is in native fullscreen */
+:fullscreen .rinswa-pip-overlay-btn,
+:-webkit-full-screen .rinswa-pip-overlay-btn {
+    display: none !important;
+}
+
+/* YouTube Native Controls Integration */
+.rinswa-ytp-pip-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 100% !important;
+    cursor: pointer !important;
+    opacity: 0.9 !important;
+    transition: opacity 0.15s ease, transform 0.15s ease !important;
+}
+
+.rinswa-ytp-pip-btn:hover {
+    opacity: 1 !important;
+    transform: scale(1.08) !important;
+}
+
+.rinswa-ytp-pip-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+    fill: #ffffff !important;
+}

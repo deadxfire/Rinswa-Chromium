@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Rinswa AdShield",
+  "name": "Rinswa Shield & Video Popout",
   "version": "1.0.6",
-  "description": "Native built-in adblocker and YouTube ad defuser for Rinswa Browser. Blocks pre-rolls, banners, and trackers.",
+  "description": "Native built-in adblocker, YouTube ad defuser, and Universal Video Popout (Picture-in-Picture) for Rinswa Browser.",
   "author": "Arindam Makar",
   "permissions": [
     "declarativeNetRequest"
@@ -29,6 +29,15 @@
       "run_at": "document_start",
       "all_frames": true,
       "world": "MAIN"
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": ["universal_pip.js"],
+      "css": ["universal_pip.css"],
+      "run_at": "document_idle",
+      "all_frames": true
     }
   ]
 }
