@@ -99,6 +99,13 @@ echo [Step 5/5] Compiling Chromium Engine into Rinswa Browser v%RINSWA_VERSION%.
 cd /d "%SRC_DIR%"
 
 echo Generating Ninja build configurations...
+if not exist "%SRC_DIR%\build\config\gclient_args.gni" (
+    echo [INFO] First-time build: Generating toolchain hooks and gclient args...
+    cd /d "%CD%\chromium"
+    call "%DEPOT_TOOLS_DIR%\gclient.bat" runhooks
+    cd /d "%SRC_DIR%"
+)
+
 call "%DEPOT_TOOLS_DIR%\gn.bat" gen out\RinswaRelease
 if %ERRORLEVEL% NEQ 0 (
     echo [ERROR] GN generation failed.

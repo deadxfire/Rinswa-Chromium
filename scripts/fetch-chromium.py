@@ -78,15 +78,37 @@ def main():
     if not os.path.exists(python_bin):
         python_bin = sys.executable
 
+    def is_valid_git_checkout(directory):
+        if not os.path.isdir(directory):
+            return False
+        res = subprocess.run(
+            ["git", "-C", directory, "rev-parse", "--verify", "HEAD"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        return res.returncode == 0
+
     # Decide whether to fetch or sync
-    if os.path.exists(GCLIENT_FILE) or os.path.exists(os.path.join(SRC_DIR, "chrome")):
-        print("\n[INFO] Existing .gclient / src checkout found. Synchronizing...")
-        gclient_py = os.path.join(depot_tools, "gclient.py")
-        cmd = [python_bin, gclient_py, "sync", "-D", "-R", "--no-history"]
+    has_valid_src = is_valid_git_checkout(SRC_DIR)
+
+    gclient_bat = os.path.join(depot_tools, "gclient.bat")
+    fetch_bat = os.path.join(depot_tools, "fetch.bat")
+
+    if has_valid_src and os.path.exists(GCLIENT_FILE):
+        print("\n[INFO] Valid Chromium checkout detected. Synchronizing...")
+        cmd = ["cmd.exe", "/c", gclient_bat, "sync", "-D", "-R", "--no-history"]
     else:
+        if os.path.exists(SRC_DIR) and not has_valid_src:
+            print("\n[WARNING] Found corrupted/incomplete 'src' folder (no commit checked out).")
+            print("          Cleaning incomplete directory for a fresh checkout...")
+            try:
+                # Remove incomplete .git or src to avoid 'unmanaged solution' or exit code 128
+                shutil.rmtree(os.path.join(SRC_DIR, ".git"), ignore_errors=True)
+            except Exception as e:
+                print(f"          Notice: {e}")
+
         print("\n[INFO] Initial shallow checkout of Google Chromium C++ source tree...")
-        fetch_py = os.path.join(depot_tools, "fetch.py")
-        cmd = [python_bin, fetch_py, "--no-history", "chromium"]
+        cmd = ["cmd.exe", "/c", fetch_bat, "--no-history", "chromium"]
 
     code = run_streaming(cmd, CHROMIUM_DIR)
     if code != 0:
