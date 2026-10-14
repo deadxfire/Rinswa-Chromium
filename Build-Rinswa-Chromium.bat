@@ -1,4 +1,5 @@
 @echo off
+setlocal EnableDelayedExpansion
 cd /d "%~dp0"
 
 set "RINSWA_VERSION=1.0.6"
@@ -62,6 +63,7 @@ if not exist "%DEPOT_TOOLS_DIR%\gn.bat" (
 )
 set "PATH=%DEPOT_TOOLS_DIR%;%PATH%"
 set "DEPOT_TOOLS_WIN_TOOLCHAIN=0"
+set "GYP_MSVS_VERSION=2022"
 
 :: 3. Verify Chromium Engine Source
 echo.
@@ -97,7 +99,7 @@ echo [Step 5/5] Compiling Chromium Engine into Rinswa Browser v%RINSWA_VERSION%.
 cd /d "%SRC_DIR%"
 
 echo Generating Ninja build configurations...
-call gn gen out\RinswaRelease
+call "%DEPOT_TOOLS_DIR%\gn.bat" gen out\RinswaRelease
 if %ERRORLEVEL% NEQ 0 (
     echo [ERROR] GN generation failed.
     goto :fail
@@ -105,7 +107,7 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo.
 echo Compiling chrome.exe and mini_installer.exe with autoninja...
-call autoninja -C out\RinswaRelease chrome mini_installer
+call "%DEPOT_TOOLS_DIR%\autoninja.bat" -C out\RinswaRelease chrome mini_installer
 if %ERRORLEVEL% NEQ 0 (
     echo [ERROR] Ninja compilation failed.
     goto :fail
@@ -138,6 +140,7 @@ pause
 exit /b 0
 
 :fail
+cd /d "%~dp0"
 echo.
 echo =======================================================
 echo                 CHROMIUM BUILD FAILED
