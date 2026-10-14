@@ -2,7 +2,7 @@
 """
 Rinswa Browser (Chromium Engine) - Overlay & Customization Injector
 Developed and made by Arindam Makar
-Injects Rinswa Cyber-Glass branding, GN flags, version metadata, and patches into Chromium source tree.
+Injects Rinswa Cyber-Glass branding, GN flags, version metadata, themes, and wallpaper into Chromium source tree.
 """
 
 import os
@@ -13,6 +13,8 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VERSION_FILE = os.path.join(PROJECT_DIR, "rinswa-version.txt")
 CONFIG_ARGS_GN = os.path.join(PROJECT_DIR, "config", "args.gn")
 BRANDING_OVERLAY = os.path.join(PROJECT_DIR, "branding", "chromium-overlay")
+UI_NEWTAB_DIR = os.path.join(PROJECT_DIR, "ui", "newtab")
+THEMES_DIR = os.path.join(PROJECT_DIR, "branding", "themes")
 
 def get_version():
     if os.path.exists(VERSION_FILE):
@@ -36,11 +38,11 @@ def prepare_overlay(chromium_src_dir):
     out_dir = os.path.join(chromium_src_dir, "out", "RinswaRelease")
     os.makedirs(out_dir, exist_ok=True)
     target_args = os.path.join(out_dir, "args.gn")
-    print(f">> [1/4] Deploying Rinswa release GN directives to {target_args}...")
+    print(f">> [1/5] Deploying Rinswa release GN directives to {target_args}...")
     shutil.copy2(CONFIG_ARGS_GN, target_args)
 
     # 2. Deploy Branding Assets (Icons, Bitmaps, Logos)
-    print(">> [2/4] Injecting Rinswa branding, ribbons, and multi-res icons...")
+    print(">> [2/5] Injecting Rinswa branding, ribbons, and multi-res icons...")
     for root, dirs, files in os.walk(BRANDING_OVERLAY):
         rel_path = os.path.relpath(root, BRANDING_OVERLAY)
         target_root = os.path.join(chromium_src_dir, rel_path)
@@ -51,21 +53,33 @@ def prepare_overlay(chromium_src_dir):
             shutil.copy2(src_file, dest_file)
             print(f"   Injected: {rel_path}/{f}")
 
-    # 3. Deploy Bundled Extensions & Policies
-    print(">> [3/4] Bundling uBlock Origin adblocker and Smart Tabs distribution...")
-    dist_ext_dir = os.path.join(chromium_src_dir, "chrome", "browser", "resources", "default_extensions")
-    os.makedirs(dist_ext_dir, exist_ok=True)
-    
-    gecko_dist = os.path.join(PROJECT_DIR, "branding", "distribution", "extensions")
-    if os.path.isdir(gecko_dist):
-        for ext in os.listdir(gecko_dist):
-            if ext.endswith(".xpi") or ext.endswith(".crx"):
-                src_ext = os.path.join(gecko_dist, ext)
-                shutil.copy2(src_ext, os.path.join(dist_ext_dir, ext))
-                print(f"   Bundled extension: {ext}")
+    # 3. Deploy New Tab Page & Dreamy Meadow Mist Wallpaper
+    print(">> [3/5] Deploying Dreamy Meadow Mist New Tab Page & Cyber-Glass UI...")
+    ntp_dest = os.path.join(chromium_src_dir, "chrome", "browser", "resources", "rinswa_ntp")
+    os.makedirs(ntp_dest, exist_ok=True)
+    if os.path.isdir(UI_NEWTAB_DIR):
+        for f in os.listdir(UI_NEWTAB_DIR):
+            src_file = os.path.join(UI_NEWTAB_DIR, f)
+            dest_file = os.path.join(ntp_dest, f)
+            if os.path.isfile(src_file):
+                shutil.copy2(src_file, dest_file)
+                print(f"   Deployed UI asset: {f}")
 
-    # 4. Stamp Version Metadata
-    print(f">> [4/4] Stamping Rinswa v{version} Stable metadata...")
+    # 4. Deploy Native 8 Theme Packages (#cbd8e1, #e4d6d8, etc.)
+    print(">> [4/5] Deploying 8 native palette themes into distribution...")
+    themes_dest = os.path.join(chromium_src_dir, "chrome", "browser", "resources", "rinswa_themes")
+    os.makedirs(themes_dest, exist_ok=True)
+    if os.path.isdir(THEMES_DIR):
+        for root, dirs, files in os.walk(THEMES_DIR):
+            rel_path = os.path.relpath(root, THEMES_DIR)
+            target_root = os.path.join(themes_dest, rel_path)
+            os.makedirs(target_root, exist_ok=True)
+            for f in files:
+                shutil.copy2(os.path.join(root, f), os.path.join(target_root, f))
+        print("   Deployed all 8 native theme color packages.")
+
+    # 5. Stamp Version Metadata
+    print(f">> [5/5] Stamping Rinswa v{version} Stable metadata...")
     version_header = os.path.join(chromium_src_dir, "chrome", "common", "chrome_version.h.in")
     if os.path.exists(version_header):
         with open(version_header, "r", encoding="utf-8") as f:
@@ -83,7 +97,6 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         src_path = sys.argv[1]
     else:
-        # Default fallback to sibling or local chromium/src directory
         src_path = os.path.join(PROJECT_DIR, "chromium", "src")
         if not os.path.exists(src_path):
             src_path = os.path.join(PROJECT_DIR, "src")

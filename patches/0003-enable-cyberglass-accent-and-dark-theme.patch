@@ -1,9 +1,15 @@
 --- a/ui/color/color_id.h
 +++ b/ui/color/color_id.h
-@@ -85,6 +85,10 @@
+@@ -85,6 +85,16 @@
    kColorFrameActive,
    kColorFrameInactive,
-+  // Rinswa Cyber-Glass Signature Ribbon Accents
-+  kColorRinswaRibbonBlue,
-+  kColorRinswaRibbonPurple,
-+  kColorRinswaRibbonRed,
++  // Rinswa Interface Palette Color IDs (Custom Theme Directives)
++  kColorRinswaThemeSoftSlate,   // #cbd8e1 (Default)
++  kColorRinswaThemeRoseMist,    // #e4d6d8
++  kColorRinswaThemeSageMint,    // #ccdfd8
++  kColorRinswaThemeCleanAsh,    // #c7c7c7
++  kColorRinswaThemeDustyLilac,  // #e1d0d1
++  kColorRinswaThemePeriwinkle,  // #d1d1db
++  kColorRinswaThemePeachSand,   // #e5d4ce
++  kColorRinswaThemeWarmLinen,   // #e6decb
++

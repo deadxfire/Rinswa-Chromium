@@ -1,0 +1,72 @@
+{
+  "manifest_version": 3,
+  "version": "1.0.6",
+  "name": "Rinswa Theme (Warm Linen Cream #e6decb)",
+  "description": "Official Rinswa Browser native color theme #e6decb by Arindam Makar",
+  "theme": {
+    "colors": {
+      "frame": [
+        230,
+        222,
+        203
+      ],
+      "frame_inactive": [
+        215,
+        207,
+        188
+      ],
+      "toolbar": [
+        255,
+        255,
+        255
+      ],
+      "tab_text": [
+        30,
+        41,
+        59
+      ],
+      "tab_background_text": [
+        100,
+        116,
+        139
+      ],
+      "bookmark_text": [
+        30,
+        41,
+        59
+      ],
+      "toolbar_button_icon": [
+        71,
+        85,
+        105
+      ],
+      "omnibox_background": [
+        255,
+        255,
+        255
+      ],
+      "omnibox_text": [
+        30,
+        41,
+        59
+      ],
+      "ntp_background": [
+        230,
+        222,
+        203
+      ],
+      "ntp_text": [
+        30,
+        41,
+        59
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.9019607843137255,
+        0.8705882352941177,
+        0.796078431372549
+      ]
+    }
+  }
+}

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Tab - Rinswa Browser</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-theme="#cbd8e1">
+  <!-- Background Wallpaper Layer -->
+  <div class="wallpaper-container" id="wallpaper-container">
+    <div class="wallpaper-image" id="wallpaper-image"></div>
+    <div class="wallpaper-tint" id="wallpaper-tint"></div>
+  </div>
+
+  <!-- Topmost Browser Chrome (Matching Screenshot) -->
+  <header class="browser-topbar" id="browser-topbar">
+    <div class="topbar-row">
+      <!-- Upper Left Corner: Rinswa Logo Button (Click opens Menu) -->
+      <div class="rinswa-menu-trigger-wrapper">
+        <button id="btn-rinswa-logo" class="rinswa-logo-btn" title="Rinswa Browser Menu & Themes">
+          <img src="Glossy Multicolour Ribbon R Emblem.png" alt="Rinswa Emblem" class="rinswa-emblem-icon">
+        </button>
+
+        <!-- Dropdown Menu that appears on click -->
+        <div class="rinswa-dropdown-menu" id="rinswa-dropdown-menu">
+          <div class="menu-header">
+            <img src="Glossy Multicolour Ribbon R Emblem.png" alt="Rinswa" class="menu-logo-small">
+            <div>
+              <div class="menu-brand-name">Rinswa Browser</div>
+              <div class="menu-brand-sub">Chromium Edition &bull; v1.0.6</div>
+            </div>
+          </div>
+
+          <div class="menu-section-label">INTERFACE THEME COLOUR</div>
+          <!-- 8 Theme Color Swatches Specified by User -->
+          <div class="theme-palette-grid" id="theme-palette-grid">
+            <button class="theme-chip active" data-color="#cbd8e1" style="--chip-color:#cbd8e1;" title="Soft Slate (#cbd8e1)"></button>
+            <button class="theme-chip" data-color="#e4d6d8" style="--chip-color:#e4d6d8;" title="Rose Mist (#e4d6d8)"></button>
+            <button class="theme-chip" data-color="#ccdfd8" style="--chip-color:#ccdfd8;" title="Sage Mint (#ccdfd8)"></button>
+            <button class="theme-chip" data-color="#c7c7c7" style="--chip-color:#c7c7c7;" title="Clean Ash (#c7c7c7)"></button>
+            <button class="theme-chip" data-color="#e1d0d1" style="--chip-color:#e1d0d1;" title="Dusty Lilac (#e1d0d1)"></button>
+            <button class="theme-chip" data-color="#d1d1db" style="--chip-color:#d1d1db;" title="Periwinkle Ice (#d1d1db)"></button>
+            <button class="theme-chip" data-color="#e5d4ce" style="--chip-color:#e5d4ce;" title="Peach Sand (#e5d4ce)"></button>
+            <button class="theme-chip" data-color="#e6decb" style="--chip-color:#e6decb;" title="Warm Linen (#e6decb)"></button>
+          </div>
+
+          <div class="menu-divider"></div>
+
+          <div class="menu-section-label">WALLPAPER</div>
+          <div class="menu-item wallpaper-item active" data-wp="meadow">
+            <span>🌄 Dreamy Meadow Mist (Default)</span>
+          </div>
+          <div class="menu-item wallpaper-item" data-wp="softblue">
+            <span>🌊 Soft Blue Mist</span>
+          </div>
+          <div class="menu-item wallpaper-item" data-wp="solid">
+            <span>🎨 Minimal Theme Color Only</span>
+          </div>
+
+          <div class="menu-divider"></div>
+
+          <button class="menu-item" id="menu-new-tab-action">
+            <span>➕ New Tab</span> <kbd>Ctrl+T</kbd>
+          </button>
+          <button class="menu-item" id="menu-bookmarks-action">
+            <span>⭐ Bookmarks</span> <kbd>Ctrl+B</kbd>
+          </button>
+          <button class="menu-item" id="menu-history-action">
+            <span>🕒 History</span> <kbd>Ctrl+H</kbd>
+          </button>
+          <button class="menu-item" id="menu-downloads-action">
+            <span>📥 Downloads</span> <kbd>Ctrl+J</kbd>
+          </button>
+          <button class="menu-item" id="menu-settings-action">
+            <span>⚙️ Settings</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab Strip (Matching Screenshot) -->
+      <nav class="tabstrip">
+        <!-- Pinned Tabs: Gmail & YouTube -->
+        <div class="pinned-tab" title="Gmail" data-url="https://mail.google.com">
+          <svg class="tab-icon-svg" viewBox="0 0 24 24" width="16" height="16">
+            <path fill="#EA4335" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/>
+            <path fill="#FBBC05" d="M22 6l-10 7L2 6"/>
+            <path fill="#34A853" d="M2 18V6l10 7 10-7v12z"/>
+            <path fill="#EA4335" d="M12 13L2 6h20z"/>
+          </svg>
+        </div>
+        <div class="pinned-tab" title="YouTube" data-url="https://youtube.com">
+          <svg class="tab-icon-svg" viewBox="0 0 24 24" width="16" height="16">
+            <path fill="#FF0000" d="M21.58 7.19a2.5 2.5 0 0 0-1.76-1.77C18.26 5 12 5 12 5s-6.26 0-7.82.42a2.5 2.5 0 0 0-1.76 1.77C2 8.76 2 12 2 12s0 3.24.42 4.81a2.5 2.5 0 0 0 1.76 1.77C5.74 19 12 19 12 19s6.26 0 7.82-.42a2.5 2.5 0 0 0 1.76-1.77C22 15.24 22 12 22 12s0-3.24-.42-4.81z"/>
+            <polygon fill="#FFFFFF" points="10 15 15 12 10 9"/>
+          </svg>
+        </div>
+
+        <!-- Active Tab: "New Tab" with rounded curved shape -->
+        <div class="active-tab">
+          <span class="active-tab-curve-left"></span>
+          <div class="tab-content">
+            <div class="tab-mini-icon"></div>
+            <span class="tab-title">New Tab</span>
+          </div>
+          <span class="active-tab-curve-right"></span>
+        </div>
+
+        <!-- Plus button for new tab -->
+        <button class="new-tab-btn" id="btn-create-tab" title="New Tab (Ctrl+T)">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.2" fill="none">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+      </nav>
+
+      <!-- Upper Right Window Caption Controls -->
+      <div class="window-caption-controls">
+        <button class="caption-btn" id="cap-min" title="Minimize">
+          <svg viewBox="0 0 12 12" width="10" height="10"><rect y="5" width="10" height="1" fill="currentColor"/></svg>
+        </button>
+        <button class="caption-btn" id="cap-max" title="Maximize">
+          <svg viewBox="0 0 12 12" width="10" height="10"><rect x="1.5" y="1.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+        </button>
+        <button class="caption-btn cap-close" id="cap-close" title="Close">
+          <svg viewBox="0 0 12 12" width="10" height="10"><path d="M 1,1 L 11,11 M 11,1 L 1,11" stroke="currentColor" stroke-width="1.2"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons Toolbar (Back, Forward, Reload) -->
+    <div class="nav-toolbar">
+      <button class="nav-arrow-btn" id="nav-btn-back" title="Back (Alt+Left)">
+        <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2.2" fill="none"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <button class="nav-arrow-btn" id="nav-btn-forward" title="Forward (Alt+Right)" disabled>
+        <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2.2" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <button class="nav-arrow-btn" id="nav-btn-reload" title="Reload (Ctrl+R)">
+        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.2" fill="none"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Central Canvas -->
+  <main class="center-stage">
+    <!-- Center Acrylic Dome Emblem (As seen in screenshot) -->
+    <div class="center-dome-emblem">
+      <div class="dome-shape"></div>
+    </div>
+
+    <!-- Center Floating Search Card (Exact design from screenshot) -->
+    <div class="search-floating-card">
+      <!-- Top Row: Search Icon + Search Input -->
+      <div class="search-input-row">
+        <svg class="search-glass-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.2" fill="none">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="main-search-input" placeholder="Search the web or type a URL..." autocomplete="off" spellcheck="false" autofocus>
+      </div>
+
+      <!-- Bottom Row: Add Tabs / Files & Submit Arrow Button -->
+      <div class="search-bottom-row">
+        <button class="btn-add-tabs" id="btn-add-tabs" title="Add quick tabs, bookmarks or files">
+          <span class="plus-icon">＋</span>
+          <span>Add tabs or files</span>
+        </button>
+
+        <button class="btn-submit-arrow" id="btn-submit-arrow" title="Search or Go">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.4" fill="none">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Add Tabs & Shortcuts Modal / Flyout -->
+    <div class="add-tabs-flyout" id="add-tabs-flyout">
+      <div class="flyout-title">Quick Shortcuts & Workspaces</div>
+      <div class="flyout-grid">
+        <a href="https://github.com" class="flyout-chip">💻 GitHub</a>
+        <a href="https://mail.google.com" class="flyout-chip">✉️ Gmail</a>
+        <a href="https://youtube.com" class="flyout-chip">🎬 YouTube</a>
+        <a href="https://reddit.com" class="flyout-chip">💬 Reddit</a>
+        <a href="https://wikipedia.org" class="flyout-chip">📚 Wikipedia</a>
+        <a href="https://amazon.com" class="flyout-chip">🛍️ Amazon</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
