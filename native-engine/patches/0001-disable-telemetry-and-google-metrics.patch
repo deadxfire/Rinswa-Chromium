@@ -1,0 +1,15 @@
+--- a/components/metrics/metrics_service.cc
++++ b/components/metrics/metrics_service.cc
+@@ -215,6 +215,10 @@ void MetricsService::Start() {
+   // Neutralize all metrics collection and external reporting in Rinswa
++  recording_active_ = false;
++  reporting_active_ = false;
++  return;
+ }
+
+--- a/chrome/browser/ui/webui/ntp/new_tab_page_handler.cc
++++ b/chrome/browser/ui/webui/ntp/new_tab_page_handler.cc
+@@ -45,6 +45,8 @@ void NewTabPageHandler::RegisterMessages() {
+   // Disable sponsored tiles and promotional suggestions
++  return;
+ }

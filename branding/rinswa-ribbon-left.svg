@@ -1,0 +1,68 @@
+<svg width="320" height="130" viewBox="0 0 320 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Cyan to Royal Blue gradient -->
+    <linearGradient id="ribbon-cyan-blue" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.95"/>
+      <stop offset="45%" stop-color="#0072ff" stop-opacity="0.9"/>
+      <stop offset="85%" stop-color="#6366f1" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Royal Blue to Indigo gradient -->
+    <linearGradient id="ribbon-blue-indigo" x1="0%" y1="100%" x2="100%" y2="10%">
+      <stop offset="0%" stop-color="#0072ff" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#6366f1" stop-opacity="0.85"/>
+      <stop offset="85%" stop-color="#a855f7" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Indigo to Purple & Magenta gradient -->
+    <linearGradient id="ribbon-indigo-magenta" x1="5%" y1="100%" x2="95%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.88"/>
+      <stop offset="45%" stop-color="#a855f7" stop-opacity="0.82"/>
+      <stop offset="80%" stop-color="#ec4899" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#ff758c" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Vivid Magenta to Peach/Coral flare -->
+    <linearGradient id="ribbon-magenta-flare" x1="0%" y1="100%" x2="80%" y2="0%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity="0.85"/>
+      <stop offset="60%" stop-color="#ff758c" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#ff9a76" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Deep Cosmic Violet base curve -->
+    <linearGradient id="ribbon-cosmic-base" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d1254" stop-opacity="0.85"/>
+      <stop offset="60%" stop-color="#1b0b36" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0e061e" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Glossy Specular Sheen -->
+    <linearGradient id="ribbon-gloss" x1="10%" y1="100%" x2="90%" y2="10%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+      <stop offset="35%" stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="70%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Deep base cosmic shadow/depth wave -->
+  <path d="M0 0 C50 12 110 40 145 80 C175 110 210 125 270 130 L0 130 Z" fill="url(#ribbon-cosmic-base)"/>
+
+  <!-- Back Ribbon: Indigo to Magenta sweep -->
+  <path d="M0 16 C60 20 125 50 160 90 C185 115 220 126 270 130 L195 130 C155 120 120 102 96 78 C65 48 30 26 0 24 Z" fill="url(#ribbon-indigo-magenta)"/>
+
+  <!-- Middle Ribbon: Blue to Indigo sweep -->
+  <path d="M0 40 C52 44 105 70 135 102 C152 120 178 128 215 130 L150 130 C120 124 96 110 78 88 C54 62 25 46 0 44 Z" fill="url(#ribbon-blue-indigo)"/>
+
+  <!-- Fore Ribbon: Electric Cyan to Royal Blue highlight wave -->
+  <path d="M0 64 C42 66 82 86 108 112 C120 123 138 128 162 130 L108 130 C86 125 70 114 55 98 C36 78 18 68 0 66 Z" fill="url(#ribbon-cyan-blue)"/>
+
+  <!-- Coral Magenta Accent Flare on the leading crest -->
+  <path d="M0 86 C28 88 56 102 74 122 C82 128 92 130 108 130 L62 130 C46 126 34 118 22 108 C12 96 5 90 0 88 Z" fill="url(#ribbon-magenta-flare)"/>
+
+  <!-- Glossy 3D specular highlight curves -->
+  <path d="M0 64 C42 66 82 86 108 112 C120 123 138 128 162 130" stroke="url(#ribbon-gloss)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M0 40 C52 44 105 70 135 102 C152 120 178 128 215 130" stroke="url(#ribbon-gloss)" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.75"/>
+  <path d="M0 16 C60 20 125 50 160 90 C185 115 220 126 270 130" stroke="url(#ribbon-gloss)" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.5"/>
+</svg>

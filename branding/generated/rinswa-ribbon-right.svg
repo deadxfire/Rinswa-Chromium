@@ -1,0 +1,39 @@
+<svg width="320" height="144" viewBox="0 0 320 144" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Magenta to Purple gradient -->
+    <linearGradient id="ribbon-right-magenta" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity="0.88"/>
+      <stop offset="50%" stop-color="#a855f7" stop-opacity="0.82"/>
+      <stop offset="85%" stop-color="#6366f1" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Indigo to Cyan gradient -->
+    <linearGradient id="ribbon-right-cyan" x1="100%" y1="10%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.92"/>
+      <stop offset="45%" stop-color="#0072ff" stop-opacity="0.85"/>
+      <stop offset="85%" stop-color="#6366f1" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Deep Cosmic base -->
+    <linearGradient id="ribbon-right-cosmic" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2d1254" stop-opacity="0.8"/>
+      <stop offset="70%" stop-color="#1b0b36" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#0e061e" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Specular Gloss -->
+    <linearGradient id="ribbon-right-gloss" x1="100%" y1="0%" x2="10%" y2="90%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.2"/>
+      <stop offset="80%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <path d="M320 0 C270 14 210 48 175 96 C145 132 110 140 50 144 L320 144 Z" fill="url(#ribbon-right-cosmic)"/>
+  <path d="M320 18 C260 24 195 60 160 108 C135 138 100 142 50 144 L125 144 C165 138 200 120 224 92 C255 56 290 30 320 28 Z" fill="url(#ribbon-right-magenta)"/>
+  <path d="M320 52 C268 54 215 86 185 122 C168 140 142 143 105 144 L170 144 C200 140 224 130 242 104 C266 74 295 56 320 54 Z" fill="url(#ribbon-right-cyan)"/>
+  <path d="M320 18 C260 24 195 60 160 108 C135 138 100 142 50 144" stroke="url(#ribbon-right-gloss)" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <path d="M320 52 C268 54 215 86 185 122 C168 140 142 143 105 144" stroke="url(#ribbon-right-gloss)" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.7"/>
+</svg>

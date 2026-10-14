@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Tab - Rinswa Browser</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="theme-alpine">
+  <!-- Dynamic Background Overlay -->
+  <div class="wallpaper-background" id="wallpaper-bg"></div>
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Header Controls -->
+  <header class="newtab-header">
+    <div class="brand-badge">
+      <img src="../../renderer/assets/Glossy Multicolour Ribbon R Emblem.png" alt="Rinswa Logo" class="brand-logo-img">
+      <span class="brand-title">RINSWA</span>
+      <span class="engine-badge">CHROMIUM</span>
+    </div>
+
+    <div class="header-actions">
+      <!-- Background switcher dropdown -->
+      <div class="dropdown-wrapper">
+        <button id="btn-theme-switcher" class="glass-btn icon-btn" title="Change Wallpaper / Theme">
+          🖼️ Theme
+        </button>
+        <div class="dropdown-menu" id="theme-menu">
+          <button class="menu-item active" data-bg="alpine">🌄 Alpine Sunset</button>
+          <button class="menu-item" data-bg="softblue">🌊 Soft Blue Mist</button>
+          <button class="menu-item" data-bg="cyberdark">🌌 Cyberpunk Void</button>
+        </div>
+      </div>
+      <button id="btn-open-settings" class="glass-btn icon-btn" title="Browser Settings">⚙️</button>
+    </div>
+  </header>
+
+  <!-- Main Center Content -->
+  <main class="newtab-center">
+    <!-- Ambient Time & Greeting -->
+    <div class="time-greeting-section">
+      <h1 class="digital-clock" id="digital-clock">12:00</h1>
+      <p class="greeting-text" id="greeting-text">Welcome back, Arindam</p>
+    </div>
+
+    <!-- Central Search Box -->
+    <div class="search-container">
+      <div class="search-glass-card">
+        <div class="search-engine-selector" id="search-engine-btn" title="Switch Search Engine">
+          <span id="current-engine-icon">🔍</span>
+          <span id="current-engine-name">DuckDuckGo</span>
+          <span class="arrow-down">▾</span>
+        </div>
+
+        <input type="text" id="search-input" placeholder="Search the web or enter URL..." autocomplete="off" autofocus>
+
+        <button id="search-submit-btn" class="search-arrow-btn" title="Search">
+          ➔
+        </button>
+      </div>
+
+      <!-- Engine Selector Menu -->
+      <div class="engine-dropdown" id="engine-dropdown">
+        <div class="engine-option active" data-engine="duckduckgo"><span>🦆</span> DuckDuckGo</div>
+        <div class="engine-option" data-engine="google"><span>🔍</span> Google</div>
+        <div class="engine-option" data-engine="brave"><span>🦁</span> Brave Search</div>
+        <div class="engine-option" data-engine="bing"><span>🌐</span> Microsoft Bing</div>
+      </div>
+    </div>
+
+    <!-- Speed Dials / Quick Shortcuts -->
+    <section class="shortcuts-section">
+      <div class="shortcuts-grid" id="shortcuts-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- Bottom Widgets (Privacy Shields & Smart Tabs stats) -->
+    <section class="widgets-row">
+      <div class="glass-widget-card" id="widget-shield">
+        <div class="widget-icon">🛡️</div>
+        <div class="widget-content">
+          <div class="widget-title">Privacy Shields Active</div>
+          <div class="widget-subtitle"><span id="blocked-count">0</span> Trackers & Ads Neutralized</div>
+        </div>
+        <div class="widget-status-badge">PROTECTED</div>
+      </div>
+
+      <div class="glass-widget-card" id="widget-smart-tabs">
+        <div class="widget-icon">⚡</div>
+        <div class="widget-content">
+          <div class="widget-title">Smart Tab Engine</div>
+          <div class="widget-subtitle">Auto-Grouping & Duplicate Isolation Ready</div>
+        </div>
+        <div class="widget-status-badge">OPTIMIZED</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="newtab-footer">
+    <span>Rinswa Browser v1.0.6 &bull; Chromium Engine &bull; Developed by Arindam Makar</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

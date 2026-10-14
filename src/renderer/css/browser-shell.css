@@ -1,0 +1,598 @@
+/* ==========================================================================
+   RINSWA CHROMIUM BROWSER - BROWSER SHELL STYLES
+   Developed by Arindam Makar
+   ========================================================================== */
+
+.rinswa-app-window {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-base);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ==========================================================================
+   Top Bar (Tabs + Window Controls)
+   ========================================================================== */
+.app-topbar {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-topbar);
+  backdrop-filter: blur(28px);
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+  z-index: 100;
+}
+
+.window-drag-region {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  -webkit-app-region: drag;
+  padding-left: 10px;
+  padding-right: 0;
+  user-select: none;
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  -webkit-app-region: no-drag;
+}
+
+.topbar-logo {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.4));
+}
+
+/* Tabstrip */
+.tabstrip-container {
+  display: flex;
+  align-items: flex-end;
+  flex: 1;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-app-region: no-drag;
+  padding-top: 6px;
+  gap: 4px;
+}
+
+.tabstrip-container::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs-list {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 100%;
+}
+
+.tab-item {
+  display: flex;
+  align-items: center;
+  height: 34px;
+  min-width: 140px;
+  max-width: 220px;
+  padding: 0 10px 0 12px;
+  background: var(--bg-tab);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  border: 1px solid transparent;
+  border-bottom: none;
+  color: var(--fg-secondary);
+  font-size: 0.82rem;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition-fast);
+}
+
+.tab-item:hover {
+  background: var(--bg-tab-hover);
+  color: var(--fg-primary);
+}
+
+.tab-item.active {
+  background: var(--bg-tab-active);
+  color: #ffffff;
+  border-color: var(--border-subtle);
+  font-weight: 500;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Ribbon Accent on Active Tab */
+.tab-item.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--ribbon-gradient);
+  border-radius: 2px 2px 0 0;
+}
+
+.tab-favicon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  border-radius: 2px;
+}
+
+.tab-title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab-sleep-badge {
+  font-size: 0.72rem;
+  opacity: 0.8;
+}
+
+.tab-mute-btn {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  padding: 2px;
+}
+
+.tab-mute-btn:hover {
+  opacity: 1;
+}
+
+.tab-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  opacity: 0;
+  font-size: 0.75rem;
+  transition: var(--transition-fast);
+}
+
+.tab-item:hover .tab-close-btn,
+.tab-item.active .tab-close-btn {
+  opacity: 0.6;
+}
+
+.tab-close-btn:hover {
+  opacity: 1 !important;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ef4444;
+}
+
+.btn-new-tab {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 3px;
+  margin-left: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--fg-secondary);
+  transition: var(--transition-fast);
+  -webkit-app-region: no-drag;
+}
+
+.btn-new-tab:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--fg-primary);
+}
+
+/* Native Window Controls */
+.window-controls {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  -webkit-app-region: no-drag;
+}
+
+.win-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 100%;
+  color: var(--fg-secondary);
+  transition: background 0.1s ease;
+}
+
+.win-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--fg-primary);
+}
+
+.win-close:hover {
+  background: #e81123 !important;
+  color: white !important;
+}
+
+/* ==========================================================================
+   Navigation Toolbar & Omnibar
+   ========================================================================== */
+.navigation-toolbar {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 10px;
+  gap: 8px;
+  background: var(--bg-toolbar);
+  backdrop-filter: blur(28px);
+}
+
+.nav-button-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  color: var(--fg-secondary);
+  transition: var(--transition-fast);
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--fg-primary);
+}
+
+.nav-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* Central Omnibar */
+.omnibar-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.omnibar {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  background: var(--bg-omnibar);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: 0 10px 0 12px;
+  gap: 8px;
+  transition: var(--transition-fast);
+}
+
+.omnibar:focus-within {
+  border-color: var(--border-focus);
+  background: rgba(10, 15, 30, 0.98);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.3);
+}
+
+.security-badge {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.security-badge:hover {
+  opacity: 1;
+}
+
+#omnibar-input {
+  flex: 1;
+  font-size: 0.85rem;
+  color: var(--fg-primary);
+  font-family: 'Inter', sans-serif;
+}
+
+#omnibar-input::placeholder {
+  color: var(--fg-muted);
+}
+
+.omnibar-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-xs);
+  font-size: 0.85rem;
+  color: var(--fg-secondary);
+  transition: var(--transition-fast);
+}
+
+.omnibar-action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--fg-primary);
+}
+
+.omnibar-action-btn.active {
+  color: #fbbf24;
+}
+
+/* Omnibar Suggestions Dropdown */
+.omnibar-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: rgba(14, 20, 38, 0.98);
+  backdrop-filter: blur(28px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 200;
+}
+
+.omnibar-dropdown.show {
+  display: flex;
+}
+
+.omnibar-result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  color: var(--fg-secondary);
+  transition: var(--transition-fast);
+}
+
+.omnibar-result-item:hover, .omnibar-result-item.selected {
+  background: rgba(99, 102, 241, 0.18);
+  color: var(--fg-primary);
+}
+
+.result-icon {
+  font-size: 0.95rem;
+}
+
+.result-title {
+  flex: 1;
+  font-size: 0.86rem;
+}
+
+.result-url {
+  font-size: 0.76rem;
+  color: var(--fg-muted);
+}
+
+/* Action Buttons */
+.action-button-group {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.shield-btn {
+  position: relative;
+}
+
+.shield-badge {
+  position: absolute;
+  top: 2px;
+  right: 1px;
+  background: #3b82f6;
+  color: white;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: var(--radius-full);
+}
+
+.tabs-count-badge {
+  position: absolute;
+  top: 2px;
+  right: 1px;
+  background: #10b981;
+  color: white;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: var(--radius-full);
+}
+
+/* Loading Ribbon Bar */
+.loading-ribbon-bar {
+  height: 2px;
+  width: 0;
+  background: var(--ribbon-gradient);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: width 0.2s ease, opacity 0.3s ease;
+  z-index: 105;
+}
+
+.loading-ribbon-bar.loading {
+  width: 70%;
+  opacity: 1;
+}
+
+.loading-ribbon-bar.finished {
+  width: 100%;
+  opacity: 0;
+}
+
+/* Optional Bookmarks Bar */
+.bookmarks-bar {
+  display: none;
+  align-items: center;
+  height: 30px;
+  background: rgba(11, 16, 32, 0.96);
+  padding: 0 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.bookmarks-bar.show {
+  display: flex;
+}
+
+.bookmarks-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+}
+
+.bookmark-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  color: var(--fg-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.bookmark-chip:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: var(--fg-primary);
+}
+
+/* ==========================================================================
+   Webview Viewport (Main Browser View)
+   ========================================================================== */
+.browser-viewport {
+  flex: 1;
+  position: relative;
+  background-color: #060913;
+  overflow: hidden;
+}
+
+webview {
+  display: none;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+}
+
+webview.active {
+  display: flex;
+}
+
+/* Find in Page Bar */
+.find-in-page-bar {
+  position: absolute;
+  top: 12px;
+  right: 24px;
+  background: rgba(14, 20, 38, 0.95);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  z-index: 150;
+}
+
+#find-input {
+  width: 160px;
+  font-size: 0.85rem;
+}
+
+.find-matches {
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+
+.find-nav-btn, .find-close-btn {
+  font-size: 0.75rem;
+  padding: 3px 6px;
+  border-radius: var(--radius-xs);
+  color: var(--fg-secondary);
+}
+
+.find-nav-btn:hover, .find-close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--fg-primary);
+}
+
+/* Downloads Shelf */
+.downloads-shelf {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(14, 20, 38, 0.96);
+  backdrop-filter: blur(28px);
+  border-top: 1px solid var(--border-subtle);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 150;
+}
+
+.download-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dl-icon {
+  font-size: 1.4rem;
+}
+
+.dl-filename {
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.dl-progress-bar {
+  width: 220px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+.dl-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--ribbon-gradient);
+  transition: width 0.2s ease;
+}
+
+.dl-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dl-close-btn {
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  color: var(--fg-secondary);
+}
+
+.dl-close-btn:hover {
+  color: var(--fg-primary);
+}

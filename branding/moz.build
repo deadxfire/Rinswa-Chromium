@@ -1,0 +1,8 @@
+# -*- Mode: python; indent-tabs-mode: nil; tab-width: 40 -*-
+# vim: set filetype=python:
+
+with Files("**"):
+    BUG_COMPONENT = ("Rinswa", "Branding")
+
+# Tell the build system where our branding files are
+# This integrates seamlessly with the Mozilla build pipeline

@@ -1,0 +1,302 @@
+{
+  "policies": {
+    "ExtensionSettings": {
+      "*": {
+        "installation_mode": "allowed"
+      },
+      "uBlock0@raymondhill.net": {
+        "installation_mode": "normal_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-607454-latest.xpi",
+        "default_area": "navbar"
+      },
+      "smart-tabs@rinswa.com": {
+        "installation_mode": "force_installed",
+        "install_url": "file:///C:/Program%20Files/Rinswa/distribution/extensions/smart-tabs@rinswa.com.xpi",
+        "default_area": "navbar"
+      },
+      "firefox-compact-dark@mozilla.org": {
+        "installation_mode": "blocked"
+      }
+    },
+    "Extensions": {
+      "Install": [
+        "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-607454-latest.xpi",
+        "file:///C:/Program%20Files/Rinswa/distribution/extensions/smart-tabs@rinswa.com.xpi"
+      ]
+    },
+    "NewTabPage": true,
+    "AppUpdateURL": "https://raw.githubusercontent.com/deadxfire/Rinswa-browser/main/update.xml",
+    "FirefoxHome": {
+      "Search": true,
+      "TopSites": true,
+      "SponsoredTopSites": false,
+      "Highlights": false,
+      "Pocket": false,
+      "SponsoredPocket": false,
+      "Snippets": false,
+      "Locked": false
+    },
+    "Preferences": {
+      "extensions.activeThemeID": {
+        "Value": "firefox-compact-light@mozilla.org",
+        "Status": "locked"
+      },
+      "browser.theme.toolbar-theme": {
+        "Value": 0,
+        "Status": "locked"
+      },
+      "browser.theme.content-theme": {
+        "Value": 2,
+        "Status": "locked"
+      },
+      "ui.systemUsesDarkTheme": {
+        "Value": 0,
+        "Status": "locked"
+      },
+      "extensions.autoDisableScopes": {
+        "Value": 0,
+        "Status": "default"
+      },
+      "extensions.enabledScopes": {
+        "Value": 15,
+        "Status": "default"
+      },
+      "general.useragent.override": {
+        "Value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0",
+        "Status": "default"
+      },
+      "general.useragent.compatMode.firefox": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.feeds.section.topstories": {
+        "Value": false,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.section.highlights.includePocket": {
+        "Value": false,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.showSponsored": {
+        "Value": false,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.showSponsoredTopSites": {
+        "Value": false,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.feeds.discoverystreamfeed": {
+        "Value": false,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.discoverystream.enabled": {
+        "Value": false,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.feeds.snippets": {
+        "Value": false,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.feeds.topsites": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.showSearch": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.startup.homepage.abouthome_cache.enabled": {
+        "Value": false,
+        "Status": "default"
+      },
+      "app.support.baseURL": {
+        "Value": "https://deadxfire.github.io/Rinswa-Browser-Support/support.html?topic=",
+        "Status": "locked"
+      },
+      "browser.shell.customIcon.enabled": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "browser.shell.customIcon.id": {
+        "Value": "",
+        "Status": "locked"
+      },
+      "browser.preferences.moreFromMozilla": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "sidebar.revamp": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "sidebar.verticalTabs": {
+        "Value": false,
+        "Status": "locked"
+      },
+      "sidebar.visibility": {
+        "Value": "hide-sidebar",
+        "Status": "locked"
+      },
+      "sidebar.main.tools": {
+        "Value": "",
+        "Status": "locked"
+      },
+      "browser.smartwindow.enabled": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.smartwindow.firstrun.hasCompleted": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.smartwindow.isDefaultWindow": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.smartwindow.autoTabGrouping.enabled": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.tabs.groups.enabled": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.tabs.groups.smart.enabled": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.tabs.groups.alternateMenu": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.tabs.groups.smart.userEnabled": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.tabs.groups.smart.optin": {
+        "Value": true,
+        "Status": "default"
+      },
+      "places.semanticHistory.smartwindow.featureGate": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.newtabWallpapers.enabled": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.newtabWallpapers.customWallpaper.enabled": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.newtabWallpapers.customWallpaper.library.enabled": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.newtabWallpapers.user.enabled": {
+        "Value": true,
+        "Status": "default"
+      },
+      "dom.ipc.processCount": {
+        "Value": 3,
+        "Status": "default"
+      },
+      "dom.ipc.processCount.webIsolated": {
+        "Value": 3,
+        "Status": "default"
+      },
+      "browser.tabs.unloadOnLowMemory": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.tabs.min_inactive_duration_before_unload": {
+        "Value": 180000,
+        "Status": "default"
+      },
+      "browser.tabs.unloadTabInContextMenu": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.tabs.fadeOutExplicitlyUnloadedTabs": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.tabs.fadeOutUnloadedTabs": {
+        "Value": true,
+        "Status": "default"
+      },
+      "browser.tabs.remote.warmup.maxTabs": {
+        "Value": 1,
+        "Status": "default"
+      },
+      "browser.sessionhistory.max_total_viewers": {
+        "Value": 2,
+        "Status": "default"
+      },
+      "browser.sessionhistory.max_entries": {
+        "Value": 20,
+        "Status": "default"
+      },
+      "browser.cache.memory.capacity": {
+        "Value": 32768,
+        "Status": "default"
+      },
+      "browser.cache.memory.max_entry_size": {
+        "Value": 4096,
+        "Status": "default"
+      },
+      "browser.cache.disk.max_chunks_memory_usage": {
+        "Value": 10240,
+        "Status": "default"
+      },
+      "browser.cache.disk.max_priority_chunks_memory_usage": {
+        "Value": 10240,
+        "Status": "default"
+      },
+      "image.mem.discardable": {
+        "Value": true,
+        "Status": "default"
+      },
+      "image.mem.animated.discardable": {
+        "Value": true,
+        "Status": "default"
+      },
+      "image.mem.surfacecache.max_size_kb": {
+        "Value": 262144,
+        "Status": "default"
+      },
+      "image.mem.surfacecache.min_expiration_ms": {
+        "Value": 20000,
+        "Status": "default"
+      },
+      "javascript.options.compact_on_user_inactive": {
+        "Value": true,
+        "Status": "default"
+      },
+      "javascript.options.compact_on_user_inactive_delay": {
+        "Value": 20000,
+        "Status": "default"
+      },
+      "javascript.options.gc_on_memory_pressure": {
+        "Value": true,
+        "Status": "default"
+      },
+      "javascript.options.gc_delay": {
+        "Value": 2000,
+        "Status": "default"
+      },
+      "media.memory_cache_max_size": {
+        "Value": 4096,
+        "Status": "default"
+      },
+      "media.memory_caches_combined_limit_kb": {
+        "Value": 65536,
+        "Status": "default"
+      },
+      "browser.sessionstore.interval": {
+        "Value": 30000,
+        "Status": "default"
+      }
+    }
+  }
+}
