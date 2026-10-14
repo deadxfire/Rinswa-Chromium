@@ -1,0 +1,8 @@
+COMPANY_FULLNAME=Arindam Makar
+COMPANY_SHORTNAME=Arindam Makar
+PRODUCT_FULLNAME=Rinswa Browser
+PRODUCT_SHORTNAME=Rinswa
+PRODUCT_INSTALLER_FULLNAME=Rinswa Browser Installer
+PRODUCT_INSTALLER_SHORTNAME=Rinswa Installer
+COPYRIGHT=Copyright 2026 Arindam Makar. All rights reserved.
+APP_USER_MODEL_ID_DEFAULT=Rinswa.Browser

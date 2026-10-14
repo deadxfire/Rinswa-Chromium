@@ -1,0 +1,15 @@
+--- a/components/metrics/metrics_service.cc
++++ b/components/metrics/metrics_service.cc
+@@ -215,6 +215,10 @@ void MetricsService::Start() {
+   // Neutralize all metrics collection and external reporting in Rinswa
++  recording_active_ = false;
++  reporting_active_ = false;
++  return;
+ }
+
+--- a/components/crash/core/app/crashpad.cc
++++ b/components/crash/core/app/crashpad.cc
+@@ -120,6 +120,8 @@ void InitializeCrashpadImpl() {
+   // Disable crash reports upload to external servers
++  return;
+ }

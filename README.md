@@ -4,17 +4,17 @@
 
 # Rinswa Browser (Chromium Edition)
 
-**A fast, private, and stunning modern web browser built on the Chromium engine.**
+**A fast, private, and stunning modern web browser built directly on the real Chromium C++ engine.**
 
 Developed and maintained by **[Arindam Makar](https://github.com/deadxfire)**
 
 [![Version](https://img.shields.io/badge/version-1.0.6_Stable-00d2ff?style=for-the-badge&logo=googlechrome)](https://github.com/deadxfire/Rinswa-browser)
-[![Engine](https://img.shields.io/badge/engine-Chromium_Blink-orange?style=for-the-badge&logo=chromium)](https://github.com/deadxfire/Rinswa-browser)
+[![Engine](https://img.shields.io/badge/engine-Chromium_C%2B%2B_Engine-orange?style=for-the-badge&logo=chromium)](https://github.com/deadxfire/Rinswa-browser)
 [![Platform](https://img.shields.io/badge/platform-Windows_x64-blue?style=for-the-badge&logo=windows)](https://github.com/deadxfire/Rinswa-browser)
 [![License](https://img.shields.io/badge/license-MPL_2.0-blueviolet?style=for-the-badge)](LICENSE)
-[![Adblocker](https://img.shields.io/badge/adblocker-Rinswa_Shields_Built--in-red?style=for-the-badge&logo=shield)](https://github.com/deadxfire/Rinswa-browser)
+[![Compiler](https://img.shields.io/badge/compiler-GN_%26_Ninja-red?style=for-the-badge&logo=ninja)](https://gn.googlesource.com/gn)
 
-[Features](#key-features) • [Architecture](#repository-structure) • [Quick Launch](#quick-launch) • [Building from Source](#building-from-source) • [Native C++ Build](docs/CHROMIUM_SOURCE_BUILD.md) • [Privacy Policy](#privacy--security-first) • [License](#license)
+[Features](#key-features) • [Architecture](#repository-structure) • [Building from Source](#building-from-source) • [Build Walkthrough](docs/CHROMIUM_BUILD_WALKTHROUGH.md) • [Privacy Policy](#privacy--security-first) • [License](#license)
 
 ---
 
@@ -22,43 +22,35 @@ Developed and maintained by **[Arindam Makar](https://github.com/deadxfire)**
 
 ## Overview
 
-**Rinswa Browser (Chromium Edition)** is the Chromium counterpart to the original Gecko-based Rinswa Browser. Engineered for power users who value aesthetic refinement, absolute privacy, and uncompromised performance, Rinswa Chromium combines the raw speed, WebGPU capabilities, and web compatibility of the modern Chromium rendering engine (Blink & V8) with Rinswa's signature **Cyber-Glass** visual theme, native **Rinswa Shields** ad and tracker blocking, and intelligent **Smart Tab & Clean Tabs** management.
+**Rinswa Browser (Chromium Edition)** is the native Chromium counterpart to the original Gecko-based Rinswa Browser. Built directly from the official Google Chromium C++ source tree using **GN** and **Ninja**, Rinswa completely removes sponsored telemetry, invasive data collection, and Google sync services, replacing them with a sleek **Cyber-Glass** visual theme, hardware-accelerated Blink rendering, proprietary media playback, and native ad blocking.
 
 ---
 
 ## Key Features
 
 ### 🎨 Cyber-Glass & Multicolour Ribbon UI
-- **Signature Visual Identity:** Designed with a vibrant, translucent glass aesthetic, custom Windows 11 titlebar and controls, and the signature Rinswa glossy multicolour ribbon emblem.
-- **Modern Tabstrip & Omnibar:** Streamlined tabs with ribbon accents, smart autocomplete omnibar supporting DuckDuckGo, Google, Brave, and Bing, and real-time loading progress animations.
-- **Alpine Sunset Dynamic New Tab:** High-resolution dynamic backgrounds crafted for new tab experiences with ambient clock, greeting, customizable speed dial shortcuts, and live privacy widgets.
+- **Signature Visual Identity:** Designed with a vibrant, translucent glass aesthetic, custom window controls, and the signature Rinswa glossy multicolour ribbon emblem.
+- **Modern Tabstrip & Navigation:** Streamlined tabs, refined omnibar, and responsive UI micro-animations tailored for Windows 11.
+- **Alpine Sunset Theme & Wallpapers:** High-resolution dynamic backgrounds crafted for new tab and start experiences.
 
 ### 🛡️ Privacy & Security First
-- **Zero Hidden Telemetry:** De-Googled command-line flags disable Google cloud sync, background networking, breakpad crash reports, and remote metrics at engine level.
+- **Zero Hidden Telemetry:** All internal Google telemetry, metrics services, and crash reports to external servers are neutralized at compile time via `config/args.gn`.
 - **No Sponsored Content:** Absolutely no sponsored tiles, sponsored shortcuts, activity stream ads, or affiliate link injection.
-- **Strict Anti-Tracking:** Strict third-party cookie isolation and tracking prevention enabled out-of-the-box.
-- **HTTPS-First Enforcement:** Automatically prioritizes encrypted connections across all web navigation.
+- **Strict Anti-Tracking:** Third-party cookie isolation and fingerprinting protection enforced out of the box.
+- **HTTPS-First Enforcement:** Encrypted connections prioritized across all web navigation.
 
-### ⚡ Built-in Rinswa Shields Adblocking
-- **Native Network-Level Filtering:** Intercepts web requests before they load, neutralizing advertisement networks, analytics beacons, cryptocurrency miners, and telemetry trackers.
-- **Interactive Shields Dashboard:** Live stats on trackers blocked, ads neutralized, and connection encryption status right from the toolbar.
+### ⚡ Out-of-the-Box Native Ad Blocking
+- **Pre-Integrated uBlock Origin:** Bundled directly into the distribution and enterprise policy definitions, providing instant, lightweight, and effective ad and tracker blocking on first launch.
 
 ### 📑 Native Smart Tab Management & Clean Tabs
-- **Automatic Tab Categorization:** Organizes tabs automatically into structured categories:
-  - **Work / Dev:** GitHub, GitLab, Stack Overflow, MDN, Laravel, Vercel, Figma, Jira
-  - **Shopping:** Amazon, Flipkart, eBay, Walmart, shopping carts
-  - **Personal:** Gmail, Reddit, Twitter/X, Discord, Telegram, WhatsApp
-  - **Media & Streaming:** YouTube, Spotify, Netflix, Twitch
-  - **Docs & Research:** Wikipedia, Arxiv, Google Scholar, Medium
-- **Duplicate-Tab Detection:** Automatically highlights duplicate URLs and paths across open tabs.
-- **Inactive Tab Hibernation (Sleeping Tabs):** Unloads inactive background tabs to drop RAM consumption by up to 80% while preserving tab history and state.
-- **Smart Workspaces:** Save any set of tabs as a persistent workspace and restore it with one click.
-- **Signature "Clean Tabs" Engine:** 1-click automated audit and cleanup that closes duplicate clones and suspends idle tabs instantly.
+- **Automatic Tab Grouping:** Automatically categorizes tabs into Work/Dev, Shopping, Personal, Media & Streaming, and Docs & Research.
+- **Duplicate-Tab Detection:** Identifies exact URL clones across open tabs.
+- **Sleeping Tabs:** Proactively hibernates inactive background tabs to drop RAM usage.
 
-### 🚀 Cutting-Edge Engine Performance
-- **Chromium / Blink Rendering Engine:** Full support for modern HTML5, CSS3, WebAssembly, WebGPU, and modern web applications.
-- **Google V8 JavaScript Engine:** Industry-leading execution speed and JIT optimization.
-- **Process Sandboxing:** Process isolation architecture ensuring untrusted sites cannot access data across tabs.
+### 🚀 Real Chromium Engine Performance
+- **Full Chromium C++ Engine (Blink & V8):** Compiled directly with Visual Studio 2022 C++ and Ninja for raw native execution speed.
+- **Proprietary Media Support:** Full hardware-accelerated playback for H.264, AAC, MP4, and Widevine DRM.
+- **Process Sandboxing:** Complete site isolation architecture ensuring secure, isolated tab execution.
 
 ---
 
@@ -66,72 +58,82 @@ Developed and maintained by **[Arindam Makar](https://github.com/deadxfire)**
 
 ```
 BrowserCromium/
-├── branding/                     # Rinswa brand identity, icons, logos, and emblems
-│   ├── assets/                   # Raw vector logos and icon assets
-│   ├── icons/                    # Multi-resolution Windows .ico and PNG icons
-│   └── wallpaper-alpine.png      # Alpine Sunset wallpaper
-├── src/                          # Browser source tree
-│   ├── main/                     # Chromium main process & lifecycle
-│   │   └── index.js              # De-googled flags, shields filter, window controls
-│   ├── preload/                  # Secure IPC context bridge
-│   │   └── index.js              # Safe window, tab, settings, and shield APIs
-│   ├── renderer/                 # Cyber-Glass browser shell UI
-│   │   ├── css/                  # cyber-glass.css, browser-shell.css, smart-tabs.css, shields.css
-│   │   ├── js/                   # app.js, tab-manager.js, navigation.js, smart-tabs.js, shields.js
-│   │   └── index.html            # Main browser window & tab host
-│   └── pages/                    # Internal browser pages
-│       ├── newtab/               # Alpine Sunset New Tab page
-│       └── settings/             # Cyber-Glass browser settings center
-├── native-engine/                # Native C++ Chromium GN/Ninja build overlay
-│   ├── gn/args.gn                # Production release GN configuration flags
-│   ├── patches/                  # De-googling and privacy source patches
-│   └── docs/                     # Full native Chromium compilation guide
-├── Build-Rinswa-Chromium.bat     # One-click Windows build & packaging script
-├── Start-Rinswa-Chromium.bat     # One-click instant launch script
-├── rinswa-version.txt            # Application version string (1.0.6)
-├── LICENSE                       # Mozilla Public License Version 2.0
-└── README.md                     # Project documentation
+├── config/                                 # GN build configurations
+│   └── args.gn                             # Windows x64 release build configuration (proprietary codecs, zero telemetry)
+├── branding/                               # Rinswa brand identity, icons, logos, and emblems
+│   ├── chromium-overlay/                   # Native Chromium source tree overlay
+│   │   ├── chrome/app/theme/chromium/      # Icons, ribbons, logos replacing default branding
+│   │   ├── chrome/installer/windows/       # Installer bitmaps and manifests
+│   │   └── components/version_info/        # Product version headers (v1.0.6)
+│   ├── wizHeader.bmp                       # Windows setup header bitmap
+│   └── wallpaper-alpine.png                # Alpine Sunset dynamic wallpaper
+├── patches/                                # Native C++ source patches
+│   ├── 0001-rinswa-branding-and-metadata.patch
+│   ├── 0002-disable-telemetry-and-cloud-sync.patch
+│   ├── 0003-enable-cyberglass-accent-and-dark-theme.patch
+│   └── 0004-default-privacy-preferences.patch
+├── ui/                                     # Cyber-Glass Native Theme & WebUI customizations
+│   └── newtab/                             # Alpine Sunset dynamic New Tab page overlay
+├── scripts/                                # Automated build orchestration scripts
+│   └── prepare-rinswa-overlay.py           # Automated branding & customization injector
+├── docs/                                   # Architectural & build guides
+│   └── CHROMIUM_BUILD_WALKTHROUGH.md       # Comprehensive build walkthrough
+├── Setup-Build-Environment.bat             # One-click Visual Studio & depot_tools setup
+├── Fetch-Chromium-Source.bat               # One-click source tree downloader (fetch --no-history)
+├── Build-Rinswa-Chromium.bat               # One-click master Windows compiler (GN + Ninja)
+├── Start-Rinswa-Chromium.bat               # Quick launcher for compiled binary
+├── rinswa-version.txt                      # Application version string (1.0.6)
+├── LICENSE                                 # Mozilla Public License Version 2.0
+└── README.md                               # Project documentation
 ```
-
----
-
-## Quick Launch
-
-To run Rinswa Chromium immediately:
-
-1. Double-click **`Start-Rinswa-Chromium.bat`** (or run `npm start` in PowerShell / Command Prompt).
-2. The browser launches instantly with the full Cyber-Glass UI, real Chromium rendering, and Alpine Sunset New Tab experience!
 
 ---
 
 ## Building from Source
 
-### One-Click Build & Packaging
+### Prerequisites
+1. **Windows 10 / 11 (64-bit)**
+2. **Visual Studio 2022 Community / Professional** (Desktop development with C++ workload and Windows 10/11 SDK)
+3. **Google depot_tools** (Automated setup via `Setup-Build-Environment.bat`)
+4. At least **100 GB** of free SSD storage
 
-The simplest way to package Rinswa Chromium into a standalone Windows distribution:
+### Quick Build (One-Click)
 
-1. Double-click **`Build-Rinswa-Chromium.bat`**
-2. The automated pipeline will:
-   - Verify Node.js and Chromium runtime libraries.
-   - Run syntax and architecture checks across all JavaScript subsystems.
-   - Package the standalone Windows application.
+The build pipeline mirrors the workflow of Rinswa Gecko:
 
-### Monolithic C++ Chromium Source Build
+1. **Step 1: Set Up Toolchain**
+   Double-click **`Setup-Build-Environment.bat`** to configure Google `depot_tools` and verify your Visual Studio C++ compiler.
 
-For compiling directly from the Google Chromium C++ source tree with Google `depot_tools` and Ninja, see the comprehensive **[Chromium Source Build Guide](docs/CHROMIUM_SOURCE_BUILD.md)**.
+2. **Step 2: Fetch Chromium Source**
+   Double-click **`Fetch-Chromium-Source.bat`** to check out the modern Chromium C++ source tree into `chromium\src`.
+
+3. **Step 3: Compile & Package**
+   Double-click **`Build-Rinswa-Chromium.bat`**. The automated pipeline will:
+   - Inject Rinswa branding assets, ribbons, and multi-resolution `.ico` files.
+   - Apply `config/args.gn` and native C++ privacy patches.
+   - Compile the full Chromium engine using parallel Ninja compilation threads (`-j16`).
+   - Package the standalone release installer (`Rinswa.Setup.v1.0.6.exe`) into `dist\installer\`.
+
+---
+
+## Release Outputs
+
+Once compiled, build artifacts are located in:
+- **Standalone Installer:** `dist\installer\Rinswa.Setup.v1.0.6.exe`
+- **Portable Distribution:** `chromium\src\out\RinswaRelease\chrome.exe`
 
 ---
 
 ## Privacy & Security
 
 Rinswa's default network policy ensures complete user sovereignty:
-- **No telemetry transmission:** Telemetry endpoints, Google crash reporting, and tracking pings are stripped.
+- **No telemetry transmission:** External metrics servers, Google crash reports, and domain reliability pings are disabled at engine level.
 - **Zero user profiling:** No browsing patterns or history are monitored or externalized.
-- **Ad & Tracker Neutralization:** Network requests matching ad and tracking patterns are dropped before DNS resolution.
+- **SafeBrowsing protection:** Uses local threat blocklists without sending browsing URLs to cloud servers.
 
 ---
 
 ## License
 
 Developed by **[Arindam Makar](https://github.com/deadxfire)**.  
-Licensed under the **Mozilla Public License Version 2.0 (MPL-2.0)**.
+Licensed under the **Mozilla Public License Version 2.0 (MPL-2.0)** and the **Chromium 3-Clause BSD License**.

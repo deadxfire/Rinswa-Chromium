@@ -1,0 +1,11 @@
+--- a/chrome/common/chrome_version.h.in
++++ b/chrome/common/chrome_version.h.in
+@@ -10,6 +10,11 @@
+ #define PRODUCT_NAME "Rinswa Browser"
+ #define PRODUCT_VERSION "@MAJOR@.@MINOR@.@BUILD@.@PATCH@"
+ #define LAST_CHANGE "@LASTCHANGE@"
++#define RINSWA_VERSION "1.0.6"
++#define RINSWA_AUTHOR "Arindam Makar"
++#define RINSWA_HOMEPAGE "https://github.com/deadxfire/Rinswa-browser"
+ 
+ #endif  // CHROME_COMMON_CHROME_VERSION_H_IN_

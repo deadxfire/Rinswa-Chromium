@@ -1,0 +1,16 @@
+// Copyright 2026 Arindam Makar. All rights reserved.
+// Use of this source code is governed by an MPL-2.0 / BSD-style license.
+
+#ifndef COMPONENTS_VERSION_INFO_VERSION_INFO_VALUES_H_
+#define COMPONENTS_VERSION_INFO_VERSION_INFO_VALUES_H_
+
+#define PRODUCT_NAME "Rinswa Browser"
+#define PRODUCT_SHORT_NAME "Rinswa"
+#define PRODUCT_VERSION "@MAJOR@.@MINOR@.@BUILD@.@PATCH@"
+#define LAST_CHANGE "@LASTCHANGE@"
+#define IS_OFFICIAL_BUILD @OFFICIAL_BUILD@
+
+#define RINSWA_VERSION "1.0.6"
+#define RINSWA_AUTHOR "Arindam Makar"
+
+#endif  // COMPONENTS_VERSION_INFO_VERSION_INFO_VALUES_H_

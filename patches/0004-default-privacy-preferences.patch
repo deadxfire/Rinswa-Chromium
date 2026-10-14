@@ -1,0 +1,8 @@
+--- a/chrome/browser/prefs/chrome_pref_service_factory.cc
++++ b/chrome/browser/prefs/chrome_pref_service_factory.cc
+@@ -190,6 +190,10 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
+   // Enforce Rinswa privacy defaults
++  registry->RegisterBooleanPref("signin.allowed", false);
++  registry->RegisterBooleanPref("spellcheck.use_spelling_service", false);
++  registry->RegisterIntegerPref("default_search_provider.data", 1);
+ }

@@ -1,0 +1,9 @@
+--- a/ui/color/color_id.h
++++ b/ui/color/color_id.h
+@@ -85,6 +85,10 @@
+   kColorFrameActive,
+   kColorFrameInactive,
++  // Rinswa Cyber-Glass Signature Ribbon Accents
++  kColorRinswaRibbonBlue,
++  kColorRinswaRibbonPurple,
++  kColorRinswaRibbonRed,
