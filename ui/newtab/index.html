@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body data-theme="#cbd8e1">
   <!-- Background Wallpaper Layer -->
@@ -19,64 +19,111 @@
   <!-- Topmost Browser Chrome (Matching Screenshot) -->
   <header class="browser-topbar" id="browser-topbar">
     <div class="topbar-row">
-      <!-- Upper Left Corner: Rinswa Logo Button (Click opens Menu) -->
+      <!-- Upper Left Corner: Rinswa Logo Button (Click opens Chromium Menu) -->
       <div class="rinswa-menu-trigger-wrapper">
-        <button id="btn-rinswa-logo" class="rinswa-logo-btn" title="Rinswa Browser Menu & Themes">
+        <button id="btn-rinswa-logo" class="rinswa-logo-btn" title="Rinswa Browser Menu (Click to open Chromium Menu)">
           <img src="Glossy Multicolour Ribbon R Emblem.png" alt="Rinswa Emblem" class="rinswa-emblem-icon">
         </button>
 
-        <!-- Dropdown Menu that appears on click -->
-        <div class="rinswa-dropdown-menu" id="rinswa-dropdown-menu">
-          <div class="menu-header">
-            <img src="Glossy Multicolour Ribbon R Emblem.png" alt="Rinswa" class="menu-logo-small">
-            <div>
-              <div class="menu-brand-name">Rinswa Browser</div>
-              <div class="menu-brand-sub">Chromium Edition &bull; v1.0.6</div>
+        <!-- Authentic Chromium Menu (Opens on clicking Rinswa Logo) -->
+        <div class="chromium-app-menu" id="chromium-app-menu">
+          <!-- Profile / Browser Info -->
+          <div class="menu-profile-card">
+            <img src="Glossy Multicolour Ribbon R Emblem.png" alt="Rinswa" class="profile-logo">
+            <div class="profile-info">
+              <div class="profile-name">Rinswa Browser</div>
+              <div class="profile-sub">Chromium Edition &bull; v1.0.6</div>
             </div>
           </div>
 
-          <div class="menu-section-label">INTERFACE THEME COLOUR</div>
-          <!-- 8 Theme Color Swatches Specified by User -->
-          <div class="theme-palette-grid" id="theme-palette-grid">
-            <button class="theme-chip active" data-color="#cbd8e1" style="--chip-color:#cbd8e1;" title="Soft Slate (#cbd8e1)"></button>
-            <button class="theme-chip" data-color="#e4d6d8" style="--chip-color:#e4d6d8;" title="Rose Mist (#e4d6d8)"></button>
-            <button class="theme-chip" data-color="#ccdfd8" style="--chip-color:#ccdfd8;" title="Sage Mint (#ccdfd8)"></button>
-            <button class="theme-chip" data-color="#c7c7c7" style="--chip-color:#c7c7c7;" title="Clean Ash (#c7c7c7)"></button>
-            <button class="theme-chip" data-color="#e1d0d1" style="--chip-color:#e1d0d1;" title="Dusty Lilac (#e1d0d1)"></button>
-            <button class="theme-chip" data-color="#d1d1db" style="--chip-color:#d1d1db;" title="Periwinkle Ice (#d1d1db)"></button>
-            <button class="theme-chip" data-color="#e5d4ce" style="--chip-color:#e5d4ce;" title="Peach Sand (#e5d4ce)"></button>
-            <button class="theme-chip" data-color="#e6decb" style="--chip-color:#e6decb;" title="Warm Linen (#e6decb)"></button>
-          </div>
+          <div class="menu-divider"></div>
+
+          <!-- Primary Navigation -->
+          <button class="chromium-menu-item" id="cmenu-new-tab">
+            <span class="cmenu-icon">➕</span>
+            <span class="cmenu-label">New Tab</span>
+            <kbd>Ctrl+T</kbd>
+          </button>
+          <button class="chromium-menu-item" id="cmenu-new-window">
+            <span class="cmenu-icon">🪟</span>
+            <span class="cmenu-label">New Window</span>
+            <kbd>Ctrl+N</kbd>
+          </button>
+          <button class="chromium-menu-item" id="cmenu-incognito">
+            <span class="cmenu-icon">🕵️</span>
+            <span class="cmenu-label">New Incognito Window</span>
+            <kbd>Ctrl+Shift+N</kbd>
+          </button>
 
           <div class="menu-divider"></div>
 
-          <div class="menu-section-label">WALLPAPER</div>
-          <div class="menu-item wallpaper-item active" data-wp="meadow">
-            <span>🌄 Dreamy Meadow Mist (Default)</span>
-          </div>
-          <div class="menu-item wallpaper-item" data-wp="softblue">
-            <span>🌊 Soft Blue Mist</span>
-          </div>
-          <div class="menu-item wallpaper-item" data-wp="solid">
-            <span>🎨 Minimal Theme Color Only</span>
-          </div>
+          <!-- History & Downloads & Bookmarks -->
+          <button class="chromium-menu-item" id="cmenu-history">
+            <span class="cmenu-icon">🕒</span>
+            <span class="cmenu-label">History</span>
+            <kbd>Ctrl+H</kbd>
+          </button>
+          <button class="chromium-menu-item" id="cmenu-downloads">
+            <span class="cmenu-icon">📥</span>
+            <span class="cmenu-label">Downloads</span>
+            <kbd>Ctrl+J</kbd>
+          </button>
+          <button class="chromium-menu-item" id="cmenu-bookmarks">
+            <span class="cmenu-icon">⭐</span>
+            <span class="cmenu-label">Bookmarks & Lists</span>
+            <kbd>Ctrl+Shift+O</kbd>
+          </button>
+          <button class="chromium-menu-item" id="cmenu-extensions">
+            <span class="cmenu-icon">🧩</span>
+            <span class="cmenu-label">Extensions</span>
+            <span class="cmenu-arrow">›</span>
+          </button>
 
           <div class="menu-divider"></div>
 
-          <button class="menu-item" id="menu-new-tab-action">
-            <span>➕ New Tab</span> <kbd>Ctrl+T</kbd>
+          <!-- Zoom Row -->
+          <div class="chromium-menu-row">
+            <span class="row-label">Zoom</span>
+            <div class="zoom-stepper">
+              <button class="zoom-btn" id="zoom-dec" title="Zoom Out">-</button>
+              <span class="zoom-val" id="zoom-val">100%</span>
+              <button class="zoom-btn" id="zoom-inc" title="Zoom In">+</button>
+              <button class="zoom-fullscreen" id="zoom-fullscreen" title="Fullscreen (F11)">⛶</button>
+            </div>
+          </div>
+
+          <!-- Print & Find -->
+          <button class="chromium-menu-item" id="cmenu-print">
+            <span class="cmenu-icon">🖨️</span>
+            <span class="cmenu-label">Print...</span>
+            <kbd>Ctrl+P</kbd>
           </button>
-          <button class="menu-item" id="menu-bookmarks-action">
-            <span>⭐ Bookmarks</span> <kbd>Ctrl+B</kbd>
+          <button class="chromium-menu-item" id="cmenu-find">
+            <span class="cmenu-icon">🔍</span>
+            <span class="cmenu-label">Find in Page...</span>
+            <kbd>Ctrl+F</kbd>
           </button>
-          <button class="menu-item" id="menu-history-action">
-            <span>🕒 History</span> <kbd>Ctrl+H</kbd>
+
+          <div class="menu-divider"></div>
+
+          <!-- Rinswa Settings (Where Wallpaper / Image Showing Option and Themes live) -->
+          <button class="chromium-menu-item highlight-settings" id="cmenu-settings">
+            <span class="cmenu-icon">⚙️</span>
+            <span class="cmenu-label"><strong>Rinswa Settings</strong></span>
+            <span class="badge-pill">Themes & Wallpaper</span>
           </button>
-          <button class="menu-item" id="menu-downloads-action">
-            <span>📥 Downloads</span> <kbd>Ctrl+J</kbd>
+
+          <button class="chromium-menu-item" id="cmenu-about">
+            <span class="cmenu-icon">ℹ️</span>
+            <span class="cmenu-label">About Rinswa Browser</span>
           </button>
-          <button class="menu-item" id="menu-settings-action">
-            <span>⚙️ Settings</span>
+
+          <div class="menu-divider"></div>
+
+          <button class="chromium-menu-item" id="cmenu-exit">
+            <span class="cmenu-icon">🚪</span>
+            <span class="cmenu-label">Exit</span>
+            <kbd>Alt+F4</kbd>
           </button>
         </div>
       </div>
@@ -193,6 +240,133 @@
       </div>
     </div>
   </main>
+
+  <!-- ==========================================================================
+       Rinswa Settings Center (Found in Settings - Contains Image Showing Option & Themes)
+       ========================================================================== -->
+  <div class="settings-modal-backdrop" id="settings-modal-backdrop">
+    <div class="settings-modal-card" id="settings-modal-card">
+      <div class="settings-modal-header">
+        <div class="settings-header-brand">
+          <img src="Glossy Multicolour Ribbon R Emblem.png" alt="Rinswa" class="settings-header-logo">
+          <div>
+            <h2 class="settings-modal-title">Rinswa Settings</h2>
+            <p class="settings-modal-subtitle">Appearance, Wallpapers & Theme Customization</p>
+          </div>
+        </div>
+        <button class="settings-close-btn" id="btn-close-settings" title="Close Settings">✕</button>
+      </div>
+
+      <div class="settings-modal-body">
+        <!-- 1. Interface Theme Color Section (8 specified colors matching screenshot) -->
+        <section class="settings-group">
+          <div class="group-header">
+            <h3 class="section-caps-title">INTERFACE THEME COLOUR</h3>
+          </div>
+
+          <div class="theme-swatches-grid" id="settings-theme-grid">
+            <button class="theme-swatch-btn active" data-color="#cbd8e1" style="background-color: #cbd8e1;" title="Soft Slate (#cbd8e1)">
+              <span class="swatch-check">✓</span>
+            </button>
+            <button class="theme-swatch-btn" data-color="#e4d6d8" style="background-color: #e4d6d8;" title="Rose Mist (#e4d6d8)">
+              <span class="swatch-check">✓</span>
+            </button>
+            <button class="theme-swatch-btn" data-color="#ccdfd8" style="background-color: #ccdfd8;" title="Sage Mint (#ccdfd8)">
+              <span class="swatch-check">✓</span>
+            </button>
+            <button class="theme-swatch-btn" data-color="#c7c7c7" style="background-color: #c7c7c7;" title="Clean Ash (#c7c7c7)">
+              <span class="swatch-check">✓</span>
+            </button>
+            <button class="theme-swatch-btn" data-color="#e1d0d1" style="background-color: #e1d0d1;" title="Dusty Lilac (#e1d0d1)">
+              <span class="swatch-check">✓</span>
+            </button>
+            <button class="theme-swatch-btn" data-color="#d1d1db" style="background-color: #d1d1db;" title="Periwinkle Ice (#d1d1db)">
+              <span class="swatch-check">✓</span>
+            </button>
+            <button class="theme-swatch-btn" data-color="#e5d4ce" style="background-color: #e5d4ce;" title="Peach Sand (#e5d4ce)">
+              <span class="swatch-check">✓</span>
+            </button>
+            <button class="theme-swatch-btn" data-color="#e6decb" style="background-color: #e6decb;" title="Warm Linen (#e6decb)">
+              <span class="swatch-check">✓</span>
+            </button>
+          </div>
+        </section>
+
+        <div class="settings-section-divider"></div>
+
+        <!-- 2. Image Showing Option (Wallpaper / Background image) -->
+        <section class="settings-group">
+          <div class="group-header">
+            <h3 class="section-caps-title">WALLPAPER</h3>
+          </div>
+
+          <!-- Wallpaper Option Items (Matching screenshot) -->
+          <div class="wallpaper-list" id="wallpaper-list">
+            <div class="wallpaper-item-row active" data-wp="meadow">
+              <span class="wp-icon">🌄</span>
+              <span class="wp-label">Dreamy Meadow Mist (Default)</span>
+            </div>
+
+            <div class="wallpaper-item-row" data-wp="softblue">
+              <span class="wp-icon">🌊</span>
+              <span class="wp-label">Soft Blue Mist</span>
+            </div>
+
+            <div class="wallpaper-item-row" data-wp="solid">
+              <span class="wp-icon">🎨</span>
+              <span class="wp-label">Minimal Theme Color Only</span>
+            </div>
+          </div>
+
+          <!-- Image Showing Option Toggle (User: "image showing option will be found in Rinswa settings") -->
+          <div class="setting-toggle-row">
+            <div class="toggle-text-block">
+              <div class="toggle-label">Show Background Wallpaper Image</div>
+              <div class="toggle-sub">Toggle image display on or off for the new tab canvas</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="toggle-show-image" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </section>
+
+        <div class="settings-section-divider"></div>
+
+        <!-- 3. Search Engine Preference -->
+        <section class="settings-group">
+          <div class="group-header">
+            <h3 class="group-title">🔍 Default Search Engine</h3>
+            <p class="group-desc">Used when submitting queries via the central floating search bar.</p>
+          </div>
+
+          <div class="search-engines-row">
+            <label class="engine-radio-card">
+              <input type="radio" name="search-engine" value="duckduckgo" checked>
+              <span class="radio-label">🦆 DuckDuckGo (Privacy First)</span>
+            </label>
+            <label class="engine-radio-card">
+              <input type="radio" name="search-engine" value="google">
+              <span class="radio-label">🔍 Google</span>
+            </label>
+            <label class="engine-radio-card">
+              <input type="radio" name="search-engine" value="brave">
+              <span class="radio-label">🦁 Brave Search</span>
+            </label>
+            <label class="engine-radio-card">
+              <input type="radio" name="search-engine" value="bing">
+              <span class="radio-label">🌐 Microsoft Bing</span>
+            </label>
+          </div>
+        </section>
+      </div>
+
+      <div class="settings-modal-footer">
+        <span class="footer-note">Rinswa Browser &bull; Developed by Arindam Makar</span>
+        <button class="settings-done-btn" id="btn-save-close-settings">Done</button>
+      </div>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
