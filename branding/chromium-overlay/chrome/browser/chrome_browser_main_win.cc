@@ -840,8 +840,9 @@ void ChromeBrowserMainPartsWin::PostBrowserStart() {
         }
       }));
 
-  // Rinswa Browser: Trigger background GitHub release auto-update check
-  RinswaTriggerBackgroundUpdateCheck();
+  // Rinswa Browser: Background update checks disabled at startup to prevent
+  // silent installer execution from terminating active browsing sessions.
+  // Updates are checked on-demand in chrome://settings/help.
 
 #if BUILDFLAG(GOOGLE_CHROME_BRANDING)
   // os_update_handler is a separate process, so mirror the status of the

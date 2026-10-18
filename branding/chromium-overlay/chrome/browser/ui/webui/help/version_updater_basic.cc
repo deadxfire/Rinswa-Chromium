@@ -366,7 +366,10 @@ UpdateCheckResultInfo PerformUpdateWorkflow(
     return result;
   }
 
-  std::string current_ver = "1.0.6";
+#ifndef RINSWA_VERSION
+#define RINSWA_VERSION "1.0.7"
+#endif
+  std::string current_ver = RINSWA_VERSION;
   if (!IsRemoteVersionNewer(current_ver, *tag_name)) {
     return result;
   }
@@ -408,9 +411,9 @@ UpdateCheckResultInfo PerformUpdateWorkflow(
     return result;
   }
 
-  if (LaunchSilentInstaller(installer_path)) {
-    result.update_installed = true;
-  }
+  // Update installer is downloaded and ready for the user. Do not execute LaunchSilentInstaller
+  // while the browser session is active, as Inno Setup force-closes running processes.
+  result.update_installed = true;
 
   return result;
 }
@@ -473,17 +476,13 @@ class VersionUpdaterBasic : public VersionUpdater {
 };
 
 void RinswaBackgroundUpdateTask() {
-  PerformUpdateWorkflow(base::DoNothing());
+  // Silent background auto-updates that kill running processes are intentionally disabled.
 }
 
 }  // namespace
 
 void RinswaTriggerBackgroundUpdateCheck() {
-  base::ThreadPool::PostDelayedTask(
-      FROM_HERE,
-      {base::MayBlock(), base::TaskPriority::BEST_EFFORT},
-      base::BindOnce(&RinswaBackgroundUpdateTask),
-      base::Seconds(25));
+  // No-op to preserve active user browsing sessions.
 }
 
 std::unique_ptr<VersionUpdater> VersionUpdater::Create(

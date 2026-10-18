@@ -20,7 +20,7 @@ def get_version():
     if os.path.exists(VERSION_FILE):
         with open(VERSION_FILE, "r", encoding="utf-8") as f:
             return f.read().strip()
-    return "1.0.6"
+    return "1.0.7"
 
 def prepare_overlay(chromium_src_dir):
     version = get_version()

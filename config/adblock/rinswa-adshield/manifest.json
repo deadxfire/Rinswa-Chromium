@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Rinswa Shield & Video Popout",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Native built-in adblocker, YouTube ad defuser, and Universal Video Popout (Picture-in-Picture) for Rinswa Browser.",
   "author": "Arindam Makar",
   "action": {
