@@ -569,7 +569,7 @@ ntp-action-chips,
 }
 
 #searchboxContainer:focus-within {
-  background: #ffffff;
+  background: #fff;
   border-color: rgba(255, 255, 255, 1);
   box-shadow: 0 25px 60px -8px rgba(15, 23, 42, 0.14),
               0 0 48px 6px var(--ntp-theme-glow-color, rgba(0, 210, 255, 0.62)),
@@ -605,7 +605,7 @@ ntp-action-chips,
 }
 
 .btn-shortcuts-toggle:hover {
-  background: #ffffff;
+  background: #fff;
   color: #0284c7;
   border-color: rgba(0, 210, 255, 0.6);
   box-shadow: 0 4px 14px rgba(0, 210, 255, 0.25);
@@ -632,7 +632,7 @@ ntp-action-chips,
   border-radius: 50%;
   background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 50%, #6366f1 100%);
   border: none;
-  color: #ffffff;
+  color: #fff;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(0, 210, 255, 0.45);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);

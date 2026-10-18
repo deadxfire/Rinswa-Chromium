@@ -11,7 +11,7 @@ os.makedirs(DIST_PORT, exist_ok=True)
 
 # 1. Package Installer
 installer_src = os.path.join(SRC, "mini_installer.exe")
-installer_dest = os.path.join(DIST_INS, "Rinswa.Setup.v1.0.6.exe")
+installer_dest = os.path.join(DIST_INS, "Rinswa.Setup.v1.0.7.exe")
 shutil.copy2(installer_src, installer_dest)
 print(f"Installer packaged: {installer_dest} ({os.path.getsize(installer_dest)} bytes)")
 

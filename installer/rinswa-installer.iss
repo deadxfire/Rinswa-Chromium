@@ -5,7 +5,7 @@
 ; ==============================================================================
 
 #define AppName "Rinswa Browser"
-#define AppVersion "1.0.6"
+#define AppVersion "1.0.7"
 #define AppPublisher "Arindam Makar"
 #define AppURL "https://github.com/deadxfire/Rinswa-browser"
 #define AppExeName "Rinswa.exe"

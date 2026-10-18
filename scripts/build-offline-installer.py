@@ -25,7 +25,7 @@ def get_app_version():
             v = f.read().strip()
             if v:
                 return v
-    return "1.0.6"
+    return "1.0.7"
 
 def find_iscc():
     candidates = [
