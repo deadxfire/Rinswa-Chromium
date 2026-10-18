@@ -316,6 +316,7 @@
     });
   }
 
+
   if (cmenuNewWindow) {
     cmenuNewWindow.addEventListener('click', () => {
       chromiumMenu.classList.remove('show');
@@ -496,7 +497,6 @@
     if (toggleShowImage) toggleShowImage.checked = showImageEnabled;
   } catch (err) {}
   updateWallpaperDisplay();
-
   try {
     const storedEngine = localStorage.getItem('rinswa_search_engine');
     if (storedEngine) {
@@ -506,4 +506,132 @@
     }
   } catch (err) {}
 
+  // Floating Rinswa Theme Button & Dome Click
+  const floatingBtn = document.getElementById('floating-btn-settings');
+  if (floatingBtn) {
+    floatingBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openSettings();
+    });
+  }
+
+  const domeEmblem = document.querySelector('.center-dome-emblem');
+  if (domeEmblem) {
+    domeEmblem.style.cursor = 'pointer';
+    domeEmblem.addEventListener('click', () => {
+      openSettings();
+    });
+  }
+
+  // Bottom Default Browser Banner
+  const btnDismissBanner = document.getElementById('btn-dismiss-banner');
+  const bottomBanner = document.getElementById('bottom-default-banner');
+  if (btnDismissBanner && bottomBanner) {
+    btnDismissBanner.addEventListener('click', () => {
+      bottomBanner.style.display = 'none';
+    });
+  }
+
+  // ==========================================================================
+  // 10. Organic Fluid Flowing Canvas Animation Engine
+  // ==========================================================================
+  function initFluidAnimation() {
+    const canvas = document.getElementById('ntpFluidCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = 0;
+    let height = 0;
+    let dpr = window.devicePixelRatio || 1;
+
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // 6 Fluid Viscous Stream Nodes with organic trajectories
+    const streams = [
+      { x: 0.2, y: 0.3, r: 0.38, vx: 0.0004, vy: 0.0003, color1: 'rgba(0, 240, 255, 0.45)', color2: 'rgba(6, 182, 212, 0)' },
+      { x: 0.8, y: 0.7, r: 0.42, vx: -0.0003, vy: -0.0004, color1: 'rgba(139, 92, 246, 0.40)', color2: 'rgba(99, 102, 241, 0)' },
+      { x: 0.5, y: 0.4, r: 0.35, vx: 0.0005, vy: -0.0002, color1: 'rgba(16, 185, 129, 0.35)', color2: 'rgba(20, 184, 166, 0)' },
+      { x: 0.3, y: 0.8, r: 0.40, vx: -0.0002, vy: 0.0004, color1: 'rgba(59, 130, 246, 0.40)', color2: 'rgba(37, 99, 235, 0)' },
+      { x: 0.7, y: 0.2, r: 0.36, vx: 0.0003, vy: -0.0005, color1: 'rgba(236, 72, 153, 0.30)', color2: 'rgba(244, 63, 94, 0)' },
+      { x: 0.5, y: 0.85, r: 0.32, vx: -0.0004, vy: -0.0003, color1: 'rgba(0, 210, 255, 0.35)', color2: 'rgba(0, 180, 255, 0)' }
+    ];
+
+    let mouseX = 0.5;
+    let mouseY = 0.5;
+    let targetMouseX = 0.5;
+    let targetMouseY = 0.5;
+
+    window.addEventListener('mousemove', (e) => {
+      targetMouseX = e.clientX / width;
+      targetMouseY = e.clientY / height;
+    });
+
+    let time = 0;
+    function render() {
+      if (document.hidden) {
+        requestAnimationFrame(render);
+        return;
+      }
+
+      time += 0.004;
+      mouseX += (targetMouseX - mouseX) * 0.03;
+      mouseY += (targetMouseY - mouseY) * 0.03;
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.globalCompositeOperation = 'screen';
+
+      const minDim = Math.min(width, height);
+
+      streams.forEach((s, idx) => {
+        // Fluid harmonic wave offset
+        const waveX = Math.sin(time * 1.2 + idx * 1.5) * 0.06;
+        const waveY = Math.cos(time * 0.9 + idx * 1.3) * 0.06;
+        const mouseInfluence = (1 - Math.hypot(s.x - mouseX, s.y - mouseY)) * 0.03;
+
+        s.x += s.vx + waveX * 0.01 + (mouseX - 0.5) * mouseInfluence;
+        s.y += s.vy + waveY * 0.01 + (mouseY - 0.5) * mouseInfluence;
+
+        // Toroidal viscous wrap
+        if (s.x < -0.2) s.x = 1.2;
+        if (s.x > 1.2) s.x = -0.2;
+        if (s.y < -0.2) s.y = 1.2;
+        if (s.y > 1.2) s.y = -0.2;
+
+        const posX = (s.x + waveX) * width;
+        const posY = (s.y + waveY) * height;
+        const radius = (s.r + Math.sin(time * 2 + idx) * 0.04) * minDim * 1.4;
+
+        const grad = ctx.createRadialGradient(posX, posY, 0, posX, posY, Math.max(1, radius));
+        grad.addColorStop(0, s.color1);
+        grad.addColorStop(0.55, s.color1.replace(/[\d\.]+\)$/, '0.15)'));
+        grad.addColorStop(1, s.color2);
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(posX, posY, radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      requestAnimationFrame(render);
+    }
+
+    render();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFluidAnimation);
+  } else {
+    initFluidAnimation();
+  }
+
 })();
+

@@ -204,20 +204,27 @@ if exist "%SRC_DIR%\out\RinswaRelease\mini_installer.exe" (
     echo Standalone installer created: dist\installer\Rinswa.Setup.v%RINSWA_VERSION%.exe
 )
 
-if exist "%SRC_DIR%\out\RinswaRelease\chrome.exe" (
-    copy /y "%SRC_DIR%\out\RinswaRelease\chrome.exe" "dist\portable\chrome.exe" >nul 2>&1
+if exist "%SRC_DIR%\out\RinswaRelease\Rinswa.exe" (
+    copy /y "%SRC_DIR%\out\RinswaRelease\Rinswa.exe" "dist\portable\Rinswa.exe" >nul 2>&1
+    copy /y "%SRC_DIR%\out\RinswaRelease\Rinswa.exe" "dist\portable\chrome.exe" >nul 2>&1
     if exist "%SRC_DIR%\out\RinswaRelease\initial_preferences" copy /y "%SRC_DIR%\out\RinswaRelease\initial_preferences" "dist\portable\initial_preferences" >nul 2>&1
     if exist "%SRC_DIR%\out\RinswaRelease\adblock" xcopy /e /i /y "%SRC_DIR%\out\RinswaRelease\adblock" "dist\portable\adblock" >nul 2>&1
-    echo Portable distribution packaged into: dist\portable\
+    echo Portable distribution packaged into: dist\portable\Rinswa.exe
+) else if exist "%SRC_DIR%\out\RinswaRelease\chrome.exe" (
+    copy /y "%SRC_DIR%\out\RinswaRelease\chrome.exe" "dist\portable\chrome.exe" >nul 2>&1
+    copy /y "%SRC_DIR%\out\RinswaRelease\chrome.exe" "dist\portable\Rinswa.exe" >nul 2>&1
+    if exist "%SRC_DIR%\out\RinswaRelease\initial_preferences" copy /y "%SRC_DIR%\out\RinswaRelease\initial_preferences" "dist\portable\initial_preferences" >nul 2>&1
+    if exist "%SRC_DIR%\out\RinswaRelease\adblock" xcopy /e /i /y "%SRC_DIR%\out\RinswaRelease\adblock" "dist\portable\adblock" >nul 2>&1
+    echo Portable distribution packaged into: dist\portable\Rinswa.exe
 )
 
 echo.
 echo =======================================================
-echo               CHROMIUM BUILD COMPLETE!
+echo               RINSWA BROWSER BUILD COMPLETE!
 echo =======================================================
 echo.
-echo Standalone Installer: dist\installer\
-echo Portable Binary:      %SRC_DIR%\out\RinswaRelease\chrome.exe
+echo Standalone Installer: dist\installer\Rinswa.Setup.v%RINSWA_VERSION%.exe
+echo Portable Binary:      dist\portable\Rinswa.exe
 echo.
 if exist "dist\installer" (
     explorer "dist\installer"

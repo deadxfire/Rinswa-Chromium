@@ -1,0 +1,62 @@
+<!doctype html>
+<html dir="$i18n{textdirection}" lang="$i18n{language}" $i18n{roundedIconsAttribute} $i18n{webuiRoundedIconsAttribute}>
+  <head>
+    <meta charset="utf-8">
+    <title>$i18n{title}</title>
+    <style>
+      :root {
+        --ntp-bg-color: $i18n{backgroundColor};
+        --ntp-theme-color: #00e5ff;
+        --ntp-theme-glow-color: rgba(0, 229, 255, 0.65);
+        --ntp-theme-ambient-color: rgba(0, 229, 255, 0.28);
+      }
+
+      *, *::before, *::after {
+        -webkit-user-drag: none;
+      }
+
+      html, body {
+        user-select: none;
+        -webkit-user-select: none;
+        cursor: default;
+        background-color: var(--ntp-bg-color, $i18n{backgroundColor});
+        background-image: radial-gradient(ellipse at 50% 45%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.12) 55%, rgba(0, 0, 0, 0.05) 100%);
+        background-attachment: fixed;
+        transition: background-color 0.35s ease;
+        margin: 0;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+
+      input, textarea, [contenteditable] {
+        user-select: text;
+        -webkit-user-select: text;
+        cursor: text;
+      }
+
+      #backgroundImage {
+        border: none;
+        height: 100%;
+        pointer-events: none;
+        position: fixed;
+        top: 0;
+        visibility: hidden;
+        width: 100%;
+      }
+
+      [show-background-image] #backgroundImage {
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe id="backgroundImage" src="$i18nRaw{backgroundImageUrl}"></iframe>
+    <ntp-app></ntp-app>
+    <script type="module" src="new_tab_page.js"></script>
+    <link rel="stylesheet" href="chrome://resources/css/text_defaults_md.css">
+    <link rel="stylesheet" href="chrome://theme/colors.css?sets=ui,chrome">
+    <link rel="stylesheet" href="shared_vars.css">
+  </body>
+</html>

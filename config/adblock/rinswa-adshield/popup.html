@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 280px;
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #111827;
+      color: #f3f4f6;
+      border-radius: 12px;
+      box-sizing: border-box;
+      user-select: none;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .version {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #10b981;
+    }
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 8px 10px;
+      border-radius: 8px;
+    }
+    .feature-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #e5e7eb;
+    }
+    .feature-status {
+      color: #10b981;
+      font-weight: 500;
+      font-size: 11px;
+    }
+    .btn-newtab {
+      display: block;
+      width: 100%;
+      padding: 8px 0;
+      text-align: center;
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-newtab:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="rinswa-logo.png" class="logo" alt="Rinswa">
+    <div>
+      <div class="title">Rinswa Shield</div>
+      <div class="version">v1.0.6 • Built-in Engine</div>
+    </div>
+  </div>
+  <div class="status-badge">
+    <span class="status-dot"></span>
+    Shields Active & Protecting
+  </div>
+  <div class="feature-list">
+    <div class="feature-item">
+      <span class="feature-name">📺 YouTube Ad Defuser</span>
+      <span class="feature-status">Active</span>
+    </div>
+    <div class="feature-item">
+      <span class="feature-name">🍿 Video Popout (PiP)</span>
+      <span class="feature-status">Ready</span>
+    </div>
+    <div class="feature-item">
+      <span class="feature-name">🛡️ Tracker Protection</span>
+      <span class="feature-status">Active</span>
+    </div>
+  </div>
+  <button class="btn-newtab" id="open-newtab">Open Rinswa Startpage</button>
+  <script>
+    document.getElementById('open-newtab').addEventListener('click', () => {
+      chrome.tabs.create({ url: 'chrome://newtab' });
+    });
+  </script>
+</body>
+</html>

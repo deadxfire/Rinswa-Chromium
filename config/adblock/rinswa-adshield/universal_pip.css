@@ -1,10 +1,8 @@
 /* Rinswa Browser - Universal Cyber-Glass Video Popout (PiP) Styles */
 
 .rinswa-pip-overlay-btn {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    z-index: 2147483647;
+    position: fixed !important;
+    z-index: 2147483647 !important;
     display: inline-flex;
     align-items: center;
     gap: 7px;
@@ -29,9 +27,11 @@
 }
 
 .rinswa-pip-overlay-btn.rinswa-visible {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0) scale(1);
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    display: inline-flex !important;
+    transform: translateY(0) scale(1) !important;
 }
 
 .rinswa-pip-overlay-btn:hover {

@@ -17,6 +17,13 @@ out/
 # Logs & temp files
 *.log
 .tmp/
+temp_*/
+screenshot_*.png
+final_ntp_*.png
+ntp_verified.png
+scripts/snap_*.py
+scripts/verify_*.py
+scripts/inspect_pill.py
 Thumbs.db
 Desktop.ini
 .DS_Store

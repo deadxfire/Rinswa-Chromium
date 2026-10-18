@@ -1,0 +1,67 @@
+diff --git a/tools/typescript/validate_tsconfig.py b/tools/typescript/validate_tsconfig.py
+index 16ba0268ff..061f4be98f 100644
+--- a/tools/typescript/validate_tsconfig.py
++++ b/tools/typescript/validate_tsconfig.py
+@@ -286,13 +286,20 @@ def validateRootDir(root_dir, gen_dir, root_gen_dir, is_ios):
+ def validateDefinitionDeps(
+   definitions_files, target_path, gen_dir, root_gen_dir, definitions
+ ):
+-  # Root gen dir relative to the current working directory (essentially 'gen')
+-  gen_dir_from_build = os.path.normpath(
+-    os.path.join(gen_dir, root_gen_dir)
++  real_src = os.path.realpath(_SRC_DIR).replace('\\', '/')
++  real_cwd = os.path.realpath(_CWD).replace('\\', '/')
++  real_gen_dir = os.path.realpath(os.path.join(_CWD, gen_dir)).replace('\\', '/')
++  real_root_gen = os.path.realpath(
++    os.path.join(real_gen_dir, root_gen_dir)
+   ).replace('\\', '/')
+ 
++  # Root gen dir relative to the current working directory (essentially 'gen')
++  gen_dir_from_build = os.path.relpath(real_root_gen, real_cwd).replace(
++    '\\', '/'
++  )
++
+   def getPathFromCwd(exception):
+-    return os.path.relpath(os.path.join(_SRC_DIR, exception), _CWD).replace(
++    return os.path.relpath(os.path.join(real_src, exception), real_cwd).replace(
+       '\\', '/'
+     )
+ 
+@@ -307,21 +314,32 @@ def validateDefinitionDeps(
+     'tools/typescript/tests/',
+   ]
+   exceptions = [getPathFromCwd(e) for e in exceptions_list]
+-  definitions_normalized = [d.replace('\\', '/') for d in definitions]
++  definitions_normalized = [
++    os.path.normpath(d).replace('\\', '/') for d in definitions
++  ]
+ 
+   missing_inputs = []
+   for f in definitions_files:
++    real_f = os.path.realpath(f).replace('\\', '/')
+     # File path relative to the current working directory.
+-    f_from_cwd = os.path.relpath(f, _CWD).replace('\\', '/')
++    f_from_cwd = os.path.relpath(real_f, real_cwd).replace('\\', '/')
+     is_gen_file = f_from_cwd.startswith(gen_dir_from_build)
+-    f_from_gen = os.path.relpath(f, gen_dir).replace('\\', '/')
++    f_from_gen = os.path.normpath(
++      os.path.relpath(real_f, real_gen_dir)
++    ).replace('\\', '/')
++    rel_f_src = os.path.relpath(real_f, real_src).replace('\\', '/')
++
++    is_exception = any(
++      f_from_cwd.startswith(exception) for exception in exceptions
++    ) or any(rel_f_src.startswith(exception) for exception in exceptions_list)
++
+     if (
+       not is_gen_file
+       and f_from_gen not in definitions_normalized
+-      and not any(f_from_cwd.startswith(exception) for exception in exceptions)
++      and not is_exception
+     ):
+       missing_inputs.append(
+-        os.path.relpath(f_from_cwd, _SRC_DIR).replace('\\', '/')
++        os.path.relpath(real_f, real_src).replace('\\', '/')
+       )
+ 
+   if not missing_inputs:

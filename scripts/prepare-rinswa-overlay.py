@@ -43,6 +43,11 @@ def prepare_overlay(chromium_src_dir):
 
     # 2. Deploy Branding Assets (Icons, Bitmaps, Logos)
     print(">> [2/5] Injecting Rinswa branding, ribbons, and multi-res icons...")
+    deploy_script = os.path.join(PROJECT_DIR, "scripts", "deploy-rinswa-logos.py")
+    if os.path.exists(deploy_script):
+        import subprocess
+        subprocess.run([sys.executable, deploy_script], cwd=PROJECT_DIR, check=False)
+
     for root, dirs, files in os.walk(BRANDING_OVERLAY):
         rel_path = os.path.relpath(root, BRANDING_OVERLAY)
         target_root = os.path.join(chromium_src_dir, rel_path)
@@ -98,14 +103,44 @@ def prepare_overlay(chromium_src_dir):
         shutil.copy2(init_prefs_src, os.path.join(out_dir, "initial_preferences"))
         print("   Deployed initial_preferences (uBlock Origin auto-installed by default).")
 
-    # Deploy full adblock directory (including rinswa-adshield extension)
-    adblock_src = os.path.join(PROJECT_DIR, "config", "adblock")
-    adblock_dest = os.path.join(out_dir, "adblock")
-    if os.path.isdir(adblock_src):
-        if os.path.exists(adblock_dest):
-            shutil.rmtree(adblock_dest)
-        shutil.copytree(adblock_src, adblock_dest)
-        print("   Deployed Rinswa AdShield extension & 250,000+ domain blocklist.")
+    # Deploy Rinswa AdShield & Universal PiP extension
+    adshield_src = os.path.join(PROJECT_DIR, "config", "adblock", "rinswa-adshield")
+    if os.path.exists(adshield_src):
+        for sub in [os.path.join(out_dir, "resources", "rinswa-adshield"), os.path.join(out_dir, "rinswa-adshield")]:
+            if os.path.exists(sub):
+                shutil.rmtree(sub, ignore_errors=True)
+            shutil.copytree(adshield_src, sub)
+        print("   Deployed Rinswa AdShield & Video Popout extension to resources/rinswa-adshield.")
+
+    # 7. Ensure TypeScript NTFS junction compatibility patch is applied
+    validate_ts = os.path.join(chromium_src_dir, "tools", "typescript", "validate_tsconfig.py")
+    if os.path.exists(validate_ts):
+        with open(validate_ts, "r", encoding="utf-8") as f:
+            v_content = f.read()
+        if "real_src = os.path.realpath" not in v_content:
+            print(">> [7/7] Applying NTFS junction compatibility patch to validate_tsconfig.py...")
+            patch_file = os.path.join(PROJECT_DIR, "patches", "0005-fix-windows-junction-typescript-deps.patch")
+            if os.path.exists(patch_file):
+                import subprocess
+                subprocess.run(["git", "apply", patch_file], cwd=chromium_src_dir, check=False)
+                print("   Applied 0005-fix-windows-junction-typescript-deps.patch successfully.")
+        else:
+            print(">> [7/7] TypeScript NTFS junction compatibility patch already active.")
+
+    # 8. Ensure theme locking and branding patch is applied
+    theme_file = os.path.join(chromium_src_dir, "chrome", "browser", "themes", "theme_service.cc")
+    if os.path.exists(theme_file):
+        with open(theme_file, "r", encoding="utf-8") as f:
+            t_content = f.read()
+        if "Rinswa Browser: Chrome theme engine" not in t_content:
+            print(">> [8/8] Applying patch 0006 (theme locking & branding)...")
+            patch_file = os.path.join(PROJECT_DIR, "patches", "0006-theme-locking-branding.patch")
+            if os.path.exists(patch_file):
+                import subprocess
+                subprocess.run(["git", "apply", "--ignore-whitespace", patch_file], cwd=chromium_src_dir, check=False)
+                print("   Applied 0006-theme-locking-branding.patch successfully.")
+        else:
+            print(">> [8/8] Theme locking & branding patches already active.")
 
     print("\nSUCCESS: Rinswa customizations applied cleanly to Chromium source tree!")
     return True

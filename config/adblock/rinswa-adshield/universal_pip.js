@@ -23,12 +23,33 @@
         </svg>
     `;
 
-    // Track attached videos
-    const trackedVideos = new WeakSet();
+    // Recursively collect all video elements, including those inside Shadow DOM
+    function getAllVideos(root = document) {
+        let vids = [];
+        try {
+            vids = Array.from(root.querySelectorAll('video'));
+            const allElements = root.querySelectorAll('*');
+            for (const el of allElements) {
+                if (el.shadowRoot) {
+                    vids = vids.concat(getAllVideos(el.shadowRoot));
+                }
+            }
+        } catch (_) {}
+        return vids;
+    }
+
+    function unblockPiP(video) {
+        if (!video) return;
+        if (video.hasAttribute('disablePictureInPicture')) {
+            video.removeAttribute('disablePictureInPicture');
+        }
+        video.disablePictureInPicture = false;
+    }
 
     // Toggle Picture-in-Picture for a video
     async function togglePiP(video) {
         if (!video) return;
+        unblockPiP(video);
         try {
             if (document.pictureInPictureElement === video) {
                 await document.exitPictureInPicture();
@@ -49,58 +70,79 @@
         }
     }
 
-    // Attach Cyber-Glass Popout button to a video element
-    function attachPiPOverlay(video) {
-        if (!video || trackedVideos.has(video)) return;
-        // Ignore tiny utility videos, ads, or audio-only streams
-        if (video.offsetWidth < 140 && video.offsetHeight < 90 && !video.paused) {
-            return;
+    // Global floating PiP button that positions over the active hovered video
+    let floatingPiPBtn = null;
+    let currentHoveredVideo = null;
+    let hideTimer = null;
+
+    function getOrCreateFloatingButton() {
+        if (floatingPiPBtn && document.documentElement.contains(floatingPiPBtn)) {
+            return floatingPiPBtn;
         }
-        trackedVideos.add(video);
+        floatingPiPBtn = document.createElement('div');
+        floatingPiPBtn.className = 'rinswa-pip-overlay-btn';
+        floatingPiPBtn.innerHTML = `${PIP_SVG_HTML}<span>Pop Out</span>`;
+        floatingPiPBtn.title = 'Rinswa Video Popout / Picture-in-Picture (Alt+P)';
 
-        // Find best container
-        const container = video.parentElement || video;
-        const computedPos = window.getComputedStyle(container).position;
-        if (computedPos === 'static') {
-            container.style.position = 'relative';
-        }
-
-        // Create overlay button
-        const btn = document.createElement('div');
-        btn.className = 'rinswa-pip-overlay-btn';
-        btn.innerHTML = `${PIP_SVG_HTML}<span>Pop Out</span>`;
-        btn.title = 'Rinswa Native Popout (Alt+P)';
-
-        btn.addEventListener('click', (e) => {
+        floatingPiPBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            togglePiP(video);
+            if (currentHoveredVideo) {
+                togglePiP(currentHoveredVideo);
+            }
         });
 
-        container.appendChild(btn);
+        floatingPiPBtn.addEventListener('mouseenter', () => {
+            clearTimeout(hideTimer);
+            floatingPiPBtn.classList.add('rinswa-visible');
+        });
 
-        // Hover handling
-        let hideTimeout = null;
+        floatingPiPBtn.addEventListener('mouseleave', () => {
+            hideTimer = setTimeout(() => {
+                if (floatingPiPBtn) floatingPiPBtn.classList.remove('rinswa-visible');
+            }, 600);
+        });
 
-        function showButton() {
-            if (document.fullscreenElement) {
-                btn.classList.remove('rinswa-visible');
-                return;
-            }
-            btn.classList.add('rinswa-visible');
-            clearTimeout(hideTimeout);
-            hideTimeout = setTimeout(() => {
-                btn.classList.remove('rinswa-visible');
-            }, 2500);
+        (document.body || document.documentElement).appendChild(floatingPiPBtn);
+        return floatingPiPBtn;
+    }
+
+    // Track mouse over videos across document
+    document.addEventListener('mousemove', (e) => {
+        if (document.fullscreenElement) {
+            if (floatingPiPBtn) floatingPiPBtn.classList.remove('rinswa-visible');
+            return;
         }
 
-        container.addEventListener('mouseenter', showButton);
-        container.addEventListener('mousemove', showButton);
-        container.addEventListener('mouseleave', () => {
-            clearTimeout(hideTimeout);
-            btn.classList.remove('rinswa-visible');
-        });
-    }
+        const videos = getAllVideos(document);
+        let matchedVideo = null;
+
+        for (const v of videos) {
+            const rect = v.getBoundingClientRect();
+            // Visible video on screen
+            if (rect.width >= 140 && rect.height >= 80) {
+                if (e.clientX >= rect.left && e.clientX <= rect.right &&
+                    e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                    matchedVideo = v;
+                    break;
+                }
+            }
+        }
+
+        if (matchedVideo) {
+            unblockPiP(matchedVideo);
+            currentHoveredVideo = matchedVideo;
+            const btn = getOrCreateFloatingButton();
+            const vRect = matchedVideo.getBoundingClientRect();
+            btn.style.top = `${Math.max(12, vRect.top + 14)}px`;
+            btn.style.left = `${Math.max(12, vRect.right - 120)}px`;
+            btn.classList.add('rinswa-visible');
+            clearTimeout(hideTimer);
+            hideTimer = setTimeout(() => {
+                btn.classList.remove('rinswa-visible');
+            }, 3500);
+        }
+    }, { passive: true });
 
     // Dedicated YouTube Player Control Bar Integration
     function injectYouTubeNativeButton() {
@@ -110,8 +152,8 @@
 
         const ytBtn = document.createElement('button');
         ytBtn.className = 'ytp-button rinswa-ytp-pip-btn';
-        ytBtn.title = 'Picture in picture (Alt+P)';
-        ytBtn.setAttribute('aria-label', 'Picture in picture (Alt+P)');
+        ytBtn.title = 'Picture-in-Picture (Alt+P)';
+        ytBtn.setAttribute('aria-label', 'Picture-in-Picture (Alt+P)');
         ytBtn.innerHTML = PIP_SVG_HTML;
 
         ytBtn.addEventListener('click', (e) => {
@@ -123,38 +165,26 @@
             }
         });
 
-        // Insert before fullscreen or at the beginning of right controls
+        const sizeBtn = rightControls.querySelector('.ytp-size-button');
         const fullscreenBtn = rightControls.querySelector('.ytp-fullscreen-button');
-        if (fullscreenBtn) {
+        if (sizeBtn) {
+            rightControls.insertBefore(ytBtn, sizeBtn);
+        } else if (fullscreenBtn) {
             rightControls.insertBefore(ytBtn, fullscreenBtn);
         } else {
             rightControls.appendChild(ytBtn);
         }
     }
 
-    // Scan for all video elements
-    function scanVideos() {
-        const videos = document.querySelectorAll('video');
-        for (const v of videos) {
-            attachPiPOverlay(v);
-        }
-        injectYouTubeNativeButton();
-    }
-
-    // Fast initial scan & dynamic DOM observer
-    scanVideos();
-    const observer = new MutationObserver(scanVideos);
-    observer.observe(document.documentElement || document.body, {
-        childList: true,
-        subtree: true
-    });
+    // Dynamic scanner
+    setInterval(injectYouTubeNativeButton, 800);
+    window.addEventListener('yt-navigate-finish', injectYouTubeNativeButton);
 
     // Universal Shortcut: Alt + P
     window.addEventListener('keydown', (e) => {
         if (e.altKey && (e.key === 'p' || e.key === 'P')) {
             e.preventDefault();
-            const videos = Array.from(document.querySelectorAll('video'));
-            // Prioritize playing video
+            const videos = getAllVideos(document);
             const playing = videos.find(v => !v.paused && !v.ended && v.readyState > 2);
             const target = playing || videos[0];
             if (target) {
@@ -166,9 +196,8 @@
     // Auto-PiP on Tab Switch
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
-            const playingVideo = Array.from(document.querySelectorAll('video')).find(v => !v.paused && !v.ended && v.readyState > 2);
+            const playingVideo = getAllVideos(document).find(v => !v.paused && !v.ended && v.readyState > 2);
             if (playingVideo && !document.pictureInPictureElement) {
-                // Auto pop out if user leaves the tab with an active video
                 togglePiP(playingVideo);
             }
         }

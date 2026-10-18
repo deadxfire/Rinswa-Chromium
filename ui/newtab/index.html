@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>New Tab - Rinswa Browser</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -195,27 +196,37 @@
 
   <!-- Central Canvas -->
   <main class="center-stage">
-    <!-- Center Acrylic Dome Emblem (As seen in screenshot) -->
-    <div class="center-dome-emblem">
-      <div class="dome-shape"></div>
+    <!-- Fluid Chosen Theme Animated Backdrop -->
+    <div class="ntp-fluid-backdrop" aria-hidden="true">
+      <canvas id="ntpFluidCanvas" class="ntp-fluid-canvas"></canvas>
+      <div class="ntp-fluid-wave wave-1"></div>
+      <div class="ntp-fluid-wave wave-2"></div>
+      <div class="ntp-fluid-wave wave-3"></div>
+      <div class="ntp-fluid-wave wave-4"></div>
+      <div class="ntp-fluid-stream stream-1"></div>
+      <div class="ntp-fluid-stream stream-2"></div>
     </div>
 
-    <!-- Center Floating Search Card (Exact design from screenshot) -->
-    <div class="search-floating-card">
+    <!-- Center Floating Search Card Wrapper with Radiant Glow -->
+    <div class="search-card-glow-wrapper">
+      <div class="search-glow-aura" aria-hidden="true"></div>
+      <div class="search-glow-backdrop" aria-hidden="true"></div>
+      <div class="search-glow-shimmer" aria-hidden="true"></div>
+      <div class="search-floating-card">
       <!-- Top Row: Search Icon + Search Input -->
       <div class="search-input-row">
         <svg class="search-glass-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.2" fill="none">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="main-search-input" placeholder="Search the web or type a URL..." autocomplete="off" spellcheck="false" autofocus>
+        <input type="text" id="main-search-input" placeholder="Ask anything or type a URL..." autocomplete="off" spellcheck="false" autofocus>
       </div>
 
       <!-- Bottom Row: Add Tabs / Files & Submit Arrow Button -->
       <div class="search-bottom-row">
-        <button class="btn-add-tabs" id="btn-add-tabs" title="Add quick tabs, bookmarks or files">
+        <button class="btn-add-tabs" id="btn-add-tabs" title="Quick Shortcuts">
           <span class="plus-icon">＋</span>
-          <span>Add tabs or files</span>
+          <span>Shortcuts</span>
         </button>
 
         <button class="btn-submit-arrow" id="btn-submit-arrow" title="Search or Go">
@@ -226,6 +237,7 @@
         </button>
       </div>
     </div>
+  </div>
 
     <!-- Add Tabs & Shortcuts Modal / Flyout -->
     <div class="add-tabs-flyout" id="add-tabs-flyout">
@@ -240,6 +252,24 @@
       </div>
     </div>
   </main>
+
+  <!-- Top Right Floating Button for Rinswa Theme & Appearance -->
+  <aside class="top-floating-actions">
+    <button id="floating-btn-settings" class="floating-pill-btn" title="Customize Themes & Wallpaper">
+      <img src="Glossy Multicolour Ribbon R Emblem.png" alt="Rinswa" class="floating-emblem">
+      <span>Rinswa Theme</span>
+    </button>
+  </aside>
+
+  <!-- Bottom Default Browser Banner (Matching Screenshot) -->
+  <footer class="bottom-banner-bar" id="bottom-default-banner">
+    <div class="banner-content">
+      <span class="banner-text">Rinswa works best as your default browser</span>
+      <span class="banner-sub">Try it for a week</span>
+      <button class="banner-action-btn" id="btn-set-default">Set Rinswa as default</button>
+      <button class="banner-dismiss-btn" id="btn-dismiss-banner">✕</button>
+    </div>
+  </footer>
 
   <!-- ==========================================================================
        Rinswa Settings Center (Found in Settings - Contains Image Showing Option & Themes)

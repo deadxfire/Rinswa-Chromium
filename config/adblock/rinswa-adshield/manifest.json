@@ -4,28 +4,26 @@
   "version": "1.0.6",
   "description": "Native built-in adblocker, YouTube ad defuser, and Universal Video Popout (Picture-in-Picture) for Rinswa Browser.",
   "author": "Arindam Makar",
-  "permissions": [
-    "declarativeNetRequest"
-  ],
+  "action": {
+    "default_title": "Rinswa Shield & Video Popout",
+    "default_popup": "popup.html",
+    "default_icon": "rinswa-logo.png"
+  },
+  "icons": {
+    "128": "rinswa-logo.png"
+  },
   "host_permissions": [
     "*://*/*"
   ],
-  "declarative_net_request": {
-    "rule_resources": [
-      {
-        "id": "ruleset_1",
-        "enabled": true,
-        "path": "rules.json"
-      }
-    ]
-  },
   "content_scripts": [
     {
       "matches": [
         "*://*.youtube.com/*",
         "*://*.youtube-nocookie.com/*"
       ],
-      "js": ["youtube_defuser.js"],
+      "js": [
+        "youtube_defuser.js"
+      ],
       "run_at": "document_start",
       "all_frames": true,
       "world": "MAIN"
@@ -34,10 +32,15 @@
       "matches": [
         "*://*/*"
       ],
-      "js": ["universal_pip.js"],
-      "css": ["universal_pip.css"],
+      "js": [
+        "universal_pip.js"
+      ],
+      "css": [
+        "universal_pip.css"
+      ],
       "run_at": "document_idle",
       "all_frames": true
     }
-  ]
+  ],
+  "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8ZtnRT6hXtjtG5XM7TcKakx9J+37WuK1g1cx2IOh9enerA5VlQBcoHSpGOx5xzebQLxzUtURmNQXSrhOac/z9SVUhHrXrtnBS4ftIUfagTDroowh1b23pIusQaLKprhkS8iFr0nw887BV+yh9LQ7J90qDNzukXn0ss6ZVMxgcaQIDAQAB"
 }

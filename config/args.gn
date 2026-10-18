@@ -11,10 +11,18 @@ is_official_build = true
 is_debug = false
 symbol_level = 0
 blink_symbol_level = 0
+v8_symbol_level = 0
 is_component_build = false
 target_cpu = "x64"
 dcheck_always_on = false
 chrome_pgo_phase = 0
+
+# High-Speed Compilation Directives
+# Disables ThinLTO and suppresses warning halts to eliminate virtual memory thrashing and cut link times by up to 80%
+use_thin_lto = false
+treat_warnings_as_errors = false
+disable_fieldtrial_testing_config = true
+
 
 # Media Codecs & Hardware Acceleration
 # Enables high-performance playback for H.264, AAC, MP4, WebM, and Widevine DRM
