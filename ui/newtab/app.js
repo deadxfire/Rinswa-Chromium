@@ -279,6 +279,51 @@
     });
   }
 
+  // ==========================================================================
+  // Auto-Focus Cursor on Search Bar
+  // Automatically sets cursor when opening new tab, clicking new tab, or clicking on page
+  // ==========================================================================
+  function autoFocusSearchInput() {
+    if (searchInput) {
+      searchInput.focus();
+      try {
+        const val = searchInput.value || '';
+        if (typeof searchInput.setSelectionRange === 'function') {
+          searchInput.setSelectionRange(val.length, val.length);
+        }
+      } catch (err) {}
+    }
+  }
+
+  // Immediate and staggered focus on page load
+  autoFocusSearchInput();
+  setTimeout(autoFocusSearchInput, 60);
+  setTimeout(autoFocusSearchInput, 200);
+
+  // Focus whenever the tab or window becomes active
+  window.addEventListener('focus', autoFocusSearchInput);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      setTimeout(autoFocusSearchInput, 50);
+    }
+  });
+
+  // When clicking anywhere on the New Tab page (unless clicking an interactive element)
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (!target.closest('button, a, input, select, textarea, kbd, .chromium-app-menu, .settings-modal-card')) {
+      autoFocusSearchInput();
+    }
+  });
+
+  // When clicking specifically on the active tab element
+  const activeTabEl = document.querySelector('.active-tab');
+  if (activeTabEl) {
+    activeTabEl.addEventListener('click', () => {
+      autoFocusSearchInput();
+    });
+  }
+
   searchEngineRadios.forEach(radio => {
     radio.addEventListener('change', () => {
       try {
@@ -575,6 +620,16 @@
       targetMouseY = e.clientY / height;
     });
 
+    // Floating ethereal stardust particles
+    const sparkles = Array.from({ length: 24 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      size: Math.random() * 2.2 + 0.8,
+      speedY: Math.random() * 0.0003 + 0.0001,
+      phase: Math.random() * Math.PI * 2,
+      hue: Math.random() > 0.5 ? 190 : 265
+    }));
+
     let time = 0;
     function render() {
       if (document.hidden) {
@@ -618,6 +673,18 @@
         ctx.fillStyle = grad;
         ctx.beginPath();
         ctx.arc(posX, posY, radius, 0, Math.PI * 2);
+        ctx.fill();
+      // Ethereal stardust particles for magical depth
+      sparkles.forEach((p) => {
+        p.y -= p.speedY;
+        if (p.y < 0) p.y = 1;
+        p.phase += 0.02;
+        const alpha = 0.2 + 0.35 * Math.sin(p.phase);
+        const px = p.x * width + Math.sin(time * 0.8 + p.phase) * 16;
+        const py = p.y * height;
+        ctx.fillStyle = `hsla(${p.hue}, 95%, 75%, ${alpha})`;
+        ctx.beginPath();
+        ctx.arc(px, py, p.size, 0, Math.PI * 2);
         ctx.fill();
       });
 

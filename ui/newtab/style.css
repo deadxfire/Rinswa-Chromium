@@ -496,20 +496,24 @@ html, body {
 }
 
 .dome-shape {
-  width: 58px;
-  height: 30px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(200, 230, 225, 0.45) 100%);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  width: 60px;
+  height: 32px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(220, 245, 255, 0.65) 50%, rgba(180, 230, 255, 0.35) 100%);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   border-bottom: none;
-  border-radius: 58px 58px 0 0;
-  box-shadow: 0 10px 25px rgba(100, 150, 140, 0.15), 0 0 12px rgba(255, 255, 255, 0.6) inset;
-  transition: var(--transition);
+  border-radius: 60px 60px 0 0;
+  box-shadow: 0 12px 30px rgba(0, 210, 255, 0.22),
+              0 0 16px rgba(255, 255, 255, 0.8) inset,
+              0 0 20px rgba(0, 240, 255, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .center-dome-emblem:hover .dome-shape {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 14px 30px rgba(100, 150, 140, 0.25);
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 18px 40px rgba(0, 210, 255, 0.38),
+              0 0 24px rgba(0, 240, 255, 0.6);
 }
 
 /* ==========================================================================
@@ -879,32 +883,34 @@ html, body {
 }
 
 /* ==========================================================================
-   Center Floating Search Card (Exact design from screenshot)
+   Center Floating Search Card (Ultra-Premium Cyber-Glass Design)
    ========================================================================== */
 .search-floating-card {
   width: 100%;
-  background: var(--bg-card);
-  backdrop-filter: blur(28px);
-  border: 1px solid rgba(255, 255, 255, 0.92);
-  border-radius: var(--radius-card);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 251, 255, 0.90) 100%);
+  backdrop-filter: blur(36px) saturate(190%);
+  -webkit-backdrop-filter: blur(36px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.98);
+  border-radius: 26px;
   padding: 16px 20px 14px 20px;
-  box-shadow: 0 12px 34px -8px rgba(0, 0, 0, 0.08),
-              0 0 28px -2px rgba(0, 210, 255, 0.38),
-              0 0 1px 1px rgba(255, 255, 255, 0.9) inset;
+  box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.09),
+              0 0 32px -4px rgba(0, 210, 255, 0.36),
+              inset 0 1.5px 2px rgba(255, 255, 255, 1),
+              inset 0 -1px 2px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
   gap: 14px;
-  transition: var(--transition);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   z-index: 2;
 }
 
 .search-floating-card:focus-within {
   background: #ffffff;
-  border-color: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 16px 44px -8px rgba(0, 0, 0, 0.12),
-              0 0 44px 4px rgba(0, 210, 255, 0.58),
-              0 0 1px 1px rgba(255, 255, 255, 1) inset;
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 25px 60px -8px rgba(15, 23, 42, 0.14),
+              0 0 48px 6px rgba(0, 210, 255, 0.62),
+              inset 0 1.5px 2px rgba(255, 255, 255, 1);
   transform: translateY(-2px);
 }
 
@@ -916,8 +922,16 @@ html, body {
 }
 
 .search-glass-icon {
-  color: #94a3b8;
+  color: #0284c7;
   flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(2, 132, 199, 0.3));
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.search-floating-card:focus-within .search-glass-icon {
+  color: #00d2ff;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.6));
 }
 
 #main-search-input {
@@ -925,14 +939,22 @@ html, body {
   border: none;
   outline: none;
   background: transparent;
-  font-size: 1.02rem;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
   font-family: inherit;
-  color: #1e293b;
+  color: #0f172a;
+  font-weight: 450;
 }
 
 #main-search-input::placeholder {
   color: #94a3b8;
   font-weight: 400;
+  letter-spacing: 0;
+  transition: color 0.2s ease;
+}
+
+#main-search-input:focus::placeholder {
+  color: #cbd5e1;
 }
 
 /* Bottom Row: Add Tabs / Files & Submit Arrow */
@@ -944,76 +966,98 @@ html, body {
 }
 
 .btn-add-tabs {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: transparent;
-  border: none;
-  color: #64748b;
-  font-size: 0.85rem;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #334155;
+  font-size: 0.84rem;
   font-weight: 500;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 8px;
-  transition: var(--transition);
+  padding: 6px 14px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
 }
 
 .btn-add-tabs:hover {
-  background: rgba(0, 0, 0, 0.04);
-  color: #1e293b;
+  background: #ffffff;
+  color: #0284c7;
+  border-color: rgba(0, 210, 255, 0.6);
+  box-shadow: 0 4px 14px rgba(0, 210, 255, 0.25);
+  transform: translateY(-1px);
 }
 
 .plus-icon {
   font-size: 0.95rem;
-  opacity: 0.7;
+  font-weight: 600;
+  color: #0284c7;
+  transition: transform 0.25s ease;
+}
+
+.btn-add-tabs:hover .plus-icon {
+  transform: rotate(90deg);
 }
 
 .btn-submit-arrow {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: #e2e8f0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 50%, #6366f1 100%);
   border: none;
-  color: #475569;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: var(--transition);
+  box-shadow: 0 4px 14px rgba(0, 210, 255, 0.45);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-submit-arrow:hover {
-  background: #cbd5e1;
-  color: #0f172a;
-  transform: translateY(-1px);
+  transform: scale(1.1) translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 210, 255, 0.7);
+  background: linear-gradient(135deg, #00e5ff 0%, #2563eb 50%, #7c3aed 100%);
+}
+
+.btn-submit-arrow:active {
+  transform: scale(0.96);
 }
 
 /* Add Tabs Flyout */
 .add-tabs-flyout {
   margin-top: 16px;
   width: 100%;
-  max-width: 560px;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 14px;
-  padding: 14px 18px;
+  max-width: 580px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 16px 20px;
   display: none;
   flex-direction: column;
-  gap: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-  animation: menuPop 0.18s ease;
+  gap: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), 0 0 24px rgba(0, 210, 255, 0.2);
+  animation: menuPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 20;
 }
 
 .add-tabs-flyout.show {
-  display: flex;
+  display: flex !important;
 }
 
 .flyout-title {
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  color: var(--fg-muted);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #64748b;
 }
 
 .flyout-grid {
@@ -1023,19 +1067,26 @@ html, body {
 }
 
 .flyout-chip {
-  padding: 6px 12px;
-  background: rgba(0, 0, 0, 0.04);
-  border-radius: var(--radius-full);
-  font-size: 0.82rem;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  font-size: 0.85rem;
   font-weight: 500;
-  color: var(--fg-main);
+  color: #1e293b;
   text-decoration: none;
-  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
 .flyout-chip:hover {
-  background: var(--theme-color);
-  color: #0f172a;
+  background: #ffffff;
+  color: #0284c7;
+  border-color: rgba(0, 210, 255, 0.7);
+  box-shadow: 0 6px 18px rgba(0, 210, 255, 0.25);
 }
 
 /* ==========================================================================

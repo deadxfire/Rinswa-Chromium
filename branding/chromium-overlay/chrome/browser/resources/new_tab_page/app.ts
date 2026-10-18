@@ -695,9 +695,38 @@ export class AppElement extends AppElementBase {
     if (this.composeButtonEnabled) {
       recordBoolean('NewTabPage.ComposeEntrypoint.Shown', true);
       this.pageHandler_.incrementComposeButtonShownCount();
-    }
-
     this.initializeContextMenuAnimationState_();
+
+    // Auto-focus search bar when new tab is created, focused, or clicked
+    const autoFocusSearchInput = () => {
+      try {
+        if (this.$.searchbox && typeof this.$.searchbox.focusInput === 'function') {
+          this.$.searchbox.focusInput();
+        }
+      } catch (err) {}
+    };
+    setTimeout(autoFocusSearchInput, 60);
+    setTimeout(autoFocusSearchInput, 250);
+
+    this.eventTracker_.add(window, 'focus', autoFocusSearchInput);
+    this.eventTracker_.add(document, 'visibilitychange', () => {
+      if (!document.hidden) {
+        setTimeout(autoFocusSearchInput, 50);
+      }
+    });
+
+    this.eventTracker_.add(this, 'click', (e: MouseEvent) => {
+      const path = e.composedPath();
+      const isInteractive = path.some((el: any) => {
+        const tag = el?.tagName?.toLowerCase();
+        return tag === 'button' || tag === 'a' || tag === 'input' || tag === 'cr-icon-button' ||
+               el?.id === 'btnShortcutsToggle' || el?.id === 'btnSearchSubmit' ||
+               el?.id === 'customizeButton';
+      });
+      if (!isInteractive) {
+        autoFocusSearchInput();
+      }
+    });
   }
 
   override disconnectedCallback() {
