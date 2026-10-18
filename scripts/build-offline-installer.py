@@ -116,8 +116,8 @@ def stage_distribution(src_dir, engine_ver):
                 return True
         return False
 
-    root_candidates = [chrome_bin, src_dir, installed_app, PORTABLE_DIR]
-    ver_candidates = [chrome_bin_ver, installed_ver, src_dir, PORTABLE_DIR]
+    root_candidates = [src_dir, chrome_bin, installed_app, PORTABLE_DIR]
+    ver_candidates = [src_dir, chrome_bin_ver, installed_ver, PORTABLE_DIR]
 
     # 1. Stage Root Executables & Preferences
     copy_first("Rinswa.exe", os.path.join(STAGE_DIR, "Rinswa.exe"), root_candidates)
