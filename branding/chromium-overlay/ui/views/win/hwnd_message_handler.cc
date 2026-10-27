@@ -411,60 +411,6 @@ class HWNDMessageHandler::ScopedRedrawLock {
   const bool should_lock_;
 };
 
-namespace {
-
-void ApplyAcrylicBackdrop(HWND hwnd) {
-  if (!hwnd) {
-    return;
-  }
-  MARGINS margins = {-1, -1, -1, -1};
-  DwmExtendFrameIntoClientArea(hwnd, &margins);
-
-  int backdrop = 3;  // DWMSBT_TRANSIENTWINDOW (Acrylic backdrop in Windows 11)
-  ::DwmSetWindowAttribute(hwnd, static_cast<DWMWINDOWATTRIBUTE>(38),
-                          &backdrop, sizeof(backdrop));
-
-  typedef enum _ACCENT_STATE {
-    ACCENT_DISABLED = 0,
-    ACCENT_ENABLE_GRADIENT = 1,
-    ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
-    ACCENT_ENABLE_BLURBEHIND = 3,
-    ACCENT_ENABLE_ACRYLICBLURBEHIND = 4,
-    ACCENT_INVALID_STATE = 5
-  } ACCENT_STATE;
-  typedef struct _ACCENT_POLICY {
-    ACCENT_STATE AccentState;
-    DWORD AccentFlags;
-    DWORD GradientColor;
-    DWORD AnimationId;
-  } ACCENT_POLICY;
-  typedef struct _WINDOWCOMPOSITIONATTRIBDATA {
-    DWORD Attrib;
-    PVOID pvData;
-    SIZE_T cbData;
-  } WINDOWCOMPOSITIONATTRIBDATA;
-  typedef BOOL(WINAPI * pfnSetWindowCompositionAttribute)(
-      HWND, WINDOWCOMPOSITIONATTRIBDATA*);
-
-  static auto set_window_composition_attribute =
-      reinterpret_cast<pfnSetWindowCompositionAttribute>(
-          ::GetProcAddress(::GetModuleHandleA("user32.dll"),
-                           "SetWindowCompositionAttribute"));
-  if (set_window_composition_attribute) {
-    ACCENT_POLICY policy = {};
-    policy.AccentState = ACCENT_ENABLE_ACRYLICBLURBEHIND;
-    policy.AccentFlags = 2;
-    policy.GradientColor = 0x01FFFFFF;
-    WINDOWCOMPOSITIONATTRIBDATA data = {};
-    data.Attrib = 19;  // WCA_ACCENT_POLICY
-    data.pvData = &policy;
-    data.cbData = sizeof(policy);
-    set_window_composition_attribute(hwnd, &data);
-  }
-}
-
-}  // namespace
-
 // static HWNDMessageHandler member initialization.
 base::LazyInstance<HWNDMessageHandler::FullscreenWindowMonitorMap>::
     DestructorAtExit HWNDMessageHandler::fullscreen_monitor_map_ =
@@ -887,9 +833,6 @@ void HWNDMessageHandler::Show(ui::mojom::WindowShowState show_state,
       native_show_state = SW_SHOWNORMAL;
       ::ShowWindow(hwnd(), native_show_state);
     }
-    if (is_translucent_) {
-      ApplyAcrylicBackdrop(hwnd());
-    }
   }
 
   // We need to explicitly activate the window if we've been shown with a state
@@ -1239,9 +1182,6 @@ bool HWNDMessageHandler::HasChildRenderingWindow() {
 
 void HWNDMessageHandler::set_is_translucent(bool is_translucent) {
   is_translucent_ = is_translucent;
-  if (is_translucent_ && hwnd()) {
-    ApplyAcrylicBackdrop(hwnd());
-  }
 }
 
 bool HWNDMessageHandler::is_translucent() const {
@@ -2008,8 +1948,6 @@ LRESULT HWNDMessageHandler::OnCreate(CREATESTRUCT* create_struct) {
     DwmExtendFrameIntoClientArea(hwnd(), &margins);
 
     ::SetProp(hwnd(), ui::kWindowTranslucent, reinterpret_cast<HANDLE>(1));
-
-    ApplyAcrylicBackdrop(hwnd());
   }
 
   if (base::win::GetVersion() >= base::win::Version::WIN11 &&
