@@ -12,6 +12,8 @@
 #include "base/timer/timer.h"
 #include "chrome/browser/ui/views/tab_search_bubble_host_observer.h"
 #include "components/prefs/pref_change_registrar.h"
+#include "base/task/cancelable_task_tracker.h"
+#include "components/favicon_base/favicon_types.h"
 #include "ui/base/interaction/element_identifier.h"
 #include "ui/base/metadata/metadata_impl_macros.h"
 #include "ui/gfx/animation/animation_delegate.h"
@@ -162,6 +164,9 @@ class TabStripComboButton : public views::View,
   std::unique_ptr<AppMenu> app_menu_;
   std::unique_ptr<AppMenuModel> app_menu_model_;
   raw_ptr<views::MenuButtonController> app_menu_controller_ = nullptr;
+
+  base::CancelableTaskTracker favicon_task_tracker_;
+  void OnFaviconLoaded(int index, const favicon_base::FaviconImageResult& result);
 
   base::WeakPtrFactory<TabStripComboButton> weak_ptr_factory_{this};
 };

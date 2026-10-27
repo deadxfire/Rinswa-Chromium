@@ -58,6 +58,7 @@
 #include "ui/color/color_id.h"
 #include "ui/color/color_provider.h"
 #include "ui/display/win/screen_win.h"
+#include "ui/gfx/color_utils.h"
 #include "ui/gfx/geometry/point_f.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
@@ -423,7 +424,9 @@ void PaintMenuBackground(cc::PaintCanvas* canvas,
   CHECK(color_provider);
   cc::PaintFlags flags;
   flags.setAntiAlias(true);
-  flags.setColor(color_provider->GetColor(kColorMenuBackground));
+  SkColor color = color_provider->GetColor(kColorMenuBackground);
+  const bool is_dark = color_utils::IsDark(color);
+  flags.setColor(SkColorSetA(color, is_dark ? 175 : 160));
   canvas->drawRoundRect(gfx::RectToSkRect(rect), 10, 10, flags);
 }
 

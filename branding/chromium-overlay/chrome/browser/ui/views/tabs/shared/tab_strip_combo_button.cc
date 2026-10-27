@@ -12,6 +12,8 @@
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/favicon/favicon_service_factory.h"
+#include "chrome/browser/favicon/history_ui_favicon_request_handler_factory.h"
 #include "chrome/browser/ui/actions/chrome_action_id.h"
 #include "chrome/browser/ui/browser_actions.h"
 #include "chrome/browser/ui/browser_commands.h"
@@ -31,6 +33,8 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
+#include "components/favicon/core/favicon_service.h"
+#include "components/favicon/core/history_ui_favicon_request_handler.h"
 #include "components/prefs/pref_service.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image_skia_operations.h"
@@ -74,10 +78,27 @@ constexpr int kToggleHideShortcuts = 9005;
 
 class TabStripShortcutImageSource : public gfx::CanvasImageSource {
  public:
-  enum class Type { kYouTube, kGmail, kGeneric };
+  enum class Type {
+    kYouTube,
+    kGmail,
+    kWikipedia,
+    kWhatsApp,
+    kX,
+    kGitHub,
+    kReddit,
+    kFacebook,
+    kChatGPT,
+    kNetflix,
+    kGeneric
+  };
 
-  TabStripShortcutImageSource(Type type, const std::string& letter)
-      : gfx::CanvasImageSource(gfx::Size(16, 16)), type_(type), letter_(letter) {}
+  TabStripShortcutImageSource(Type type,
+                              const std::string& letter,
+                              SkColor bg_color = SK_ColorTRANSPARENT)
+      : gfx::CanvasImageSource(gfx::Size(16, 16)),
+        type_(type),
+        letter_(letter),
+        bg_color_(bg_color) {}
 
   void Draw(gfx::Canvas* canvas) override {
     if (type_ == Type::kYouTube) {
@@ -119,10 +140,124 @@ class TabStripShortcutImageSource : public gfx::CanvasImageSource {
       m_path.lineTo(13.5f, 4.0f);
       m_path.lineTo(13.5f, 12.0f);
       canvas->DrawPath(m_path.detach(), m_flags);
+    } else if (type_ == Type::kWikipedia) {
+      cc::PaintFlags bg_flags;
+      bg_flags.setAntiAlias(true);
+      bg_flags.setColor(SK_ColorWHITE);
+      bg_flags.setStyle(cc::PaintFlags::kFill_Style);
+      canvas->DrawRoundRect(gfx::RectF(1.0f, 1.0f, 14.0f, 14.0f), 3.0f, bg_flags);
+
+      canvas->DrawStringRectWithFlags(
+          u"W",
+          gfx::FontList({"Times New Roman", "serif"},
+                        gfx::Font::FontStyle::NORMAL, 11,
+                        gfx::Font::Weight::BOLD),
+          SK_ColorBLACK, gfx::Rect(0, 0, 16, 16),
+          gfx::Canvas::TEXT_ALIGN_CENTER);
+    } else if (type_ == Type::kWhatsApp) {
+      cc::PaintFlags bg_flags;
+      bg_flags.setAntiAlias(true);
+      bg_flags.setColor(SkColorSetRGB(37, 211, 102));
+      bg_flags.setStyle(cc::PaintFlags::kFill_Style);
+      canvas->DrawRoundRect(gfx::RectF(1.0f, 1.0f, 14.0f, 14.0f), 4.0f, bg_flags);
+
+      canvas->DrawStringRectWithFlags(
+          u"W",
+          gfx::FontList({"Segoe UI", "sans-serif"},
+                        gfx::Font::FontStyle::NORMAL, 10,
+                        gfx::Font::Weight::BOLD),
+          SK_ColorWHITE, gfx::Rect(0, 0, 16, 16),
+          gfx::Canvas::TEXT_ALIGN_CENTER);
+    } else if (type_ == Type::kX) {
+      cc::PaintFlags bg_flags;
+      bg_flags.setAntiAlias(true);
+      bg_flags.setColor(SK_ColorBLACK);
+      bg_flags.setStyle(cc::PaintFlags::kFill_Style);
+      canvas->DrawRoundRect(gfx::RectF(1.0f, 1.0f, 14.0f, 14.0f), 3.0f, bg_flags);
+
+      canvas->DrawStringRectWithFlags(
+          u"X",
+          gfx::FontList({"Segoe UI", "sans-serif"},
+                        gfx::Font::FontStyle::NORMAL, 10,
+                        gfx::Font::Weight::BOLD),
+          SK_ColorWHITE, gfx::Rect(0, 0, 16, 16),
+          gfx::Canvas::TEXT_ALIGN_CENTER);
+    } else if (type_ == Type::kGitHub) {
+      cc::PaintFlags bg_flags;
+      bg_flags.setAntiAlias(true);
+      bg_flags.setColor(SkColorSetRGB(36, 41, 46));
+      bg_flags.setStyle(cc::PaintFlags::kFill_Style);
+      canvas->DrawRoundRect(gfx::RectF(1.0f, 1.0f, 14.0f, 14.0f), 4.0f, bg_flags);
+
+      canvas->DrawStringRectWithFlags(
+          u"GH",
+          gfx::FontList({"Segoe UI", "sans-serif"},
+                        gfx::Font::FontStyle::NORMAL, 8,
+                        gfx::Font::Weight::BOLD),
+          SK_ColorWHITE, gfx::Rect(0, 0, 16, 16),
+          gfx::Canvas::TEXT_ALIGN_CENTER);
+    } else if (type_ == Type::kReddit) {
+      cc::PaintFlags bg_flags;
+      bg_flags.setAntiAlias(true);
+      bg_flags.setColor(SkColorSetRGB(255, 69, 0));
+      bg_flags.setStyle(cc::PaintFlags::kFill_Style);
+      canvas->DrawCircle(gfx::PointF(8.0f, 8.0f), 7.0f, bg_flags);
+
+      canvas->DrawStringRectWithFlags(
+          u"r/",
+          gfx::FontList({"Segoe UI", "sans-serif"},
+                        gfx::Font::FontStyle::NORMAL, 8,
+                        gfx::Font::Weight::BOLD),
+          SK_ColorWHITE, gfx::Rect(0, 0, 16, 16),
+          gfx::Canvas::TEXT_ALIGN_CENTER);
+    } else if (type_ == Type::kFacebook) {
+      cc::PaintFlags bg_flags;
+      bg_flags.setAntiAlias(true);
+      bg_flags.setColor(SkColorSetRGB(24, 119, 242));
+      bg_flags.setStyle(cc::PaintFlags::kFill_Style);
+      canvas->DrawRoundRect(gfx::RectF(1.0f, 1.0f, 14.0f, 14.0f), 4.0f, bg_flags);
+
+      canvas->DrawStringRectWithFlags(
+          u"f",
+          gfx::FontList({"Segoe UI", "sans-serif"},
+                        gfx::Font::FontStyle::NORMAL, 11,
+                        gfx::Font::Weight::BOLD),
+          SK_ColorWHITE, gfx::Rect(0, 0, 16, 16),
+          gfx::Canvas::TEXT_ALIGN_CENTER);
+    } else if (type_ == Type::kChatGPT) {
+      cc::PaintFlags bg_flags;
+      bg_flags.setAntiAlias(true);
+      bg_flags.setColor(SkColorSetRGB(16, 163, 127));
+      bg_flags.setStyle(cc::PaintFlags::kFill_Style);
+      canvas->DrawRoundRect(gfx::RectF(1.0f, 1.0f, 14.0f, 14.0f), 4.0f, bg_flags);
+
+      canvas->DrawStringRectWithFlags(
+          u"AI",
+          gfx::FontList({"Segoe UI", "sans-serif"},
+                        gfx::Font::FontStyle::NORMAL, 8,
+                        gfx::Font::Weight::BOLD),
+          SK_ColorWHITE, gfx::Rect(0, 0, 16, 16),
+          gfx::Canvas::TEXT_ALIGN_CENTER);
+    } else if (type_ == Type::kNetflix) {
+      cc::PaintFlags bg_flags;
+      bg_flags.setAntiAlias(true);
+      bg_flags.setColor(SK_ColorBLACK);
+      bg_flags.setStyle(cc::PaintFlags::kFill_Style);
+      canvas->DrawRoundRect(gfx::RectF(1.0f, 1.0f, 14.0f, 14.0f), 3.0f, bg_flags);
+
+      canvas->DrawStringRectWithFlags(
+          u"N",
+          gfx::FontList({"Segoe UI", "sans-serif"},
+                        gfx::Font::FontStyle::NORMAL, 10,
+                        gfx::Font::Weight::BOLD),
+          SkColorSetRGB(229, 9, 20), gfx::Rect(0, 0, 16, 16),
+          gfx::Canvas::TEXT_ALIGN_CENTER);
     } else {
       cc::PaintFlags bg_flags;
       bg_flags.setAntiAlias(true);
-      bg_flags.setColor(SkColorSetRGB(66, 133, 244));
+      bg_flags.setColor(bg_color_ != SK_ColorTRANSPARENT
+                            ? bg_color_
+                            : SkColorSetRGB(66, 133, 244));
       bg_flags.setStyle(cc::PaintFlags::kFill_Style);
       canvas->DrawRoundRect(gfx::RectF(1.0f, 1.0f, 14.0f, 14.0f), 3.5f, bg_flags);
 
@@ -139,6 +274,7 @@ class TabStripShortcutImageSource : public gfx::CanvasImageSource {
  private:
   Type type_;
   std::string letter_;
+  SkColor bg_color_;
 };
 
 }  // namespace
@@ -495,6 +631,7 @@ void TabStripComboButton::UpdateShortcuts() {
   if (!browser_ || !browser_->GetProfile()) {
     return;
   }
+  favicon_task_tracker_.TryCancelAll();
   PrefService* prefs = browser_->GetProfile()->GetPrefs();
   auto configure_button = [&](TabStripFlatEdgeButton* button, int index) {
     if (!button) {
@@ -528,21 +665,112 @@ void TabStripComboButton::UpdateShortcuts() {
                lower_title.find("gmail") != std::string::npos ||
                lower_url.find("gmail") != std::string::npos) {
       icon_type = TabStripShortcutImageSource::Type::kGmail;
+    } else if (lower_url.find("wikipedia.org") != std::string::npos ||
+               lower_title.find("wikipedia") != std::string::npos) {
+      icon_type = TabStripShortcutImageSource::Type::kWikipedia;
+    } else if (lower_url.find("whatsapp.com") != std::string::npos ||
+               lower_title.find("whatsapp") != std::string::npos) {
+      icon_type = TabStripShortcutImageSource::Type::kWhatsApp;
+    } else if (lower_url.find("twitter.com") != std::string::npos ||
+               lower_url.find("x.com") != std::string::npos ||
+               lower_title == "x") {
+      icon_type = TabStripShortcutImageSource::Type::kX;
+    } else if (lower_url.find("github.com") != std::string::npos ||
+               lower_title.find("github") != std::string::npos) {
+      icon_type = TabStripShortcutImageSource::Type::kGitHub;
+    } else if (lower_url.find("reddit.com") != std::string::npos ||
+               lower_title.find("reddit") != std::string::npos) {
+      icon_type = TabStripShortcutImageSource::Type::kReddit;
+    } else if (lower_url.find("facebook.com") != std::string::npos ||
+               lower_title.find("facebook") != std::string::npos) {
+      icon_type = TabStripShortcutImageSource::Type::kFacebook;
+    } else if (lower_url.find("openai.com") != std::string::npos ||
+               lower_url.find("chatgpt.com") != std::string::npos ||
+               lower_title.find("chatgpt") != std::string::npos) {
+      icon_type = TabStripShortcutImageSource::Type::kChatGPT;
+    } else if (lower_url.find("netflix.com") != std::string::npos ||
+               lower_title.find("netflix") != std::string::npos) {
+      icon_type = TabStripShortcutImageSource::Type::kNetflix;
     }
+
+    uint32_t hash = 5381;
+    for (char c : lower_url) {
+      hash = ((hash << 5) + hash) + static_cast<uint8_t>(c);
+    }
+    const SkColor kPastelColors[] = {
+        SkColorSetRGB(52, 168, 83),   // Google Green
+        SkColorSetRGB(66, 133, 244),  // Google Blue
+        SkColorSetRGB(251, 188, 4),   // Google Yellow
+        SkColorSetRGB(156, 39, 176),  // Purple
+        SkColorSetRGB(0, 150, 136),   // Teal
+        SkColorSetRGB(233, 30, 99),   // Pink
+        SkColorSetRGB(255, 87, 34),   // Deep Orange
+        SkColorSetRGB(63, 81, 181),   // Indigo
+    };
+    SkColor bg_color = kPastelColors[hash % std::size(kPastelColors)];
 
     std::string first_letter = title.empty() ? "?" : title.substr(0, 1);
     gfx::ImageSkia icon =
         gfx::CanvasImageSource::MakeImageSkia<TabStripShortcutImageSource>(
-            icon_type, first_letter);
+            icon_type, first_letter, bg_color);
     ui::ImageModel model = ui::ImageModel::FromImageSkia(icon);
     button->SetImageModel(views::Button::STATE_NORMAL, model);
     button->SetImageModel(views::Button::STATE_HOVERED, model);
     button->SetImageModel(views::Button::STATE_PRESSED, model);
     button->SetImageModel(views::Button::STATE_DISABLED, model);
+
+    GURL gurl(url);
+    if (!gurl.is_valid()) {
+      gurl = GURL("https://" + url);
+    }
+    if (gurl.is_valid() && browser_->GetProfile()) {
+      Profile* profile = browser_->GetProfile();
+      favicon::FaviconService* favicon_service =
+          FaviconServiceFactory::GetForProfile(
+              profile, ServiceAccessType::EXPLICIT_ACCESS);
+      if (favicon_service) {
+        favicon_service->GetFaviconImageForPageURL(
+            gurl,
+            base::BindOnce(&TabStripComboButton::OnFaviconLoaded,
+                           weak_ptr_factory_.GetWeakPtr(), index),
+            &favicon_task_tracker_);
+      }
+      favicon::HistoryUiFaviconRequestHandler* history_handler =
+          HistoryUiFaviconRequestHandlerFactory::GetForBrowserContext(profile);
+      if (history_handler) {
+        history_handler->GetFaviconImageForPageURL(
+            gurl,
+            base::BindOnce(&TabStripComboButton::OnFaviconLoaded,
+                           weak_ptr_factory_.GetWeakPtr(), index));
+      }
+    }
   };
 
   configure_button(shortcut_button_1_, 1);
   configure_button(shortcut_button_2_, 2);
+}
+
+void TabStripComboButton::OnFaviconLoaded(
+    int index,
+    const favicon_base::FaviconImageResult& result) {
+  if (result.image.IsEmpty()) {
+    return;
+  }
+  TabStripFlatEdgeButton* button =
+      (index == 1) ? shortcut_button_1_ : shortcut_button_2_;
+  if (!button) {
+    return;
+  }
+  gfx::ImageSkia icon = result.image.AsImageSkia();
+  if (icon.width() != 16 || icon.height() != 16) {
+    icon = gfx::ImageSkiaOperations::CreateResizedImage(
+        icon, skia::ImageOperations::RESIZE_BEST, gfx::Size(16, 16));
+  }
+  ui::ImageModel model = ui::ImageModel::FromImageSkia(icon);
+  button->SetImageModel(views::Button::STATE_NORMAL, model);
+  button->SetImageModel(views::Button::STATE_HOVERED, model);
+  button->SetImageModel(views::Button::STATE_PRESSED, model);
+  button->SetImageModel(views::Button::STATE_DISABLED, model);
 }
 
 void TabStripComboButton::OnShortcutClicked(int index) {
