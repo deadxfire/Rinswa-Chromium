@@ -16,7 +16,7 @@ def get_version():
             v = f.read().strip()
             if v:
                 return v
-    return "1.0.9"
+    return "2.0"
 
 version = get_version()
 

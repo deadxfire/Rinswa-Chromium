@@ -28,7 +28,7 @@ if /i not "%ORIGINAL_ROOT%"=="%SHORT_ROOT%" (
 
 cd /d "%~dp0"
 
-set "RINSWA_VERSION=1.0.9"
+set "RINSWA_VERSION=2.0"
 if exist "rinswa-version.txt" (
     set /p RINSWA_VERSION=<"rinswa-version.txt"
 )

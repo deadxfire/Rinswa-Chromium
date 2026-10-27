@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Rinswa Video Popout & Screen Capture",
-  "version": "1.0.9",
+  "version": "2.0",
   "description": "Universal Video Popout (Picture-in-Picture) and Screen Capture (Ctrl+Shift+S) for Rinswa Browser.",
   "author": "Arindam Makar",
   "action": {

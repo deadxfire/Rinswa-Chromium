@@ -21,7 +21,7 @@ def get_version():
     if os.path.exists(VERSION_FILE):
         with open(VERSION_FILE, "r", encoding="utf-8") as f:
             return f.read().strip()
-    return "1.0.9"
+    return "2.0"
 
 def prepare_overlay(chromium_src_dir):
     version = get_version()
@@ -97,6 +97,32 @@ def prepare_overlay(chromium_src_dir):
         with open(version_header, "w", encoding="utf-8") as f:
             f.write(content)
         print(f"   Stamped version header (v{version}).")
+
+    for vi_path in [
+        os.path.join(chromium_src_dir, "components", "version_info", "version_info_values.h.in"),
+        os.path.join(BRANDING_OVERLAY, "components", "version_info", "version_info_values.h.in"),
+    ]:
+        if os.path.exists(vi_path):
+            with open(vi_path, "r", encoding="utf-8") as f:
+                vicontent = f.read()
+            if "RINSWA_VERSION" in vicontent:
+                vicontent = re.sub(r'#define RINSWA_VERSION "[^"]+"', f'#define RINSWA_VERSION "{version}"', vicontent)
+                with open(vi_path, "w", encoding="utf-8") as f:
+                    f.write(vicontent)
+                print(f"   Stamped {os.path.basename(vi_path)} (v{version}).")
+
+    for vpath in [
+        os.path.join(chromium_src_dir, "chrome", "browser", "ui", "webui", "help", "version_updater_basic.cc"),
+        os.path.join(BRANDING_OVERLAY, "chrome", "browser", "ui", "webui", "help", "version_updater_basic.cc"),
+    ]:
+        if os.path.exists(vpath):
+            with open(vpath, "r", encoding="utf-8") as f:
+                vcontent = f.read()
+            if "RINSWA_VERSION" in vcontent:
+                vcontent = re.sub(r'#define RINSWA_VERSION "[^"]+"', f'#define RINSWA_VERSION "{version}"', vcontent)
+                with open(vpath, "w", encoding="utf-8") as f:
+                    f.write(vcontent)
+                print(f"   Stamped version updater at {os.path.basename(vpath)} (v{version}).")
 
     # 6. Deploy Native Adblock Data, Rinswa AdShield Extension & initial_preferences
     print(">> [6/6] Deploying Rinswa AdShield, YouTube Defuser & initial_preferences...")

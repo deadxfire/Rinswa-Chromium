@@ -61,33 +61,37 @@ void HandleAppExitingForPlatform() {
 #endif
 
 #if BUILDFLAG(IS_WIN)
-  base::FilePath temp_dir;
-  if (base::PathService::Get(base::DIR_TEMP, &temp_dir)) {
-    base::FilePath update_installer = temp_dir.Append(L"Rinswa-Browser-Update-Setup.exe");
-    if (base::PathExists(update_installer)) {
-      base::FilePath current_exe = base::CommandLine::ForCurrentProcess()->GetProgram();
-      base::FilePath install_dir = current_exe.DirName();
-      DWORD pid = ::GetCurrentProcessId();
+  if (!chrome::IsUpdateRelaunchInProgress()) {
+    base::FilePath temp_dir;
+    if (base::PathService::Get(base::DIR_TEMP, &temp_dir)) {
+      base::FilePath update_installer = temp_dir.Append(L"Rinswa-Browser-Update-Setup.exe");
+      if (base::PathExists(update_installer)) {
+        base::FilePath current_exe = base::CommandLine::ForCurrentProcess()->GetProgram();
+        base::FilePath install_dir = current_exe.DirName();
+        DWORD pid = ::GetCurrentProcessId();
 
-      std::wstring script =
-          L"Wait-Process -Id " + std::to_wstring(pid) +
-          L" -Timeout 20 -ErrorAction SilentlyContinue; Start-Sleep -Milliseconds 500; "
-          L"Start-Process -FilePath '" + update_installer.value() +
-          L"' -ArgumentList '/VERYSILENT /SUPPRESSMSGBOXES /SP- /NORESTART /DIR=\"" +
-          install_dir.value() + L"\"' -Wait; "
-          L"Remove-Item -Path '" + update_installer.value() +
-          L"' -Force -ErrorAction SilentlyContinue;";
+        std::wstring script =
+            L"Wait-Process -Id " + std::to_wstring(pid) +
+            L" -Timeout 15 -ErrorAction SilentlyContinue; "
+            L"Get-Process -Name 'Rinswa*','chrome_proxy' -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue; "
+            L"Start-Sleep -Seconds 1; "
+            L"Start-Process -FilePath '" + update_installer.value() +
+            L"' -ArgumentList '/VERYSILENT /SUPPRESSMSGBOXES /SP- /NORESTART /DIR=\"" +
+            install_dir.value() + L"\"' -Wait; "
+            L"Remove-Item -Path '" + update_installer.value() +
+            L"' -Force -ErrorAction SilentlyContinue;";
 
-      base::CommandLine cmd(base::FilePath(L"powershell.exe"));
-      cmd.AppendArg("-WindowStyle");
-      cmd.AppendArg("Hidden");
-      cmd.AppendArg("-NoProfile");
-      cmd.AppendArg("-Command");
-      cmd.AppendArgNative(script);
+        base::CommandLine cmd(base::FilePath(L"powershell.exe"));
+        cmd.AppendArg("-WindowStyle");
+        cmd.AppendArg("Hidden");
+        cmd.AppendArg("-NoProfile");
+        cmd.AppendArg("-Command");
+        cmd.AppendArgNative(script);
 
-      base::LaunchOptions options;
-      options.start_hidden = true;
-      base::LaunchProcess(cmd, options);
+        base::LaunchOptions options;
+        options.start_hidden = true;
+        base::LaunchProcess(cmd, options);
+      }
     }
   }
 #endif

@@ -6,10 +6,10 @@
 
 #define AppName "Rinswa Browser"
 #ifndef AppVersion
-  #define AppVersion "1.0.9"
+  #define AppVersion "2.0"
 #endif
 #define AppPublisher "Arindam Makar"
-#define AppURL "https://github.com/deadxfire/Rinswa-browser"
+#define AppURL "https://github.com/deadxfire/Rinswa-Chromium"
 #define AppExeName "Rinswa.exe"
 #define AppId "{{5A8D3E42-6F91-4B2E-8E71-912836EBAF91}"
 
@@ -51,7 +51,7 @@ PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
 UninstallDisplayIcon={app}\{#AppExeName},0
 UninstallDisplayName={#AppName} (Chromium Edition)
-CloseApplications=no
+CloseApplications=force
 RestartApplications=yes
 DisableWelcomePage=no
 DisableProgramGroupPage=yes
@@ -134,6 +134,17 @@ Type: filesandordirs; Name: "{app}\{#EngineVersion}"
 Type: filesandordirs; Name: "{app}"
 
 [Code]
+function InitializeSetup(): Boolean;
+var
+  ErrorCode: Integer;
+begin
+  // Terminate any running Rinswa instances so files (like chrome.dll) are not locked
+  ShellExec('open', 'taskkill.exe', '/F /IM Rinswa.exe /T', '', SW_HIDE, ewWaitUntilTerminated, ErrorCode);
+  ShellExec('open', 'taskkill.exe', '/F /IM chrome_proxy.exe /T', '', SW_HIDE, ewWaitUntilTerminated, ErrorCode);
+  Sleep(500);
+  Result := True;
+end;
+
 procedure SHChangeNotify(wEventId: LongInt; uFlags: Cardinal; dwItem1, dwItem2: Cardinal);
 external 'SHChangeNotify@shell32.dll stdcall';
 

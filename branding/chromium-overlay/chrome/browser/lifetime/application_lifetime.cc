@@ -75,6 +75,14 @@ void AttemptUserExit() {
   AttemptExitInternal(false);
 }
 
+#if BUILDFLAG(IS_WIN)
+static bool g_update_relaunch_in_progress = false;
+
+bool IsUpdateRelaunchInProgress() {
+  return g_update_relaunch_in_progress;
+}
+#endif
+
 void AttemptRelaunch() {
 #if BUILDFLAG(IS_WIN)
   base::FilePath temp_dir;
@@ -87,7 +95,9 @@ void AttemptRelaunch() {
 
       std::wstring script =
           L"Wait-Process -Id " + std::to_wstring(pid) +
-          L" -Timeout 20 -ErrorAction SilentlyContinue; Start-Sleep -Milliseconds 500; "
+          L" -Timeout 15 -ErrorAction SilentlyContinue; "
+          L"Get-Process -Name 'Rinswa*','chrome_proxy' -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue; "
+          L"Start-Sleep -Seconds 1; "
           L"Start-Process -FilePath '" + update_installer.value() +
           L"' -ArgumentList '/VERYSILENT /SUPPRESSMSGBOXES /SP- /NORESTART /DIR=\"" +
           install_dir.value() + L"\"' -Wait; "
@@ -105,6 +115,7 @@ void AttemptRelaunch() {
       base::LaunchOptions options;
       options.start_hidden = true;
       if (base::LaunchProcess(cmd, options).IsValid()) {
+        g_update_relaunch_in_progress = true;
         AttemptExit();
         return;
       }

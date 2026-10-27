@@ -23,6 +23,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/version/version_handler.h"
 #include "chrome/common/channel_info.h"
+#include "chrome/common/chrome_version.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/branded_strings.h"
 #include "chrome/grit/generated_resources.h"
@@ -247,7 +248,10 @@ void VersionUI::AddVersionDetailStrings(content::WebUIDataSource* html_source) {
                                   VersionProcessorVariation());
 
   // Data strings.
-  html_source->AddString(version_ui::kVersion, "1.0.9");
+#ifndef RINSWA_VERSION
+#define RINSWA_VERSION "2.0"
+#endif
+  html_source->AddString(version_ui::kVersion, RINSWA_VERSION);
   html_source->AddString(version_ui::kVersionSuffix,
                          GetVersionInformationalSuffix());
 
@@ -337,9 +341,12 @@ void VersionUI::AddVersionDetailStrings(content::WebUIDataSource* html_source) {
 #if !BUILDFLAG(IS_ANDROID)
 // static
 std::u16string VersionUI::GetAnnotatedVersionStringForUi() {
+#ifndef RINSWA_VERSION
+#define RINSWA_VERSION "2.0"
+#endif
   return l10n_util::GetStringFUTF16(
       IDS_SETTINGS_ABOUT_PAGE_BROWSER_VERSION,
-      std::u16string(u"1.0.9"),
+      base::UTF8ToUTF16(std::string_view(RINSWA_VERSION)),
       base::UTF8ToUTF16(GetVersionInformationalSuffix()),
       l10n_util::GetStringUTF16(version_info::IsOfficialBuild()
                                     ? IDS_VERSION_UI_OFFICIAL

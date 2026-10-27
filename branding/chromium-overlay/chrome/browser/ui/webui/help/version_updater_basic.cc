@@ -31,6 +31,7 @@
 #include "base/values.h"
 #include "chrome/browser/ui/webui/help/version_updater.h"
 #include "chrome/browser/upgrade_detector/upgrade_detector.h"
+#include "chrome/common/chrome_version.h"
 #include "content/public/browser/browser_task_traits.h"
 #include "content/public/browser/browser_thread.h"
 
@@ -361,7 +362,7 @@ UpdateCheckResultInfo PerformUpdateWorkflow(
   }
 
 #ifndef RINSWA_VERSION
-#define RINSWA_VERSION "1.0.9"
+#define RINSWA_VERSION "2.0"
 #endif
   std::string current_ver = RINSWA_VERSION;
   if (!IsRemoteVersionNewer(current_ver, *tag_name)) {
