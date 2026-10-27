@@ -425,8 +425,7 @@ void PaintMenuBackground(cc::PaintCanvas* canvas,
   cc::PaintFlags flags;
   flags.setAntiAlias(true);
   SkColor color = color_provider->GetColor(kColorMenuBackground);
-  const bool is_dark = color_utils::IsDark(color);
-  flags.setColor(SkColorSetA(color, is_dark ? 175 : 160));
+  flags.setColor(SkColorGetA(color) == 255 ? SkColorSetA(color, 190) : color);
   canvas->drawRoundRect(gfx::RectToSkRect(rect), 10, 10, flags);
 }
 

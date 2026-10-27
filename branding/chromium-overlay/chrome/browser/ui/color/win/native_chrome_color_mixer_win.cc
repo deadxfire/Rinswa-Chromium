@@ -302,27 +302,27 @@ void AddNativeChromeColorMixer(ui::ColorProvider* provider,
     const bool dark_mode =
         key.color_mode == ui::ColorProviderKey::ColorMode::kDark;
     if (dark_mode) {
-      mixer[ui::kColorMenuBackground] = {SkColorSetARGB(185, 28, 30, 36)};
-      mixer[ui::kColorMenuBorder] = {SkColorSetARGB(45, 255, 255, 255)};
+      mixer[ui::kColorMenuBackground] = {SkColorSetARGB(190, 26, 28, 34)};
+      mixer[ui::kColorMenuBorder] = {SkColorSetARGB(40, 255, 255, 255)};
       mixer[ui::kColorMenuItemBackgroundSelected] = {
-          SkColorSetARGB(150, 65, 72, 85)};
-      mixer[ui::kColorMenuSeparator] = {SkColorSetARGB(40, 255, 255, 255)};
-      mixer[ui::kColorMenuItemForeground] = {SkColorSetRGB(240, 243, 246)};
+          SkColorSetARGB(140, 70, 78, 92)};
+      mixer[ui::kColorMenuSeparator] = {SkColorSetARGB(30, 255, 255, 255)};
+      mixer[ui::kColorMenuItemForeground] = {SkColorSetRGB(242, 244, 248)};
       mixer[ui::kColorMenuItemForegroundSelected] = {SK_ColorWHITE};
       mixer[ui::kColorMenuItemForegroundSecondary] = {
           SkColorSetARGB(160, 255, 255, 255)};
-      mixer[ui::kColorBubbleBorder] = {SkColorSetARGB(45, 255, 255, 255)};
+      mixer[ui::kColorBubbleBorder] = {SkColorSetARGB(40, 255, 255, 255)};
     } else {
-      mixer[ui::kColorMenuBackground] = {SkColorSetARGB(180, 248, 250, 252)};
-      mixer[ui::kColorMenuBorder] = {SkColorSetARGB(60, 0, 0, 0)};
+      mixer[ui::kColorMenuBackground] = {SkColorSetARGB(190, 244, 246, 249)};
+      mixer[ui::kColorMenuBorder] = {SkColorSetARGB(35, 0, 0, 0)};
       mixer[ui::kColorMenuItemBackgroundSelected] = {
-          SkColorSetARGB(140, 215, 225, 240)};
-      mixer[ui::kColorMenuSeparator] = {SkColorSetARGB(30, 0, 0, 0)};
-      mixer[ui::kColorMenuItemForeground] = {SkColorSetRGB(30, 32, 36)};
-      mixer[ui::kColorMenuItemForegroundSelected] = {SkColorSetRGB(15, 17, 20)};
+          SkColorSetARGB(120, 215, 225, 242)};
+      mixer[ui::kColorMenuSeparator] = {SkColorSetARGB(25, 0, 0, 0)};
+      mixer[ui::kColorMenuItemForeground] = {SkColorSetRGB(28, 30, 34)};
+      mixer[ui::kColorMenuItemForegroundSelected] = {SkColorSetRGB(12, 14, 18)};
       mixer[ui::kColorMenuItemForegroundSecondary] = {
           SkColorSetARGB(160, 0, 0, 0)};
-      mixer[ui::kColorBubbleBorder] = {SkColorSetARGB(60, 0, 0, 0)};
+      mixer[ui::kColorBubbleBorder] = {SkColorSetARGB(35, 0, 0, 0)};
     }
   }
 }

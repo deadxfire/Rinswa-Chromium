@@ -164,10 +164,9 @@ void MenuHost::InitMenuHost(const InitParams& init_params) {
   }
 
 #if BUILDFLAG(IS_WIN)
-  // On Windows use the software compositor so that WS_EX_LAYERED per-pixel
-  // alpha is used, preventing opaque white rectangular backgrounds around
-  // rounded corners and enabling true background transparency.
-  params.force_software_compositing = true;
+  // On Windows use hardware compositing so that DWM system backdrop (Acrylic blur)
+  // and native rounded corners are applied directly by DWM.
+  params.force_software_compositing = false;
 #endif
   Init(std::move(params));
   std::optional<std::string> show_menu_host_duration_histogram =

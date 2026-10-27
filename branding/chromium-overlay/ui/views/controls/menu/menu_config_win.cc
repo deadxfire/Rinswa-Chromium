@@ -35,7 +35,7 @@ void MenuConfig::InitPlatform() {
   auxiliary_corner_radius = 10;
   touchable_corner_radius = 10;
 
-  use_bubble_border = true;
+  use_bubble_border = false;
   use_outer_border = true;
 }
 
