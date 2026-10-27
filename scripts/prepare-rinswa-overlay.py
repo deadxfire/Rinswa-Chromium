@@ -8,6 +8,7 @@ Injects Rinswa Cyber-Glass branding, GN flags, version metadata, themes, and wal
 import os
 import sys
 import shutil
+import re
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VERSION_FILE = os.path.join(PROJECT_DIR, "rinswa-version.txt")
@@ -20,7 +21,7 @@ def get_version():
     if os.path.exists(VERSION_FILE):
         with open(VERSION_FILE, "r", encoding="utf-8") as f:
             return f.read().strip()
-    return "1.0.7"
+    return "1.0.9"
 
 def prepare_overlay(chromium_src_dir):
     version = get_version()
@@ -89,11 +90,13 @@ def prepare_overlay(chromium_src_dir):
     if os.path.exists(version_header):
         with open(version_header, "r", encoding="utf-8") as f:
             content = f.read()
-        if "RINSWA_VERSION" not in content:
+        if "RINSWA_VERSION" in content:
+            content = re.sub(r'#define RINSWA_VERSION "[^"]+"', f'#define RINSWA_VERSION "{version}"', content)
+        else:
             content += f'\n#define RINSWA_VERSION "{version}"\n#define RINSWA_AUTHOR "Arindam Makar"\n'
-            with open(version_header, "w", encoding="utf-8") as f:
-                f.write(content)
-            print("   Stamped version header.")
+        with open(version_header, "w", encoding="utf-8") as f:
+            f.write(content)
+        print(f"   Stamped version header (v{version}).")
 
     # 6. Deploy Native Adblock Data, Rinswa AdShield Extension & initial_preferences
     print(">> [6/6] Deploying Rinswa AdShield, YouTube Defuser & initial_preferences...")
@@ -101,7 +104,7 @@ def prepare_overlay(chromium_src_dir):
     init_prefs_src = os.path.join(PROJECT_DIR, "config", "initial_preferences")
     if os.path.exists(init_prefs_src):
         shutil.copy2(init_prefs_src, os.path.join(out_dir, "initial_preferences"))
-        print("   Deployed initial_preferences (uBlock Origin auto-installed by default).")
+        print("   Deployed initial_preferences.")
 
     # Deploy Rinswa AdShield & Universal PiP extension
     adshield_src = os.path.join(PROJECT_DIR, "config", "adblock", "rinswa-adshield")

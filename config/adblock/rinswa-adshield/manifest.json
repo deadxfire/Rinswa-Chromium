@@ -1,32 +1,49 @@
 {
   "manifest_version": 3,
-  "name": "Rinswa Shield & Video Popout",
-  "version": "1.0.7",
-  "description": "Native built-in adblocker, YouTube ad defuser, and Universal Video Popout (Picture-in-Picture) for Rinswa Browser.",
+  "name": "Rinswa Video Popout & Screen Capture",
+  "version": "1.0.8",
+  "description": "Universal Video Popout (Picture-in-Picture) and Screen Capture (Ctrl+Shift+S) for Rinswa Browser.",
   "author": "Arindam Makar",
   "action": {
-    "default_title": "Rinswa Shield & Video Popout",
+    "default_title": "Rinswa Tools & Screen Capture",
     "default_popup": "popup.html",
     "default_icon": "rinswa-logo.png"
   },
   "icons": {
     "128": "rinswa-logo.png"
   },
+  "permissions": [
+    "activeTab",
+    "clipboardWrite",
+    "tabs",
+    "scripting"
+  ],
   "host_permissions": [
     "*://*/*"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "capture-screenshot": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "windows": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Capture Screenshot (Select Area or Full Screen)"
+    }
+  },
   "content_scripts": [
     {
       "matches": [
-        "*://*.youtube.com/*",
-        "*://*.youtube-nocookie.com/*"
+        "*://*/*"
       ],
       "js": [
-        "youtube_defuser.js"
+        "screenshot.js"
       ],
       "run_at": "document_start",
-      "all_frames": true,
-      "world": "MAIN"
+      "all_frames": false
     },
     {
       "matches": [
@@ -40,6 +57,17 @@
       ],
       "run_at": "document_idle",
       "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "screenshot.css",
+        "rinswa-logo.png"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
     }
   ],
   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8ZtnRT6hXtjtG5XM7TcKakx9J+37WuK1g1cx2IOh9enerA5VlQBcoHSpGOx5xzebQLxzUtURmNQXSrhOac/z9SVUhHrXrtnBS4ftIUfagTDroowh1b23pIusQaLKprhkS8iFr0nw887BV+yh9LQ7J90qDNzukXn0ss6ZVMxgcaQIDAQAB"

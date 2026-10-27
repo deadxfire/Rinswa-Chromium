@@ -7,6 +7,7 @@
 #include "base/i18n/rtl.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
+#include "base/task/sequenced_task_runner.h"
 #include "base/time/time.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/app/vector_icons/vector_icons.h"
@@ -42,6 +43,20 @@
 #include "ui/views/controls/button/menu_button_controller.h"
 #include "ui/views/controls/menu/menu_model_adapter.h"
 #include "ui/views/controls/menu/menu_runner.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/navigator/browser_navigator.h"
+#include "chrome/browser/ui/navigator/browser_navigator_params.h"
+#include "chrome/browser/ui/browser_tabstrip.h"
+#include "chrome/browser/ui/browser_window.h"
+#include "ui/views/window/dialog_delegate.h"
+#include "ui/views/controls/textfield/textfield.h"
+#include "ui/views/controls/label.h"
+#include "ui/gfx/canvas.h"
+#include "ui/gfx/image/canvas_image_source.h"
+#include "ui/gfx/image/image_skia.h"
+#include "base/strings/utf_string_conversions.h"
+#include "base/strings/string_util.h"
+#include "third_party/skia/include/core/SkPathBuilder.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/layout_types.h"
 #include "ui/views/view_class_properties.h"
@@ -50,6 +65,82 @@
 namespace {
 constexpr base::TimeDelta kHideTabSearchButtonDelay = base::Seconds(2);
 constexpr base::TimeDelta kAnimationDuration = base::Milliseconds(300);
+
+constexpr int kOpenShortcutTab = 9001;
+constexpr int kOpenShortcutWindow = 9002;
+constexpr int kEditShortcut = 9003;
+constexpr int kResetShortcut = 9004;
+constexpr int kToggleHideShortcuts = 9005;
+
+class TabStripShortcutImageSource : public gfx::CanvasImageSource {
+ public:
+  enum class Type { kYouTube, kGmail, kGeneric };
+
+  TabStripShortcutImageSource(Type type, const std::string& letter)
+      : gfx::CanvasImageSource(gfx::Size(16, 16)), type_(type), letter_(letter) {}
+
+  void Draw(gfx::Canvas* canvas) override {
+    if (type_ == Type::kYouTube) {
+      cc::PaintFlags flags;
+      flags.setAntiAlias(true);
+      flags.setColor(SkColorSetRGB(235, 32, 32));
+      flags.setStyle(cc::PaintFlags::kFill_Style);
+      canvas->DrawRoundRect(gfx::RectF(0.5f, 2.0f, 15.0f, 12.0f), 3.5f, flags);
+
+      cc::PaintFlags play_flags;
+      play_flags.setAntiAlias(true);
+      play_flags.setColor(SK_ColorWHITE);
+      play_flags.setStyle(cc::PaintFlags::kFill_Style);
+      SkPathBuilder path;
+      path.moveTo(6.5f, 5.0f);
+      path.lineTo(11.0f, 8.0f);
+      path.lineTo(6.5f, 11.0f);
+      path.close();
+      canvas->DrawPath(path.detach(), play_flags);
+    } else if (type_ == Type::kGmail) {
+      cc::PaintFlags bg_flags;
+      bg_flags.setAntiAlias(true);
+      bg_flags.setColor(SK_ColorWHITE);
+      bg_flags.setStyle(cc::PaintFlags::kFill_Style);
+      canvas->DrawRoundRect(gfx::RectF(1.0f, 2.0f, 14.0f, 12.0f), 2.5f, bg_flags);
+
+      cc::PaintFlags m_flags;
+      m_flags.setAntiAlias(true);
+      m_flags.setColor(SkColorSetRGB(234, 67, 53));
+      m_flags.setStyle(cc::PaintFlags::kStroke_Style);
+      m_flags.setStrokeWidth(1.8f);
+      m_flags.setStrokeCap(cc::PaintFlags::kRound_Cap);
+      m_flags.setStrokeJoin(cc::PaintFlags::kRound_Join);
+
+      SkPathBuilder m_path;
+      m_path.moveTo(2.5f, 12.0f);
+      m_path.lineTo(2.5f, 4.0f);
+      m_path.lineTo(8.0f, 8.5f);
+      m_path.lineTo(13.5f, 4.0f);
+      m_path.lineTo(13.5f, 12.0f);
+      canvas->DrawPath(m_path.detach(), m_flags);
+    } else {
+      cc::PaintFlags bg_flags;
+      bg_flags.setAntiAlias(true);
+      bg_flags.setColor(SkColorSetRGB(66, 133, 244));
+      bg_flags.setStyle(cc::PaintFlags::kFill_Style);
+      canvas->DrawRoundRect(gfx::RectF(1.0f, 1.0f, 14.0f, 14.0f), 3.5f, bg_flags);
+
+      canvas->DrawStringRectWithFlags(
+          base::UTF8ToUTF16(letter_),
+          gfx::FontList({"Segoe UI", "sans-serif"},
+                        gfx::Font::FontStyle::NORMAL, 10,
+                        gfx::Font::Weight::BOLD),
+          SK_ColorWHITE, gfx::Rect(0, 0, 16, 16),
+          gfx::Canvas::TEXT_ALIGN_CENTER);
+    }
+  }
+
+ private:
+  Type type_;
+  std::string letter_;
+};
+
 }  // namespace
 
 DEFINE_CLASS_ELEMENT_IDENTIFIER_VALUE(TabStripComboButton,
@@ -130,6 +221,11 @@ TabStripComboButton::TabStripComboButton(BrowserWindowInterface* browser,
     end_button_->set_paint_transparent(true);
   }
 
+  if (context_ == Context::kHorizontalTabStrip) {
+    shortcut_button_1_ = AddChildView(CreateShortcutButton(1));
+    shortcut_button_2_ = AddChildView(CreateShortcutButton(2));
+  }
+
   PrefService* prefs = browser_->GetProfile()->GetPrefs();
   pref_registrar_.Init(prefs);
   pref_registrar_.Add(
@@ -140,7 +236,28 @@ TabStripComboButton::TabStripComboButton(BrowserWindowInterface* browser,
       prefs::kEverythingMenuPinnedToTabstrip,
       base::BindRepeating(&TabStripComboButton::UpdateButtonsVisibility,
                           base::Unretained(this)));
+  pref_registrar_.Add(
+      prefs::kTabStripShortcutsEnabled,
+      base::BindRepeating(&TabStripComboButton::UpdateButtonsVisibility,
+                          base::Unretained(this)));
+  pref_registrar_.Add(
+      prefs::kTabStripShortcut1Title,
+      base::BindRepeating(&TabStripComboButton::UpdateShortcuts,
+                          base::Unretained(this)));
+  pref_registrar_.Add(
+      prefs::kTabStripShortcut1Url,
+      base::BindRepeating(&TabStripComboButton::UpdateShortcuts,
+                          base::Unretained(this)));
+  pref_registrar_.Add(
+      prefs::kTabStripShortcut2Title,
+      base::BindRepeating(&TabStripComboButton::UpdateShortcuts,
+                          base::Unretained(this)));
+  pref_registrar_.Add(
+      prefs::kTabStripShortcut2Url,
+      base::BindRepeating(&TabStripComboButton::UpdateShortcuts,
+                          base::Unretained(this)));
   UpdateButtonsVisibility();
+  UpdateShortcuts();
   UpdateStyles();
 }
 
@@ -187,6 +304,15 @@ void TabStripComboButton::UpdateButtonsVisibility() {
 
   update_button_visibility(GetEndButtonActionItem(), end_button_animation_,
                            IsTabSearchPinned() || show_tab_search_ephemerally_);
+
+  const bool shortcuts_enabled =
+      prefs->GetBoolean(prefs::kTabStripShortcutsEnabled);
+  if (shortcut_button_1_) {
+    shortcut_button_1_->SetVisible(shortcuts_enabled);
+  }
+  if (shortcut_button_2_) {
+    shortcut_button_2_->SetVisible(shortcuts_enabled);
+  }
 }
 
 void TabStripComboButton::SetOrientation(views::LayoutOrientation orientation) {
@@ -212,6 +338,7 @@ void TabStripComboButton::SetOrientation(views::LayoutOrientation orientation) {
 
 void TabStripComboButton::ChildVisibilityChanged(views::View* child) {
   UpdateStyles();
+  PreferredSizeChanged();
 }
 
 void TabStripComboButton::ShowEverythingMenu() {
@@ -250,6 +377,9 @@ void TabStripComboButton::ShowAppMenu() {
     return;
   }
 
+  app_menu_.reset();
+  app_menu_model_.reset();
+
   AlertMenuItem alert_item =
       AppMenuModel::GetAlertItemForRunningTutorial(browser_);
 
@@ -260,14 +390,22 @@ void TabStripComboButton::ShowAppMenu() {
   app_menu_ = std::make_unique<AppMenu>(
       browser_, app_menu_model_.get(), views::MenuRunner::HAS_MNEMONICS,
       base::BindRepeating(&TabStripComboButton::OnAppMenuClosed,
-                          base::Unretained(this)));
+                          weak_ptr_factory_.GetWeakPtr()));
   app_menu_->RunMenu(app_menu_controller_, ui::mojom::MenuSourceType::kNone,
                      views::MenuAnchorPosition::kTopLeft);
 }
 
 void TabStripComboButton::OnAppMenuClosed() {
-  app_menu_.reset();
-  app_menu_model_.reset();
+  base::SequencedTaskRunner::GetCurrentDefault()->PostTask(
+      FROM_HERE,
+      base::BindOnce(
+          [](base::WeakPtr<TabStripComboButton> self) {
+            if (self) {
+              self->app_menu_.reset();
+              self->app_menu_model_.reset();
+            }
+          },
+          weak_ptr_factory_.GetWeakPtr()));
 }
 
 std::unique_ptr<TabStripFlatEdgeButton>
@@ -331,6 +469,174 @@ void TabStripComboButton::UpdateStyles() {
     }
     end_button_->SetFlatEdge(flat_edge);
   }
+
+  if (shortcut_button_1_) {
+    shortcut_button_1_->SetFlatEdge(TabStripFlatEdgeButton::FlatEdge::kNone);
+  }
+  if (shortcut_button_2_) {
+    shortcut_button_2_->SetFlatEdge(TabStripFlatEdgeButton::FlatEdge::kNone);
+  }
+}
+
+std::unique_ptr<TabStripFlatEdgeButton>
+TabStripComboButton::CreateShortcutButton(int index) {
+  auto button = std::make_unique<TabStripFlatEdgeButton>();
+  button->SetHorizontalAlignment(gfx::HorizontalAlignment::ALIGN_CENTER);
+  button->SetShouldShowLabel(false);
+  button->SetExpansionOrientation(orientation_);
+  button->set_paint_transparent(true);
+  button->set_context_menu_controller(this);
+  button->SetCallback(base::BindRepeating(
+      &TabStripComboButton::OnShortcutClicked, base::Unretained(this), index));
+  return button;
+}
+
+void TabStripComboButton::UpdateShortcuts() {
+  if (!browser_ || !browser_->GetProfile()) {
+    return;
+  }
+  PrefService* prefs = browser_->GetProfile()->GetPrefs();
+  auto configure_button = [&](TabStripFlatEdgeButton* button, int index) {
+    if (!button) {
+      return;
+    }
+    std::string title = prefs->GetString(
+        index == 1 ? prefs::kTabStripShortcut1Title
+                   : prefs::kTabStripShortcut2Title);
+    std::string url = prefs->GetString(
+        index == 1 ? prefs::kTabStripShortcut1Url
+                   : prefs::kTabStripShortcut2Url);
+    if (title.empty()) {
+      title = (index == 1) ? "YouTube" : "Gmail";
+    }
+    if (url.empty()) {
+      url = (index == 1) ? "https://www.youtube.com"
+                         : "https://mail.google.com";
+    }
+    std::u16string title16 = base::UTF8ToUTF16(title);
+    button->SetTooltipText(title16);
+    button->GetViewAccessibility().SetName(title16);
+
+    TabStripShortcutImageSource::Type icon_type =
+        TabStripShortcutImageSource::Type::kGeneric;
+    std::string lower_url = base::ToLowerASCII(url);
+    std::string lower_title = base::ToLowerASCII(title);
+    if (lower_url.find("youtube") != std::string::npos ||
+        lower_title.find("youtube") != std::string::npos) {
+      icon_type = TabStripShortcutImageSource::Type::kYouTube;
+    } else if (lower_url.find("mail.google.com") != std::string::npos ||
+               lower_title.find("gmail") != std::string::npos ||
+               lower_url.find("gmail") != std::string::npos) {
+      icon_type = TabStripShortcutImageSource::Type::kGmail;
+    }
+
+    std::string first_letter = title.empty() ? "?" : title.substr(0, 1);
+    gfx::ImageSkia icon =
+        gfx::CanvasImageSource::MakeImageSkia<TabStripShortcutImageSource>(
+            icon_type, first_letter);
+    ui::ImageModel model = ui::ImageModel::FromImageSkia(icon);
+    button->SetImageModel(views::Button::STATE_NORMAL, model);
+    button->SetImageModel(views::Button::STATE_HOVERED, model);
+    button->SetImageModel(views::Button::STATE_PRESSED, model);
+    button->SetImageModel(views::Button::STATE_DISABLED, model);
+  };
+
+  configure_button(shortcut_button_1_, 1);
+  configure_button(shortcut_button_2_, 2);
+}
+
+void TabStripComboButton::OnShortcutClicked(int index) {
+  if (!browser_) {
+    return;
+  }
+  PrefService* prefs = browser_->GetProfile()->GetPrefs();
+  std::string url_str = prefs->GetString(
+      index == 1 ? prefs::kTabStripShortcut1Url
+                 : prefs::kTabStripShortcut2Url);
+  if (url_str.empty()) {
+    url_str = (index == 1) ? "https://www.youtube.com" : "https://mail.google.com";
+  }
+  GURL url(url_str);
+  if (!url.is_valid()) {
+    url = GURL("https://" + url_str);
+  }
+  if (url.is_valid()) {
+    chrome::AddSelectedTabWithURL(browser_, url,
+                                  ui::PAGE_TRANSITION_AUTO_BOOKMARK);
+  }
+}
+
+void TabStripComboButton::ShowEditShortcutDialog(int index) {
+  if (!GetWidget()) {
+    return;
+  }
+  PrefService* prefs = browser_->GetProfile()->GetPrefs();
+  auto dialog = std::make_unique<views::DialogDelegate>();
+  dialog->SetTitle(index == 1 ? u"Edit Shortcut 1" : u"Edit Shortcut 2");
+  dialog->SetShowCloseButton(true);
+  dialog->SetModalType(ui::mojom::ModalType::kWindow);
+  dialog->SetButtons(static_cast<int>(ui::mojom::DialogButton::kOk) |
+                     static_cast<int>(ui::mojom::DialogButton::kCancel));
+  dialog->SetButtonLabel(ui::mojom::DialogButton::kOk, u"Save");
+
+  auto contents = std::make_unique<views::View>();
+  contents->SetLayoutManager(std::make_unique<views::BoxLayout>(
+      views::BoxLayout::Orientation::kVertical, gfx::Insets::VH(10, 14), 8));
+
+  auto* name_label = contents->AddChildView(std::make_unique<views::Label>(u"Name"));
+  name_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  auto* name_field = contents->AddChildView(std::make_unique<views::Textfield>());
+  std::string cur_title = prefs->GetString(
+      index == 1 ? prefs::kTabStripShortcut1Title : prefs::kTabStripShortcut2Title);
+  name_field->SetText(base::UTF8ToUTF16(cur_title));
+  name_field->SetAccessibleName(u"Shortcut Name");
+
+  auto* url_label = contents->AddChildView(std::make_unique<views::Label>(u"URL"));
+  url_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  auto* url_field = contents->AddChildView(std::make_unique<views::Textfield>());
+  std::string cur_url = prefs->GetString(
+      index == 1 ? prefs::kTabStripShortcut1Url : prefs::kTabStripShortcut2Url);
+  url_field->SetText(base::UTF8ToUTF16(cur_url));
+  url_field->SetAccessibleName(u"Shortcut URL");
+
+  dialog->SetAcceptCallback(base::BindOnce(
+      [](PrefService* prefs, int shortcut_index, views::Textfield* nf,
+         views::Textfield* uf) {
+        std::string title = base::UTF16ToUTF8(nf->GetText());
+        std::string url = base::UTF16ToUTF8(uf->GetText());
+        if (title.empty()) {
+          title = (shortcut_index == 1) ? "YouTube" : "Gmail";
+        }
+        if (!url.empty() &&
+            !base::StartsWith(url, "http://",
+                              base::CompareCase::INSENSITIVE_ASCII) &&
+            !base::StartsWith(url, "https://",
+                              base::CompareCase::INSENSITIVE_ASCII)) {
+          url = "https://" + url;
+        }
+        if (url.empty()) {
+          url = (shortcut_index == 1) ? "https://www.youtube.com"
+                                      : "https://mail.google.com";
+        }
+        prefs->SetString(shortcut_index == 1 ? prefs::kTabStripShortcut1Title
+                                             : prefs::kTabStripShortcut2Title,
+                         title);
+        prefs->SetString(shortcut_index == 1 ? prefs::kTabStripShortcut1Url
+                                             : prefs::kTabStripShortcut2Url,
+                         url);
+      },
+      base::Unretained(prefs), index, base::Unretained(name_field),
+      base::Unretained(url_field)));
+
+  dialog->SetContentsView(std::move(contents));
+  views::DialogDelegate::CreateDialogWidget(dialog.release(), nullptr,
+                                            GetWidget()->GetNativeView())
+      ->Show();
+}
+
+bool TabStripComboButton::HasVisibleShortcuts() const {
+  return (shortcut_button_1_ && shortcut_button_1_->GetVisible()) ||
+         (shortcut_button_2_ && shortcut_button_2_->GetVisible());
 }
 
 void TabStripComboButton::ShowContextMenuForViewImpl(
@@ -362,6 +668,40 @@ void TabStripComboButton::ShowContextMenuForViewImpl(
                     ? IDS_TAB_SEARCH_BUTTON_CXMENU_UNPIN
                     : IDS_TAB_SEARCH_BUTTON_CXMENU_PIN;
     element_id = kTabSearchUnpinMenuItem;
+  } else if (source == shortcut_button_1_ || source == shortcut_button_2_) {
+    int shortcut_index = (source == shortcut_button_1_) ? 1 : 2;
+    context_menu_shortcut_index_ = shortcut_index;
+
+    menu_model_ = std::make_unique<ui::SimpleMenuModel>(this);
+    menu_model_->AddItem(kOpenShortcutTab, u"Open in new tab");
+    menu_model_->AddItem(kOpenShortcutWindow, u"Open in new window");
+    menu_model_->AddSeparator(ui::NORMAL_SEPARATOR);
+    menu_model_->AddItem(kEditShortcut, u"Edit shortcut...");
+    menu_model_->AddItem(kResetShortcut, u"Reset to default");
+    menu_model_->AddSeparator(ui::NORMAL_SEPARATOR);
+    menu_model_->AddItem(kToggleHideShortcuts, u"Hide tab strip shortcuts");
+
+    menu_model_adapter_ = std::make_unique<views::MenuModelAdapter>(
+        menu_model_.get(),
+        base::BindRepeating(&TabStripComboButton::OnMenuClosed,
+                            base::Unretained(this)));
+    menu_model_adapter_->set_triggerable_event_flags(ui::EF_LEFT_MOUSE_BUTTON |
+                                                     ui::EF_RIGHT_MOUSE_BUTTON);
+    std::unique_ptr<views::MenuItemView> root = menu_model_adapter_->CreateMenu();
+    menu_runner_ = std::make_unique<views::MenuRunner>(
+        std::move(root),
+        views::MenuRunner::HAS_MNEMONICS | views::MenuRunner::CONTEXT_MENU);
+
+    BrowserView* browser_view = BrowserView::GetBrowserViewForBrowser(browser_);
+    if (browser_view && browser_view->tab_strip_view()) {
+      expand_on_hover_lock_ = browser_view->tab_strip_view()->GetExpandOnHoverLock(
+          ExpandOnHoverLockType::kKeepCurrentState);
+    }
+
+    menu_runner_->RunMenuAt(GetWidget(), nullptr,
+                            source->GetAnchorBoundsInScreen(),
+                            views::MenuAnchorPosition::kTopLeft, source_type);
+    return;
   } else {
     return;
   }
@@ -378,6 +718,11 @@ void TabStripComboButton::ShowContextMenuForViewImpl(
       command_id, string_id,
       ui::ImageModel::FromVectorIcon(icon, ui::kColorIcon, 16));
   menu_model_->SetElementIdentifierAt(0, element_id);
+
+  if (source == end_button_) {
+    menu_model_->AddSeparator(ui::NORMAL_SEPARATOR);
+    menu_model_->AddCheckItem(kToggleHideShortcuts, u"Show tab strip shortcuts");
+  }
 
   menu_model_adapter_ = std::make_unique<views::MenuModelAdapter>(
       menu_model_.get(), base::BindRepeating(&TabStripComboButton::OnMenuClosed,
@@ -408,6 +753,51 @@ void TabStripComboButton::ExecuteCommand(int command_id, int event_flags) {
     return;
   }
 
+  if (command_id == kOpenShortcutTab) {
+    OnShortcutClicked(context_menu_shortcut_index_);
+    return;
+  }
+  if (command_id == kOpenShortcutWindow) {
+    PrefService* prefs = browser_->GetProfile()->GetPrefs();
+    std::string url_str = prefs->GetString(context_menu_shortcut_index_ == 1
+                                               ? prefs::kTabStripShortcut1Url
+                                               : prefs::kTabStripShortcut2Url);
+    if (url_str.empty()) {
+      url_str = (context_menu_shortcut_index_ == 1) ? "https://www.youtube.com"
+                                                    : "https://mail.google.com";
+    }
+    NavigateParams params(
+        BrowserView::GetBrowserViewForBrowser(browser_)->browser(),
+        GURL(url_str), ui::PAGE_TRANSITION_AUTO_BOOKMARK);
+    params.disposition = WindowOpenDisposition::NEW_WINDOW;
+    Navigate(&params);
+    return;
+  }
+  if (command_id == kEditShortcut) {
+    ShowEditShortcutDialog(context_menu_shortcut_index_);
+    return;
+  }
+  if (command_id == kResetShortcut) {
+    PrefService* prefs = browser_->GetProfile()->GetPrefs();
+    prefs->SetString(context_menu_shortcut_index_ == 1
+                         ? prefs::kTabStripShortcut1Title
+                         : prefs::kTabStripShortcut2Title,
+                     context_menu_shortcut_index_ == 1 ? "YouTube" : "Gmail");
+    prefs->SetString(context_menu_shortcut_index_ == 1
+                         ? prefs::kTabStripShortcut1Url
+                         : prefs::kTabStripShortcut2Url,
+                     context_menu_shortcut_index_ == 1
+                         ? "https://www.youtube.com"
+                         : "https://mail.google.com");
+    return;
+  }
+  if (command_id == kToggleHideShortcuts) {
+    PrefService* prefs = browser_->GetProfile()->GetPrefs();
+    bool current = prefs->GetBoolean(prefs::kTabStripShortcutsEnabled);
+    prefs->SetBoolean(prefs::kTabStripShortcutsEnabled, !current);
+    return;
+  }
+
   if (command_id != IDC_EVERYTHING_MENU_TOGGLE_PIN) {
     return;
   }
@@ -420,6 +810,14 @@ void TabStripComboButton::ExecuteCommand(int command_id, int event_flags) {
                 : "TabStripComboButton.EverythingMenu.Pinned"));
 
   prefs->SetBoolean(prefs::kEverythingMenuPinnedToTabstrip, !is_pinned);
+}
+
+bool TabStripComboButton::IsCommandIdChecked(int command_id) const {
+  if (command_id == kToggleHideShortcuts) {
+    return browser_->GetProfile()->GetPrefs()->GetBoolean(
+        prefs::kTabStripShortcutsEnabled);
+  }
+  return false;
 }
 
 void TabStripComboButton::OnBubbleInitializing() {

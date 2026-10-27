@@ -1558,10 +1558,10 @@ Chromium is unable to recover your settings.
       <if expr="not is_chromeos and not is_android">
         <!-- Profile Customization Web UI -->
         <message name="IDS_PROFILE_CUSTOMIZATION_TEXT" desc="Text of the profile customization bubble">
-          Customize your new Chromium profile
+          Customize your new profile
         </message>
         <message name="IDS_PROFILE_CUSTOMIZATION_TITLE_V2" desc="Title of the profile customization dialog">
-          Customize your Chromium profile
+          Customize your profile
         </message>
       </if>
 
@@ -2705,86 +2705,86 @@ Chromium is unable to recover your settings.
         </message>
         <!-- Profile Picker -->
         <message name="IDS_PROFILE_PICKER_MAIN_VIEW_TITLE" desc="Profile picker main view title">
-          Welcome to Chromium profiles
+          Welcome to Rinswa profiles
         </message>
         <message name="IDS_PROFILE_PICKER_MAIN_VIEW_TITLE_V2" desc="Title of a screen that lets the user choose which profile to use when browsing the web. *If the EN source doesn't translate well in your language, an alternative string 'Which Chromium profile would you like to use?' may be used instead">
-          Who's using Chromium?
+          Who's using Rinswa?
         </message>
         <message name="IDS_PROFILE_PICKER_MAIN_VIEW_SUBTITLE" desc="Profile picker main view subtitle">
-          With Chromium profiles, you can separate all your Chromium stuff. Create profiles for friends and family, or split between work and fun.
+          With Rinswa profiles, you can separate all your Rinswa stuff. Create profiles for friends and family, or split between work and fun.
         </message>
         <message name="IDS_PROFILE_PICKER_PROFILE_CREATION_FLOW_PROFILE_TYPE_CHOICE_TITLE" desc="Profile picker profile type choice title">
-          Set up your new Chromium profile
+          Set up your new Rinswa profile
         </message>
         <message name="IDS_PROFILE_PICKER_IPH_FOR_PROFILES_TEXT" desc="Text of the IPH bubble for introducing profiles.">
-          Each profile holds its own Chromium info like bookmarks, history, passwords, and more
+          Each profile holds its own Rinswa info like bookmarks, history, passwords, and more
         </message>
         <message name="IDS_PROFILE_PICKER_IPH_FOR_ADD_PROFILE_TEXT" desc="Text of the IPH bubble for adding new profiles.">
-          If you share a device, friends and family can browse separately and set up Chromium just the way they want
+          If you share a device, friends and family can browse separately and set up Rinswa just the way they want
         </message>
         <message name="IDS_PROFILE_PICKER_PROFILE_SWITCH_TITLE" desc="Profile picker profile switch title">
-          Switch to existing Chromium profile?
+          Switch to existing Rinswa profile?
         </message>
         <message name="IDS_PROFILE_PICKER_PROFILE_SWITCH_SUBTITLE" desc="Profile picker profile switch subtitle">
-          A Chromium profile with this account already exists on this device
+          A Rinswa profile with this account already exists on this device
         </message>
         <message name="IDS_PROFILE_PICKER_FORCE_SIGN_IN_ERROR_DIALOG_NOT_SUPPORTED_BY_GLIC_FLOW_BODY" desc="Body of the force sign in error dialog, the dialog is shown when the user attempts to reauth a profile while in the Glic version. This flow is not supported in this version of the picker. The overall purpose of the dialog is to redirect the user to the regular picker to finalize the reauth." translateable="false">
-          To use this profile with Glic, open Chromium and sign in
+          To use this profile with Glic, open Rinswa and sign in
         </message>
 
         <!-- First Run Experience -->
         <message name="IDS_FRE_WELCOME_START_BUTTON_LABEL" desc="This string is found on a primary button that takes the user into the main browser experience. It is a verb-based call to action. (CHAR LIMIT = 20)">
-          Start Chromium
+          Start Rinswa
         </message>
 
         <message name="IDS_FRE_SIGN_IN_TITLE_0" meaning="Title"
           desc="This string appears as a heading on a full-page screen that asks the user to sign in to Chromium with their Google Account. It appears when the user launches Chromium for the first time. When they sign in, they can personalize and customize Chromium and remember their settings in their Google Account. The tone should be inviting and alluring.">
-          Sign in to Chromium
+          Sign in to Rinswa
         </message>
 
         <!-- Default Browser Promo -->
         <message name="IDS_FRE_DEFAULT_BROWSER_TITLE" desc="Title for the page that prompts user to set Chromium as their default browser in the first run experience.">
-          Set Chromium as your default browser
+          Set Rinswa as your default browser
         </message>
         <message name="IDS_FRE_DEFAULT_BROWSER_AND_PINNING_TITLE" desc="Title for the page that prompts user to set Chromium as their default browser and pin to taskbar in the first run experience.">
-          Use Chromium by default and get it pinned
+          Use Rinswa by default and get it pinned
         </message>
         <message name="IDS_FRE_DEFAULT_BROWSER_SUBTITLE_NEW" desc="Subtitle for the page that prompts user to set Chromium as their default browser in the first run experience.">
-          Use Chromium anytime you click links in messages, documents, and other apps
+          Use Rinswa anytime you click links in messages, documents, and other apps
         </message>
         <message name="IDS_FRE_DEFAULT_BROWSER_AND_PINNING_SUBTITLE" desc="Subtitle for the page that prompts user to set Chromium as their default browser and pin to taskbar in the first run experience.">
-          Open links in Chromium from any app. Plus for easy access, it gets pinned to your taskbar.
+          Open links in Rinswa from any app. Plus for easy access, it gets pinned to your taskbar.
         </message>
         <message name="IDS_FRE_DEFAULT_BROWSER_ILLUSTRATION_ALT_TEXT" desc="Alt text for the illustration in the page that prompts user to set Chromium as their default browser.">
-          Chromium logo inside a computer screen.
+          Rinswa logo inside a computer screen.
         </message>
         <message name="IDS_APP_MENU_TOOLTIP_DEFAULT_PROMPT" desc="The tooltip to show for the browser menu when the default browser prompt is displayed">
-          Customize and control Chromium. Set Chromium as your default.
+          Customize and control Rinswa. Set Rinswa as your default.
         </message>
         <message name="IDS_APP_MENU_BUTTON_DEFAULT_PROMPT" desc="Text in the browser menu chip indicating that the user can change their default browser">
-          Set Chromium as your default
+          Set Rinswa as your default
         </message>
         <message name="IDS_SET_BROWSER_AS_DEFAULT_MENU_ITEM" desc="Menu item that prompts user to set Chromium as their default browser.">
-          Set Chromium as your default browser
+          Set Rinswa as your default browser
         </message>
 
         <!-- Default Browser Promo Refresh -->
         <message name="IDS_FRE_REFRESH_DEFAULT_BROWSER_TITLE" desc="Title for the page that prompts user to set Chromium as their default browser in the refreshed first run experience.">
-          Set Chromium as default and pin it to taskbar
+          Set Rinswa as default and pin it to taskbar
         </message>
         <message name="IDS_FRE_REFRESH_DEFAULT_BROWSER_SUBTITLE" desc="Subtitle for the page that prompts user to set Chromium as their default browser in the refreshed first run experience.">
-          Open links in Chromium from any app and keep the browser accessible on your taskbar
+          Open links in Rinswa from any app and keep the browser accessible on your taskbar
         </message>
 
         <!-- Profile switch IPH -->
         <message name="IDS_PROFILE_SWITCH_PROMO" desc="Text of the In-Product-Help bubble for profile switching.">
-          You can switch between Chromium profiles here
+          You can switch between Rinswa profiles here
         </message>
         <message name="IDS_PROFILE_SWITCH_PROMO_SCREENREADER" desc="Text announced by screenreaders to explain how to switch between profiles.">
-          <ph name="SHORTCUT">$1<ex>CTRL+SHIFT+M</ex></ph> can switch between Chromium profiles
+          <ph name="SHORTCUT">$1<ex>CTRL+SHIFT+M</ex></ph> can switch between Rinswa profiles
         </message>
         <message name="IDS_PASSWORD_MANAGER_IPH_BODY_WEB_APP_PROFILE_SWITCH" desc="Body of the in Product Help for profile switching shown in the password manager web app.">
-          You can switch to see passwords from another Chromium profile
+          You can switch to see passwords from another Rinswa profile
         </message>
 
         <!-- Web Signout Intercept IPH -->
@@ -2820,7 +2820,7 @@ Chromium is unable to recover your settings.
 
       <!-- Feature Showcase - Themes -->
       <message name="IDS_FEATURE_SHOWCASE_THEMES_TITLE" desc="This is the headline for a customization onboarding screen. It focuses on personalization and user choice. (CHAR LIMIT = 30)">
-        Make Chromium yours
+        Make Rinswa yours
       </message>
 
       <!-- Notification quiet permission IPH -->
@@ -2833,20 +2833,20 @@ Chromium is unable to recover your settings.
 
       <!-- ChromeLabs bubble -->
       <message name="IDS_CHROMELABS_RELAUNCH_FOOTER_MESSAGE" desc="Text that shows in the footer of the Chrome Labs bubble when relaunch is needed for changes to take effect.">
-        Your changes will take effect the next time you relaunch Chromium.
+        Your changes will take effect the next time you relaunch Rinswa.
       </message>
 
       <!-- Device Chooser Prompt -->
       <message name="IDS_SERIAL_DEVICE_CHOOSER_AUTHORIZE_BLUETOOTH" desc="Text shown in the Web Serial Chooser when browser does not have Bluetooth permission. The '&#10;' is a newline character to force the desired line wrapping.">
-        Chromium needs Bluetooth access to explore &#10; Bluetooth devices. <ph name="IDS_SERIAL_DEVICE_CHOOSER_AUTHORIZE_BLUETOOTH_LINK">$1<ex>Open Preferences</ex></ph>
+        Rinswa needs Bluetooth access to explore &#10; Bluetooth devices. <ph name="IDS_SERIAL_DEVICE_CHOOSER_AUTHORIZE_BLUETOOTH_LINK">$1<ex>Open Preferences</ex></ph>
       </message>
 
       <!-- Tailored Security -->
       <message name="IDS_TAILORED_SECURITY_UNCONSENTED_PROMOTION_NOTIFICATION_TITLE" desc="Title of notification prompting the user to enable Enhanced Safe Browsing after they have enabled account-level protections.">
-        Get Chromium's strongest security
+        Get Rinswa's strongest security
       </message>
       <message name="IDS_TAILORED_SECURITY_UNCONSENTED_PROMOTION_MESSAGE_TITLE" desc="Title shown in the message shown when a user changes their account-level tailored security setting encouraging them to enable Enhanced Safe Browsing">
-        Get Chromium's strongest security
+        Get Rinswa's strongest security
       </message>
       <message name="IDS_TAILORED_SECURITY_UNCONSENTED_PROMOTION_MESSAGE_DESCRIPTION" desc="Description shown in the message shown when a user changes their account-level tailored security setting encouraging them to enable Enhanced Safe Browsing">
         Enhanced protection does more to block phishing and malware
@@ -2861,16 +2861,16 @@ Chromium is unable to recover your settings.
       <!--Launch On Startup-->
       <if expr="is_win">
         <message name="IDS_SETTINGS_FOREGROUND_LAUNCH_ON_STARTUP_LABEL" desc="Label for settings toggle button that enables or disables opening Chromium on system startup">
-          Launch Chromium when Windows starts
+          Launch Rinswa when Windows starts
         </message>
         <message name="IDS_SETTINGS_FOREGROUND_LAUNCH_ON_STARTUP_SUB_LABEL" desc="Sub label for settings toggle button that enables or disables opening Chromium on system startup">
-          Launch Chromium automatically to begin browsing instantly.
+          Launch Rinswa automatically to begin browsing instantly.
         </message>
         <message name="IDS_STARTUP_LAUNCH_INFOBAR_OPT_IN_TITLE" desc="Title of the infobar shown to ask the user if they want to allow Chromium to launch when windows starts.">
-          Begin browsing instantly: Chromium can now launch when Windows starts.
+          Begin browsing instantly: Rinswa can now launch when Windows starts.
         </message>
         <message name="IDS_STARTUP_LAUNCH_INFOBAR_OPT_OUT_TITLE" desc="Title of the infobar shown to inform the user that Chromium now starts automatically when Windows starts.">
-          Chromium now launches when Windows starts so you can begin browsing instantly. You can turn this off in settings.
+          Rinswa now launches when Windows starts so you can begin browsing instantly. You can turn this off in settings.
         </message>
       </if>
 
@@ -3317,21 +3317,21 @@ Chromium is unable to recover your settings.
       </if>
       <if expr="not is_macosx">
         <message name="IDS_OMNIBOX_EVERYWHERE_STATUS_ICON_MENU_TOGGLE" desc="Label for the toggle item in the Search in Chromium status tray context menu.">
-          Open search with Chromium
+          Open search with Rinswa
         </message>
       </if>
       <message name="IDS_OMNIBOX_EVERYWHERE_STATUS_ICON_TOOLTIP" desc="Tooltip text for the Search with Chromium status tray icon.">
-        Search with Chromium
+        Search with Rinswa
       </message>
       <message name="IDS_OMNIBOX_EVERYWHERE_PROFILE_TOOLTIP" desc="Tooltip header for the profile icon in Omnibox Everywhere.">
-        Chromium profile
+        Rinswa profile
       </message>
       <message name="IDS_OMNIBOX_EVERYWHERE_NAME" desc="Name of the desktop search feature (Omnibox Everywhere) used for window titles and shortcuts.">
-        Search with Chromium
+        Search with Rinswa
       </message>
       <if expr="is_win">
         <message name="IDS_OMNIBOX_EVERYWHERE_NAME_BETA" desc="Unused; Chromium has no side-by-side channels." translateable="false">
-          Search with Chromium Beta
+          Search with Rinswa Beta
         </message>
         <message name="IDS_OMNIBOX_EVERYWHERE_NAME_DEV" desc="Unused; Chromium has no side-by-side channels." translateable="false">
           Search with Chromium Dev
@@ -3395,19 +3395,19 @@ Chromium is unable to recover your settings.
 
       <!-- Profile Picker Glic version-->
       <message name="IDS_PROFILE_PICKER_MAIN_VIEW_TITLE_GLIC" desc="Profile picker main view title for Glic version. 'Glic' has a special styling." translateable="false">
-        Choose a Chromium profile to use with <ph name="START_GLIC_STYLING">&lt;span class="glic-brand-style"&gt;</ph>Glic<ph name="END_GLIC_STYLING">&lt;/span&gt;</ph>
+        Choose a profile to use with <ph name="START_GLIC_STYLING">&lt;span class="glic-brand-style"&gt;</ph>Glic<ph name="END_GLIC_STYLING">&lt;/span&gt;</ph>
       </message>
       <message name="IDS_PROFILE_PICKER_MAIN_VIEW_TITLE_GLIC_NO_PROFILE" desc="Profile picker main view title for Glic version when no profiles are eligible to use Glic. 'Glic' has a special styling." translateable="false">
         Sign into Chromium with your Google Account to use <ph name="START_GLIC_STYLING">&lt;span class="glic-brand-style"&gt;</ph>Glic<ph name="END_GLIC_STYLING">&lt;/span&gt;</ph>
       </message>
       <message name="IDS_PROFILE_PICKER_MAIN_VIEW_SUBTITLE_GLIC" desc="Profile picker main view subtitle for Glic version." translateable="false">
-        Select the Chromium profile linked to your Google Account to personalize your Glic experience
+        Select the profile linked to your Google Account to personalize your Glic experience
       </message>
       <message name="IDS_PROFILE_PICKER_MAIN_VIEW_SUBTITLE_GLIC_NO_PROFILE" desc="Profile picker main view subtitle for Glic version. This version is shown when no profiles are eligibile to use Glic." translateable="false">
         To add a new profile and use it with Glic, sign in to Chromium with a Google Account. <ph name="BEGIN_LINK">&lt;a class="learn-more-link" href="#" target=&quot;_blank&quot;&gt;</ph>Learn how to sign in to Chromium<ph name="END_LINK">&lt;/a&gt;</ph>
       </message>
       <message name="IDS_PROFILE_PICKER_ADD_PROFILE_HELPER_GLIC" desc="Text shown in the Profile Picker Glic version below the profiles list container that helps the user to create a new profile and sign in to it." translateable="false">
-        To add a new profile and use it with Glic, sign in to Chromium with a different Google Account. <ph name="BEGIN_LINK">&lt;a class="learn-more-link" href="#" target=&quot;_blank&quot;&gt;</ph>Learn how to add a new Chromium profile<ph name="END_LINK">&lt;/a&gt;</ph>
+        To add a new profile and use it with Glic, sign in to Chromium with a different Google Account. <ph name="BEGIN_LINK">&lt;a class="learn-more-link" href="#" target=&quot;_blank&quot;&gt;</ph>Learn how to add a new profile<ph name="END_LINK">&lt;/a&gt;</ph>
       </message>
 
       <!-- Glic button and tab strip context menu -->

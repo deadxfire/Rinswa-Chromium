@@ -5,7 +5,9 @@
 ; ==============================================================================
 
 #define AppName "Rinswa Browser"
-#define AppVersion "1.0.7"
+#ifndef AppVersion
+  #define AppVersion "1.0.9"
+#endif
 #define AppPublisher "Arindam Makar"
 #define AppURL "https://github.com/deadxfire/Rinswa-browser"
 #define AppExeName "Rinswa.exe"
@@ -68,6 +70,8 @@ Name: "registerbrowser"; Description: "Register Rinswa Browser in Windows Defaul
 ; Root Browser Files
 Source: "{#StageDir}\{#AppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#StageDir}\chrome_proxy.exe"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "{#StageDir}\yt-dlp.exe"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "{#StageDir}\ffmpeg.exe"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "{#StageDir}\initial_preferences"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "{#StageDir}\Rinswa.VisualElementsManifest.xml"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "{#StageDir}\document.ico"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist

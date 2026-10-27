@@ -7,6 +7,7 @@
 
 #include "base/callback_list.h"
 #include "base/memory/raw_ptr.h"
+#include "base/memory/weak_ptr.h"
 #include "base/scoped_observation.h"
 #include "base/timer/timer.h"
 #include "chrome/browser/ui/views/tab_search_bubble_host_observer.h"
@@ -66,6 +67,9 @@ class TabStripComboButton : public views::View,
 
   TabStripFlatEdgeButton* start_button() { return start_button_; }
   TabStripFlatEdgeButton* end_button() { return end_button_; }
+  TabStripFlatEdgeButton* shortcut_button_1() { return shortcut_button_1_; }
+  TabStripFlatEdgeButton* shortcut_button_2() { return shortcut_button_2_; }
+  bool HasVisibleShortcuts() const;
 
   void ShowAppMenu();
 
@@ -77,6 +81,7 @@ class TabStripComboButton : public views::View,
 
   // ui::SimpleMenuModel::Delegate:
   void ExecuteCommand(int command_id, int event_flags) override;
+  bool IsCommandIdChecked(int command_id) const override;
 
   // TabSearchBubbleHostObserver:
   void OnBubbleInitializing() override;
@@ -100,6 +105,10 @@ class TabStripComboButton : public views::View,
   void ShowEverythingMenu();
 
   void UpdateButtonsVisibility();
+  void UpdateShortcuts();
+  void OnShortcutClicked(int index);
+  void ShowEditShortcutDialog(int index);
+  std::unique_ptr<TabStripFlatEdgeButton> CreateShortcutButton(int index);
 
   std::unique_ptr<TabStripFlatEdgeButton> CreateFlatEdgeButtonFor(
       ui::ElementIdentifier element_id);
@@ -122,6 +131,9 @@ class TabStripComboButton : public views::View,
   const Context context_;
   raw_ptr<TabStripFlatEdgeButton> start_button_ = nullptr;
   raw_ptr<TabStripFlatEdgeButton> end_button_ = nullptr;
+  raw_ptr<TabStripFlatEdgeButton> shortcut_button_1_ = nullptr;
+  raw_ptr<TabStripFlatEdgeButton> shortcut_button_2_ = nullptr;
+  int context_menu_shortcut_index_ = 0;
 
   gfx::SlideAnimation start_button_animation_{this};
   gfx::SlideAnimation end_button_animation_{this};
@@ -150,6 +162,8 @@ class TabStripComboButton : public views::View,
   std::unique_ptr<AppMenu> app_menu_;
   std::unique_ptr<AppMenuModel> app_menu_model_;
   raw_ptr<views::MenuButtonController> app_menu_controller_ = nullptr;
+
+  base::WeakPtrFactory<TabStripComboButton> weak_ptr_factory_{this};
 };
 
 #endif  // CHROME_BROWSER_UI_VIEWS_TABS_SHARED_TAB_STRIP_COMBO_BUTTON_H_

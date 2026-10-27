@@ -1,7 +1,7 @@
 # Rinswa Browser (Chromium Edition) - Architecture & Compilation Guide
 
 **A fast, private, and stunning modern Chromium-based web browser.**  
-Developed and maintained by **Arindam Makar** &bull; Version `1.0.6 Stable`
+Developed and maintained by **Arindam Makar** &bull; Version `1.0.8 Stable`
 
 ---
 

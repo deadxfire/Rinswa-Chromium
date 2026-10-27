@@ -367,7 +367,7 @@ UpdateCheckResultInfo PerformUpdateWorkflow(
   }
 
 #ifndef RINSWA_VERSION
-#define RINSWA_VERSION "1.0.7"
+#define RINSWA_VERSION "1.0.9"
 #endif
   std::string current_ver = RINSWA_VERSION;
   if (!IsRemoteVersionNewer(current_ver, *tag_name)) {

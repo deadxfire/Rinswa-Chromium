@@ -11,17 +11,5 @@
   "homepage_is_newtabpage": true,
   "browser": {
     "show_home_button": true
-  },
-  "extensions": {
-    "settings": {
-      "cjpalhdlnbpafiamejdnhcphjbkeiagm": {
-        "installation_mode": "normal_installed",
-        "update_url": "https://clients2.google.com/service/update2/crx"
-      },
-      "ddkjiahejlhfcafbddmgiahcphecmpfh": {
-        "installation_mode": "normal_installed",
-        "update_url": "https://clients2.google.com/service/update2/crx"
-      }
-    }
   }
 }

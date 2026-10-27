@@ -1,7 +1,7 @@
 # Rinswa Browser (Chromium Engine): Architecture & Build Walkthrough
 
 **The Official Guide to Compiling Rinswa Browser from the Chromium C++ Engine.**  
-Developed and maintained by **[Arindam Makar](https://github.com/deadxfire)** &bull; Version `1.0.6 Stable`
+Developed and maintained by **[Arindam Makar](https://github.com/deadxfire)** &bull; Version `1.0.8 Stable`
 
 ---
 
@@ -72,7 +72,7 @@ The automated pipeline will:
    ```cmd
    autoninja -C out\RinswaRelease chrome mini_installer
    ```
-5. Package the standalone Windows installer into `dist\installer\Rinswa.Setup.v1.0.6.exe`.
+5. Package the standalone Windows installer into `dist\installer\Rinswa.Setup.v1.0.8.exe`.
 
 ---
 
@@ -94,7 +94,7 @@ The automated pipeline will:
 
 ## 5. Output Artifacts
 
-- **Standalone Windows Installer:** `dist\installer\Rinswa.Setup.v1.0.6.exe`
+- **Standalone Windows Installer:** `dist\installer\Rinswa.Setup.v1.0.8.exe`
 - **Standalone Binary:** `chromium\src\out\RinswaRelease\chrome.exe` (stamped with Rinswa emblem)
 
 ---

@@ -1,0 +1,450 @@
+/**
+ * Rinswa Browser - Cyber-Glass Minimalist Screen Capture CSS
+ * Designed with a refined, ultra-modern frosted glass aesthetic.
+ * Developed by Arindam Makar for Rinswa Chromium
+ */
+
+:host {
+  all: initial;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2147483647;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  box-sizing: border-box;
+  display: block;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+:host, :host *, :host *::before, :host *::after, #rinswa-screenshot-host * {
+  box-sizing: border-box;
+}
+
+/* Background Dimmed Overlay */
+.rinswa-backdrop-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+/* Top Floating Capsule (Dynamic Island Style) */
+.rinswa-top-bar {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(13, 17, 23, 0.82);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  padding: 4px 6px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), 0 0 1px rgba(255, 255, 255, 0.2);
+  animation: rinswaPillDrop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+}
+
+@keyframes rinswaPillDrop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.rinswa-divider {
+  width: 1px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 0 4px;
+}
+
+/* Segmented Control Buttons */
+.rinswa-mode-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.rinswa-mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  white-space: nowrap;
+}
+
+.rinswa-mode-btn svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+}
+
+.rinswa-mode-btn:hover {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.rinswa-mode-btn.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #38bdf8;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.rinswa-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.rinswa-close-btn svg {
+  width: 13px;
+  height: 13px;
+}
+
+.rinswa-close-btn:hover {
+  background: rgba(239, 68, 68, 0.18);
+  color: #f87171;
+}
+
+/* Minimalist Selection Box */
+.rinswa-selection-box {
+  position: absolute;
+  border: 1.5px solid #38bdf8;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), 0 0 14px rgba(56, 189, 248, 0.28);
+  box-sizing: border-box;
+  cursor: move;
+  z-index: 5;
+  pointer-events: auto;
+}
+
+/* Minimalist Dimension Tag */
+.rinswa-dimensions-tag {
+  position: absolute;
+  top: -24px;
+  left: 0;
+  background: rgba(13, 17, 23, 0.85);
+  backdrop-filter: blur(8px);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 10px;
+  font-weight: 500;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.rinswa-dimensions-tag.flip-down {
+  top: 6px;
+}
+
+/* Minimalist Circular Micro-Handles */
+.rinswa-handle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: #ffffff;
+  border: 1.5px solid #0284c7;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  z-index: 6;
+  box-sizing: border-box;
+}
+
+.rinswa-handle-tl { top: -4px; left: -4px; cursor: nwse-resize; }
+.rinswa-handle-tr { top: -4px; right: -4px; cursor: nesw-resize; }
+.rinswa-handle-bl { bottom: -4px; left: -4px; cursor: nesw-resize; }
+.rinswa-handle-br { bottom: -4px; right: -4px; cursor: nwse-resize; }
+.rinswa-handle-t  { top: -4px; left: 50%; transform: translateX(-50%); cursor: ns-resize; }
+.rinswa-handle-b  { bottom: -4px; left: 50%; transform: translateX(-50%); cursor: ns-resize; }
+.rinswa-handle-l  { left: -4px; top: 50%; transform: translateY(-50%); cursor: ew-resize; }
+.rinswa-handle-r  { right: -4px; top: 50%; transform: translateY(-50%); cursor: ew-resize; }
+
+/* Floating Minimalist Action Capsule */
+.rinswa-action-bar {
+  position: absolute;
+  bottom: -40px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(13, 17, 23, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  padding: 4px 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  animation: rinswaFadePop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+@keyframes rinswaFadePop {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.rinswa-action-bar.flip-up {
+  bottom: auto;
+  top: -40px;
+}
+
+.rinswa-action-bar.flip-inside {
+  bottom: 8px;
+  right: 8px;
+}
+
+.rinswa-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 9999px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.rinswa-action-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Copied badge/button */
+.rinswa-btn-copied {
+  background: rgba(16, 185, 129, 0.14);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.rinswa-btn-copied:hover {
+  background: rgba(16, 185, 129, 0.22);
+}
+
+.rinswa-btn-copied.pulse {
+  animation: rinswaSoftPulse 0.3s ease-out;
+}
+
+@keyframes rinswaSoftPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Save button */
+.rinswa-btn-save {
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.25);
+}
+
+.rinswa-btn-save:hover {
+  opacity: 0.94;
+  transform: translateY(-0.5px);
+  box-shadow: 0 3px 10px rgba(14, 165, 233, 0.35);
+}
+
+/* Close/dismiss icon button in action bar */
+.rinswa-btn-mini-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.rinswa-btn-mini-close svg {
+  width: 11px;
+  height: 11px;
+}
+
+.rinswa-btn-mini-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+/* Floating CleanShot-Style Fullscreen Preview Pill */
+.rinswa-fullscreen-modal {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  background: rgba(13, 17, 23, 0.88);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 8px 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 1px rgba(255, 255, 255, 0.2);
+  z-index: 20;
+  animation: rinswaCardSlideUp 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes rinswaCardSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.rinswa-fs-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rinswa-fs-thumb {
+  width: 52px;
+  height: 34px;
+  background: #020617;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rinswa-fs-thumb img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.rinswa-fs-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 130px;
+}
+
+.rinswa-fs-title {
+  color: #f8fafc;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.rinswa-fs-meta {
+  color: #94a3b8;
+  font-size: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.rinswa-fs-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #34d399;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.rinswa-fs-status svg {
+  width: 12px;
+  height: 12px;
+}
+
+.rinswa-fs-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 4px;
+}
+
+/* Minimalist Floating Toast */
+.rinswa-toast {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(13, 17, 23, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #f1f5f9;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  z-index: 30;
+  animation: rinswaToastUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rinswa-toast-icon {
+  color: #34d399;
+  display: flex;
+  align-items: center;
+}
+
+.rinswa-toast-icon svg {
+  width: 13px;
+  height: 13px;
+}
+
+@keyframes rinswaToastUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}

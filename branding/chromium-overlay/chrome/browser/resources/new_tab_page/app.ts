@@ -1179,6 +1179,10 @@ export class AppElement extends AppElementBase {
     this.requestUpdate();
   }
 
+  protected getShortcutsWidthContainer_(): HTMLElement | null {
+    return this.shadowRoot?.getElementById('searchboxContainer') || null;
+  }
+
   protected onSearchSubmitClick_() {
     const searchbox =
         this.shadowRoot?.querySelector('ntp-searchbox');

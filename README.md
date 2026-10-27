@@ -8,9 +8,9 @@
 
 Developed and maintained by **[Arindam Makar](https://github.com/deadxfire)**
 
-[![Version](https://img.shields.io/badge/version-1.0.7_Stable-00d2ff?style=for-the-badge&logo=googlechrome)](https://github.com/deadxfire/Rinswa-browser)
-[![Engine](https://img.shields.io/badge/engine-Chromium_C%2B%2B_Engine-orange?style=for-the-badge&logo=chromium)](https://github.com/deadxfire/Rinswa-browser)
-[![Platform](https://img.shields.io/badge/platform-Windows_x64-blue?style=for-the-badge&logo=windows)](https://github.com/deadxfire/Rinswa-browser)
+[![Version](https://img.shields.io/badge/version-1.0.9_Stable-00d2ff?style=for-the-badge&logo=googlechrome)](https://github.com/deadxfire/Rinswa-Chromium/releases)
+[![Engine](https://img.shields.io/badge/engine-Chromium_C%2B%2B_Engine-orange?style=for-the-badge&logo=chromium)](https://github.com/deadxfire/Rinswa-Chromium)
+[![Platform](https://img.shields.io/badge/platform-Windows_x64-blue?style=for-the-badge&logo=windows)](https://github.com/deadxfire/Rinswa-Chromium)
 [![License](https://img.shields.io/badge/license-MPL_2.0-blueviolet?style=for-the-badge)](LICENSE)
 [![Compiler](https://img.shields.io/badge/compiler-GN_%26_Ninja-red?style=for-the-badge&logo=ninja)](https://gn.googlesource.com/gn)
 
@@ -42,6 +42,12 @@ Developed and maintained by **[Arindam Makar](https://github.com/deadxfire)**
 ### ⚡ Out-of-the-Box Native Ad Blocking
 - **Pre-Integrated uBlock Origin:** Bundled directly into the distribution and enterprise policy definitions, providing instant, lightweight, and effective ad and tracker blocking on first launch.
 
+### 📸 Native Web Capture & Smart Screenshot Engine (`Ctrl+Shift+S`)
+- **Instant Keyboard Activation:** Press `Ctrl+Shift+S` anywhere to open the Cyber-Glass Web Capture interface.
+- **Select-Wise & Full-Screen Options:** Drag to capture any custom rectangular area with pixel-accurate 8-point resizing, or capture the entire visible screen with one click.
+- **Autocopy to Clipboard:** Automatically copies captured screenshots directly to the system clipboard upon selection for instant pasting.
+- **Instant Save to Disk:** One-click Save action downloads crisp, high-resolution PNG screenshots.
+
 ### 📑 Native Smart Tab Management & Clean Tabs
 - **Automatic Tab Grouping:** Automatically categorizes tabs into Work/Dev, Shopping, Personal, Media & Streaming, and Docs & Research.
 - **Duplicate-Tab Detection:** Identifies exact URL clones across open tabs.
@@ -64,7 +70,7 @@ BrowserCromium/
 │   ├── chromium-overlay/                   # Native Chromium source tree overlay
 │   │   ├── chrome/app/theme/chromium/      # Icons, ribbons, logos replacing default branding
 │   │   ├── chrome/installer/windows/       # Installer bitmaps and manifests
-│   │   └── components/version_info/        # Product version headers (v1.0.6)
+│   │   └── components/version_info/        # Product version headers (v1.0.8)
 │   ├── wizHeader.bmp                       # Windows setup header bitmap
 │   └── wallpaper-alpine.png                # Alpine Sunset dynamic wallpaper
 ├── patches/                                # Native C++ source patches
@@ -82,7 +88,7 @@ BrowserCromium/
 ├── Fetch-Chromium-Source.bat               # One-click source tree downloader (fetch --no-history)
 ├── Build-Rinswa-Chromium.bat               # One-click master Windows compiler (GN + Ninja)
 ├── Start-Rinswa-Chromium.bat               # Quick launcher for compiled binary
-├── rinswa-version.txt                      # Application version string (1.0.6)
+├── rinswa-version.txt                      # Application version string (1.0.8)
 ├── LICENSE                                 # Mozilla Public License Version 2.0
 └── README.md                               # Project documentation
 ```
@@ -112,15 +118,15 @@ The build pipeline mirrors the workflow of Rinswa Gecko:
    - Inject Rinswa branding assets, ribbons, and multi-resolution `.ico` files.
    - Apply `config/args.gn` and native C++ privacy patches.
    - Compile the full Chromium engine using parallel Ninja compilation threads (`-j16`).
-   - Package the standalone release installer (`Rinswa-Browser-Setup-x64-v1.0.7.exe` / `Rinswa.Setup.v1.0.7.exe`) into `dist\installer\`.
+   - Package the standalone release installer (`Rinswa-Browser-Setup-x64-v1.0.9.exe` / `Rinswa.Setup.v1.0.9.exe`) into `dist\installer\`.
 
 ---
 
 ## Release Outputs
 
 Once compiled, build artifacts are located in:
-- **Standalone Offline Installer:** `dist\installer\Rinswa-Browser-Setup-x64-v1.0.7.exe`
-- **Mini-Installer Setup:** `dist\installer\Rinswa.Setup.v1.0.7.exe`
+- **Standalone Offline Installer:** `dist\installer\Rinswa-Browser-Setup-x64-v1.0.9.exe`
+- **Mini-Installer Setup:** `dist\installer\Rinswa.Setup.v1.0.9.exe`
 - **Portable Distribution:** `dist\portable\Rinswa.exe`
 
 ---

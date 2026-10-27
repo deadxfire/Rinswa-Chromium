@@ -116,6 +116,30 @@
     });
   }
 
+  const cmenuScreenshot = document.getElementById('cmenu-screenshot');
+  if (cmenuScreenshot) {
+    cmenuScreenshot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (chromiumMenu) chromiumMenu.classList.remove('show');
+      window.dispatchEvent(new KeyboardEvent('keydown', {
+        key: 's',
+        code: 'KeyS',
+        ctrlKey: true,
+        shiftKey: true,
+        bubbles: true
+      }));
+    });
+  }
+
+  const cmenuInspect = document.getElementById('cmenu-inspect');
+  if (cmenuInspect) {
+    cmenuInspect.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (chromiumMenu) chromiumMenu.classList.remove('show');
+      alert('Inspect Element / Developer Tools:\n\n• Press Ctrl+Shift+I (or F12)\n• Or right-click any element on the page and select "Inspect"');
+    });
+  }
+
   if (btnCloseSettings) {
     btnCloseSettings.addEventListener('click', closeSettings);
   }

@@ -25,7 +25,7 @@ def get_app_version():
             v = f.read().strip()
             if v:
                 return v
-    return "1.0.7"
+    return "1.0.8"
 
 def find_iscc():
     candidates = [
@@ -46,8 +46,8 @@ def find_iscc():
 
 def find_chromium_output():
     candidates = [
-        os.path.join(PROJECT_ROOT, "chromium", "src", "out", "RinswaRelease"),
         r"C:\cr\chromium\src\out\RinswaRelease",
+        os.path.join(PROJECT_ROOT, "chromium", "src", "out", "RinswaRelease"),
         os.path.join(PROJECT_ROOT, "src", "out", "RinswaRelease"),
     ]
     for c in candidates:
@@ -112,7 +112,7 @@ def stage_distribution(src_dir, engine_ver):
             if os.path.isdir(src_d):
                 if os.path.exists(dest_path):
                     shutil.rmtree(dest_path, ignore_errors=True)
-                shutil.copytree(src_d, dest_path)
+                shutil.copytree(src_d, dest_path, dirs_exist_ok=True)
                 return True
         return False
 
@@ -126,6 +126,10 @@ def stage_distribution(src_dir, engine_ver):
         copy_first("chrome.exe", os.path.join(STAGE_DIR, "Rinswa.exe"), root_candidates)
 
     copy_first("chrome_proxy.exe", os.path.join(STAGE_DIR, "chrome_proxy.exe"), root_candidates)
+    
+    # Stage Video Downloader binaries (yt-dlp.exe & ffmpeg.exe)
+    copy_first("yt-dlp.exe", os.path.join(STAGE_DIR, "yt-dlp.exe"), root_candidates)
+    copy_first("ffmpeg.exe", os.path.join(STAGE_DIR, "ffmpeg.exe"), root_candidates)
     
     # Initial preferences
     init_pref_srcs = [os.path.join(PROJECT_ROOT, "config"), chrome_bin, src_dir, installed_app]
@@ -227,9 +231,14 @@ def stage_distribution(src_dir, engine_ver):
             shutil.copy2(ribbon_png, os.path.join(ve_dir, "Logo.png"))
             shutil.copy2(ribbon_png, os.path.join(ve_dir, "SmallLogo.png"))
 
-    # Extensions, IwaKeyDistribution, MEIPreload
-    for sub in ["Extensions", "IwaKeyDistribution", "MEIPreload"]:
+    # Extensions, IwaKeyDistribution, MEIPreload, WidevineCdm
+    for sub in ["Extensions", "IwaKeyDistribution", "MEIPreload", "WidevineCdm"]:
         copy_dir_first(sub, os.path.join(stage_ver, sub), ver_candidates)
+
+    widevine_src = r"C:\Program Files\Google\Chrome\Application\155.0.8059.85\WidevineCdm"
+    if os.path.isdir(widevine_src):
+        shutil.copytree(widevine_src, os.path.join(stage_ver, "WidevineCdm"), dirs_exist_ok=True)
+        shutil.copytree(widevine_src, os.path.join(STAGE_DIR, "WidevineCdm"), dirs_exist_ok=True)
 
     # Stage Rinswa AdShield & Video Popout extension
     adshield_src = os.path.join(PROJECT_ROOT, "config", "adblock", "rinswa-adshield")
@@ -242,7 +251,7 @@ def stage_distribution(src_dir, engine_ver):
             os.makedirs(os.path.dirname(target_loc), exist_ok=True)
             if os.path.exists(target_loc):
                 shutil.rmtree(target_loc, ignore_errors=True)
-            shutil.copytree(adshield_src, target_loc)
+            shutil.copytree(adshield_src, target_loc, dirs_exist_ok=True)
         print("   Staged Rinswa AdShield & Video Popout extension.")
 
     print(f"   Staged root files: {len(os.listdir(STAGE_DIR))} items")
@@ -251,27 +260,45 @@ def stage_distribution(src_dir, engine_ver):
     # 6. Synchronize into dist/portable so portable distribution works without SxS error
     print(">> [2/4] Synchronizing verified SxS layout to dist/portable...")
     os.makedirs(PORTABLE_DIR, exist_ok=True)
-    # Clean up old flattened dlls in root of portable that belong in version dir
-    for f in os.listdir(STAGE_DIR):
-        src_item = os.path.join(STAGE_DIR, f)
-        dst_item = os.path.join(PORTABLE_DIR, f)
-        if os.path.isdir(src_item):
-            if os.path.exists(dst_item):
-                shutil.rmtree(dst_item, ignore_errors=True)
-            shutil.copytree(src_item, dst_item)
-        else:
-            shutil.copy2(src_item, dst_item)
 
-    # Clean old flattened chrome.dll and paks in portable root to avoid confusion
-    for obsolete in ["chrome.dll", "resources.pak", "chrome_100_percent.pak", "chrome_200_percent.pak", "icudtl.dat", "v8_context_snapshot.bin", "chrome.exe"]:
-        obs_p = os.path.join(PORTABLE_DIR, obsolete)
-        if os.path.isfile(obs_p):
-            try:
-                os.remove(obs_p)
-            except Exception:
-                pass
+    def copy_tree_safe(src, dst):
+        os.makedirs(dst, exist_ok=True)
+        for item in os.listdir(src):
+            s = os.path.join(src, item)
+            d = os.path.join(dst, item)
+            if os.path.isdir(s):
+                copy_tree_safe(s, d)
+            else:
+                try:
+                    shutil.copy2(s, d)
+                except (PermissionError, OSError):
+                    pass
 
-    print("   Updated dist/portable with versioned engine layout.")
+    try:
+        for f in os.listdir(STAGE_DIR):
+            src_item = os.path.join(STAGE_DIR, f)
+            dst_item = os.path.join(PORTABLE_DIR, f)
+            if os.path.isdir(src_item):
+                copy_tree_safe(src_item, dst_item)
+            else:
+                try:
+                    shutil.copy2(src_item, dst_item)
+                except (PermissionError, OSError):
+                    pass
+
+        # Clean old flattened chrome.dll and paks in portable root to avoid confusion
+        for obsolete in ["chrome.dll", "resources.pak", "chrome_100_percent.pak", "chrome_200_percent.pak", "icudtl.dat", "v8_context_snapshot.bin", "chrome.exe"]:
+            obs_p = os.path.join(PORTABLE_DIR, obsolete)
+            if os.path.isfile(obs_p):
+                try:
+                    os.remove(obs_p)
+                except Exception:
+                    pass
+
+        print("   Updated dist/portable with versioned engine layout.")
+    except Exception as e:
+        print(f"   [NOTE] dist/portable update note: {e}")
+
     return True
 
 def compile_installer(app_version, engine_ver, iscc_exe):

@@ -23,7 +23,13 @@ final_ntp_*.png
 ntp_verified.png
 scripts/snap_*.py
 scripts/verify_*.py
+scripts/test_*.py
 scripts/inspect_pill.py
+test-*/
+test_*/
+crop_*.png
+dom.txt
+check_codecs.py
 Thumbs.db
 Desktop.ini
 .DS_Store

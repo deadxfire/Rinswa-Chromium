@@ -9,9 +9,20 @@ DIST_PORT = os.path.join(PROJECT_ROOT, "dist", "portable")
 os.makedirs(DIST_INS, exist_ok=True)
 os.makedirs(DIST_PORT, exist_ok=True)
 
+def get_version():
+    vfile = os.path.join(PROJECT_ROOT, "rinswa-version.txt")
+    if os.path.exists(vfile):
+        with open(vfile, "r", encoding="utf-8") as f:
+            v = f.read().strip()
+            if v:
+                return v
+    return "1.0.9"
+
+version = get_version()
+
 # 1. Package Installer
 installer_src = os.path.join(SRC, "mini_installer.exe")
-installer_dest = os.path.join(DIST_INS, "Rinswa.Setup.v1.0.7.exe")
+installer_dest = os.path.join(DIST_INS, f"Rinswa.Setup.v{version}.exe")
 shutil.copy2(installer_src, installer_dest)
 print(f"Installer packaged: {installer_dest} ({os.path.getsize(installer_dest)} bytes)")
 
@@ -62,6 +73,15 @@ adblock_port = os.path.join(DIST_PORT, "adblock")
 if os.path.exists(adblock_port):
     shutil.rmtree(adblock_port, ignore_errors=True)
     print("  Removed leftover adblock from portable distribution")
+
+# Sync rinswa-adshield into portable
+adshield_src = os.path.join(PROJECT_ROOT, "config", "adblock", "rinswa-adshield")
+adshield_dst = os.path.join(DIST_PORT, "rinswa-adshield")
+if os.path.isdir(adshield_src):
+    if os.path.exists(adshield_dst):
+        shutil.rmtree(adshield_dst)
+    shutil.copytree(adshield_src, adshield_dst)
+    print("  Copied rinswa-adshield extension to portable distribution")
 
 # Also sync and clean into LOCALAPPDATA installed directory if present
 local_app = os.path.join(os.environ.get("LOCALAPPDATA", ""), "Arindam Makar", "Rinswa", "Application")

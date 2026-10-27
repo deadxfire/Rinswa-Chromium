@@ -217,15 +217,15 @@ ContentsContainerView* MultiContentsView::GetInactiveContentsContainerView()
 }
 
 const gfx::RoundedCornersF& MultiContentsView::GetBackgroundRadii() const {
-  return background_view_->GetRoundedCorners();
+  return background_radii_;
 }
 
 void MultiContentsView::SetBackgroundRadii(const gfx::RoundedCornersF& radii) {
-  if (radii == GetBackgroundRadii()) {
+  if (radii == background_radii_) {
     return;
   }
 
-  background_view_->SetRoundedCorners(radii);
+  background_radii_ = radii;
   UpdateContentsBorderAndOverlay();
 }
 
@@ -798,7 +798,7 @@ void MultiContentsView::UpdateContentsBorderAndOverlay() {
   const bool is_in_split = IsInSplitView();
   const bool is_fullscreen = browser_view_ && browser_view_->IsFullscreen();
   static constexpr gfx::RoundedCornersF kRinswaPaddedCorners{
-      /*upper_left=*/10.0f, /*upper_right=*/10.0f,
+      /*upper_left=*/0.0f, /*upper_right=*/0.0f,
       /*lower_right=*/12.0f, /*lower_left=*/12.0f};
 
   for (auto& contents_container_view : contents_container_views_) {
@@ -854,10 +854,10 @@ void MultiContentsView::OnDragAndDropPrefStateChange() {
 }
 
 void MultiContentsView::SetShouldShowTopSeparator(bool should_show) {
-  if (contents_separators_.should_show_top == should_show) {
+  if (contents_separators_.should_show_top == false) {
     return;
   }
-  contents_separators_.should_show_top = should_show;
+  contents_separators_.should_show_top = false;
   // This can be called during BrowserView layout, so protect against creating a
   // layout loop.
   InvalidateLayout(/*avoid_propagate_during_layout=*/true);
