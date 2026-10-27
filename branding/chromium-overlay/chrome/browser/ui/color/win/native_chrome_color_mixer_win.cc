@@ -298,5 +298,31 @@ void AddNativeChromeColorMixer(ui::ColorProvider* provider,
     AddNativeHighContrastColors(mixer);
   } else {
     AddNativeNonHighContrastColors(mixer, key);
+
+    const bool dark_mode =
+        key.color_mode == ui::ColorProviderKey::ColorMode::kDark;
+    if (dark_mode) {
+      mixer[ui::kColorMenuBackground] = {SkColorSetARGB(185, 28, 30, 36)};
+      mixer[ui::kColorMenuBorder] = {SkColorSetARGB(45, 255, 255, 255)};
+      mixer[ui::kColorMenuItemBackgroundSelected] = {
+          SkColorSetARGB(150, 65, 72, 85)};
+      mixer[ui::kColorMenuSeparator] = {SkColorSetARGB(40, 255, 255, 255)};
+      mixer[ui::kColorMenuItemForeground] = {SkColorSetRGB(240, 243, 246)};
+      mixer[ui::kColorMenuItemForegroundSelected] = {SK_ColorWHITE};
+      mixer[ui::kColorMenuItemForegroundSecondary] = {
+          SkColorSetARGB(160, 255, 255, 255)};
+      mixer[ui::kColorBubbleBorder] = {SkColorSetARGB(45, 255, 255, 255)};
+    } else {
+      mixer[ui::kColorMenuBackground] = {SkColorSetARGB(180, 248, 250, 252)};
+      mixer[ui::kColorMenuBorder] = {SkColorSetARGB(60, 0, 0, 0)};
+      mixer[ui::kColorMenuItemBackgroundSelected] = {
+          SkColorSetARGB(140, 215, 225, 240)};
+      mixer[ui::kColorMenuSeparator] = {SkColorSetARGB(30, 0, 0, 0)};
+      mixer[ui::kColorMenuItemForeground] = {SkColorSetRGB(30, 32, 36)};
+      mixer[ui::kColorMenuItemForegroundSelected] = {SkColorSetRGB(15, 17, 20)};
+      mixer[ui::kColorMenuItemForegroundSecondary] = {
+          SkColorSetARGB(160, 0, 0, 0)};
+      mixer[ui::kColorBubbleBorder] = {SkColorSetARGB(60, 0, 0, 0)};
+    }
   }
 }
