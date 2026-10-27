@@ -26,7 +26,6 @@
 #include "ui/color/color_variant.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_palette.h"
-#include "ui/gfx/color_utils.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rrect_f.h"
 #include "ui/gfx/geometry/skia_conversions.h"
@@ -234,11 +233,7 @@ const cc::PaintFlags& GetBorderAndShadowFlags(
   }
 
   cc::PaintFlags flags;
-  SkColor border_color = color_provider->GetColor(ui::kColorBubbleBorder);
-#if BUILDFLAG(IS_WIN)
-  border_color = SkColorSetA(border_color, color_utils::IsDark(border_color) ? 75 : 45);
-#endif
-  flags.setColor(border_color);
+  flags.setColor(color_provider->GetColor(ui::kColorBubbleBorder));
   flags.setAntiAlias(true);
   flags.setLooper(gfx::CreateShadowDrawLooper(
       GetShadowValues(color_provider, elevation, shadow_type)));
@@ -782,13 +777,7 @@ void BubbleBackground::Paint(gfx::Canvas* canvas, views::View* view) const {
   cc::PaintFlags flags;
   flags.setAntiAlias(true);
   flags.setStyle(cc::PaintFlags::kFill_Style);
-  SkColor base_color = border_->color().ResolveToSkColor(view->GetColorProvider());
-#if BUILDFLAG(IS_WIN)
-  const bool is_dark = color_utils::IsDark(base_color);
-  flags.setColor(SkColorSetA(base_color, is_dark ? 175 : 160));
-#else
-  flags.setColor(base_color);
-#endif
+  flags.setColor(border_->color().ResolveToSkColor(view->GetColorProvider()));
   gfx::RectF bounds(view->GetLocalBounds());
   bounds.Inset(gfx::InsetsF(border_->GetInsets()));
 
