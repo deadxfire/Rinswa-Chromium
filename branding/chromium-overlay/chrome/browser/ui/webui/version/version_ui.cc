@@ -249,7 +249,7 @@ void VersionUI::AddVersionDetailStrings(content::WebUIDataSource* html_source) {
 
   // Data strings.
 #ifndef RINSWA_VERSION
-#define RINSWA_VERSION "2.0"
+#define RINSWA_VERSION "2.0.0.1"
 #endif
   std::string rinswa_version_full =
       std::string(RINSWA_VERSION) + " (Chromium " + std::string(version_info::GetVersionNumber()) + ")";
@@ -344,7 +344,7 @@ void VersionUI::AddVersionDetailStrings(content::WebUIDataSource* html_source) {
 // static
 std::u16string VersionUI::GetAnnotatedVersionStringForUi() {
 #ifndef RINSWA_VERSION
-#define RINSWA_VERSION "2.0"
+#define RINSWA_VERSION "2.0.0.1"
 #endif
   std::string full_ver =
       std::string(RINSWA_VERSION) + " (Chromium " + std::string(version_info::GetVersionNumber()) + ")";

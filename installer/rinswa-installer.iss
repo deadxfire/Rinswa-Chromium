@@ -6,7 +6,7 @@
 
 #define AppName "Rinswa Browser"
 #ifndef AppVersion
-  #define AppVersion "2.0"
+  #define AppVersion "2.0.0.1"
 #endif
 #define AppPublisher "Arindam Makar"
 #define AppURL "https://github.com/deadxfire/Rinswa-Chromium"

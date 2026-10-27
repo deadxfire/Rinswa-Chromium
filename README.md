@@ -8,7 +8,7 @@
 
 Developed and maintained by **[Arindam Makar](https://github.com/deadxfire)**
 
-[![Version](https://img.shields.io/badge/version-2.0_Stable-00d2ff?style=for-the-badge&logo=googlechrome)](https://github.com/deadxfire/Rinswa-Chromium/releases)
+[![Version](https://img.shields.io/badge/version-2.0.0.1_Stable-00d2ff?style=for-the-badge&logo=googlechrome)](https://github.com/deadxfire/Rinswa-Chromium/releases)
 [![Engine](https://img.shields.io/badge/engine-Chromium_C%2B%2B_Engine-orange?style=for-the-badge&logo=chromium)](https://github.com/deadxfire/Rinswa-Chromium)
 [![Platform](https://img.shields.io/badge/platform-Windows_x64-blue?style=for-the-badge&logo=windows)](https://github.com/deadxfire/Rinswa-Chromium)
 [![License](https://img.shields.io/badge/license-MPL_2.0-blueviolet?style=for-the-badge)](LICENSE)
@@ -118,15 +118,15 @@ The build pipeline mirrors the workflow of Rinswa Gecko:
    - Inject Rinswa branding assets, ribbons, and multi-resolution `.ico` files.
    - Apply `config/args.gn` and native C++ privacy patches.
    - Compile the full Chromium engine using parallel Ninja compilation threads (`-j16`).
-   - Package the standalone release installer (`Rinswa-Browser-Setup-x64-v2.0.exe` / `Rinswa.Setup.v2.0.exe`) into `dist\installer\`.
+   - Package the standalone release installer (`Rinswa-Browser-Setup-x64-v2.0.0.1.exe` / `Rinswa.Setup.v2.0.0.1.exe`) into `dist\installer\`.
 
 ---
 
 ## Release Outputs
 
 Once compiled, build artifacts are located in:
-- **Standalone Offline Installer:** `dist\installer\Rinswa-Browser-Setup-x64-v2.0.exe`
-- **Mini-Installer Setup:** `dist\installer\Rinswa.Setup.v2.0.exe`
+- **Standalone Offline Installer:** `dist\installer\Rinswa-Browser-Setup-x64-v2.0.0.1.exe`
+- **Mini-Installer Setup:** `dist\installer\Rinswa.Setup.v2.0.0.1.exe`
 - **Portable Distribution:** `dist\portable\Rinswa.exe`
 
 ---
