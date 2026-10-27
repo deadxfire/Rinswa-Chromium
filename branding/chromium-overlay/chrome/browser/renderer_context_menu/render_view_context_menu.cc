@@ -2494,7 +2494,7 @@ void RenderViewContextMenu::AppendVideoItems() {
   }
 
   // Search for video frame menu item.
-  if (false && base::FeatureList::IsEnabled(media::kContextMenuSearchForVideoFrame) &&
+  if (/* DISABLES CODE */ (false) && base::FeatureList::IsEnabled(media::kContextMenuSearchForVideoFrame) &&
       IsSearchAllowedByPolicy()) {
     const int search_for_video_frame_idc = GetSearchForVideoFrameIdc();
     auto* entry_point_controller =
@@ -3711,6 +3711,59 @@ std::u16string RenderViewContextMenu::GetLabelForCommandId(
 
 ui::ImageModel RenderViewContextMenu::GetIconForCommandId(
     int command_id) const {
+  switch (command_id) {
+    case IDC_BACK:
+      return ui::ImageModel::FromVectorIcon(vector_icons::kArrowBackIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    case IDC_FORWARD:
+      return ui::ImageModel::FromVectorIcon(vector_icons::kArrowForwardIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    case IDC_RELOAD:
+      return ui::ImageModel::FromVectorIcon(vector_icons::kRefreshIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    case IDC_SAVE_PAGE:
+    case IDC_CONTENT_CONTEXT_SAVEPLUGINAS:
+      return ui::ImageModel::FromVectorIcon(kFileSaveIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    case IDC_PRINT:
+      return ui::ImageModel::FromVectorIcon(vector_icons::kPrintIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    case IDC_ROUTE_MEDIA:
+      return ui::ImageModel::FromVectorIcon(vector_icons::kCastIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    case IDC_CONTENT_CONTEXT_TRANSLATE:
+      return ui::ImageModel::FromVectorIcon(vector_icons::kGTranslateIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    case IDC_VIEW_SOURCE:
+    case IDC_CONTENT_CONTEXT_VIEWFRAMESOURCE:
+      return ui::ImageModel::FromVectorIcon(vector_icons::kCodeIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    case IDC_CONTENT_CONTEXT_INSPECTELEMENT:
+    case IDC_CONTENT_CONTEXT_INSPECTBACKGROUNDPAGE:
+      return ui::ImageModel::FromVectorIcon(kGridViewIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    case IDC_CONTENT_CONTEXT_OPEN_IN_READING_MODE:
+      return ui::ImageModel::FromVectorIcon(kMenuBookIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    case IDC_CONTENT_CONTEXT_CUT:
+    case IDC_CUT:
+      return ui::ImageModel::FromVectorIcon(kContentCutIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    case IDC_CONTENT_CONTEXT_COPY:
+    case IDC_COPY:
+      return ui::ImageModel::FromVectorIcon(vector_icons::kContentCopyIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    case IDC_CONTENT_CONTEXT_PASTE:
+    case IDC_PASTE:
+      return ui::ImageModel::FromVectorIcon(vector_icons::kContentPasteIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    case IDC_CONTENT_CONTEXT_UNDO:
+      return ui::ImageModel::FromVectorIcon(vector_icons::kUndoIcon,
+                                            ui::kColorMenuIcon, kTabMenuIconSize);
+    default:
+      break;
+  }
+
   if (command_id == IDC_CONTENT_CONTEXT_PICTUREINPICTURE &&
       base::FeatureList::IsEnabled(features::kMenuSimplification)) {
     return ui::ImageModel::FromVectorIcon(

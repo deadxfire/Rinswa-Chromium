@@ -164,10 +164,8 @@ void MenuHost::InitMenuHost(const InitParams& init_params) {
   }
 
 #if BUILDFLAG(IS_WIN)
-  // On Windows use the software compositor to ensure that we don't block
-  // the UI thread blocking issue during command buffer creation. We can
-  // revert this change once http://crbug.com/125248 is fixed.
-  params.force_software_compositing = true;
+  // Use hardware DirectComposition so Windows DWM Acrylic backdrop blur works.
+  params.force_software_compositing = false;
 #endif
   Init(std::move(params));
   std::optional<std::string> show_menu_host_duration_histogram =

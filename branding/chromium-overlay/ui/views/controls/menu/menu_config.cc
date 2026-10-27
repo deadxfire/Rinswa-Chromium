@@ -55,6 +55,63 @@ bool MenuConfig::ShouldShowAcceleratorText(const MenuItemView* item,
     base::debug::DumpWithoutCrashing();
     return false;
   }
+  if (item->GetMenuController() && item->GetMenuController()->IsContextMenu()) {
+    switch (item->GetCommand()) {
+      case 33000:  // IDC_BACK
+        *text = u"B";
+        return true;
+      case 33001:  // IDC_FORWARD
+        *text = u"F";
+        return true;
+      case 33002:  // IDC_RELOAD
+        *text = u"Ctrl+R";
+        return true;
+      case 35004:  // IDC_SAVE_PAGE
+        *text = u"Ctrl+S";
+        return true;
+      case 35003:  // IDC_PRINT
+        *text = u"Ctrl+P";
+        return true;
+      case 35011:  // IDC_ROUTE_MEDIA
+        *text = u"C";
+        return true;
+      case 50161:  // IDC_CONTENT_CONTEXT_TRANSLATE
+        *text = u"T";
+        return true;
+      case 35002:  // IDC_VIEW_SOURCE
+      case 50181:  // IDC_CONTENT_CONTEXT_VIEWFRAMESOURCE
+        *text = u"Ctrl+U";
+        return true;
+      case 50162:  // IDC_CONTENT_CONTEXT_INSPECTELEMENT
+      case 50171:  // IDC_CONTENT_CONTEXT_INSPECTBACKGROUNDPAGE
+        *text = u"N";
+        return true;
+      case 36000:  // IDC_CUT
+      case 50151:  // IDC_CONTENT_CONTEXT_CUT
+        *text = u"Ctrl+X";
+        return true;
+      case 36001:  // IDC_COPY
+      case 50150:  // IDC_CONTENT_CONTEXT_COPY
+        *text = u"Ctrl+C";
+        return true;
+      case 36002:
+      case 36003:  // IDC_PASTE
+      case 50152:  // IDC_CONTENT_CONTEXT_PASTE
+        *text = u"Ctrl+V";
+        return true;
+      case 50156:  // IDC_CONTENT_CONTEXT_SELECTALL
+        *text = u"Ctrl+A";
+        return true;
+      case 50154:  // IDC_CONTENT_CONTEXT_UNDO
+        *text = u"Ctrl+Z";
+        return true;
+      case 50155:  // IDC_CONTENT_CONTEXT_REDO
+        *text = u"Ctrl+Y";
+        return true;
+      default:
+        break;
+    }
+  }
   ui::Accelerator accelerator;
   if (!item->GetDelegate()->GetAccelerator(item->GetCommand(), &accelerator)) {
     return false;
