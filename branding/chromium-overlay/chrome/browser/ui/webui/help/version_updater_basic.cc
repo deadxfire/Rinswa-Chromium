@@ -224,6 +224,11 @@ bool DownloadFile(const WinHttpApi& api,
   api.QueryHeaders(hRequest, WINHTTP_QUERY_CONTENT_LENGTH | WINHTTP_QUERY_FLAG_NUMBER,
                    WINHTTP_HEADER_NAME_BY_INDEX, &contentLength, &contentLengthSize, WINHTTP_NO_HEADER_INDEX);
 
+  // Remove any stale or partially downloaded file first
+  if (base::PathExists(dest_path)) {
+    base::DeleteFile(dest_path);
+  }
+
   base::File dest_file(dest_path, base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
   if (!dest_file.IsValid()) {
     api.CloseHandle(hRequest);
@@ -233,13 +238,17 @@ bool DownloadFile(const WinHttpApi& api,
   }
 
   DWORD totalBytesRead = 0;
-  DWORD bytesAvailable = 0;
   int lastReportedProgress = -1;
+  std::vector<char> buffer(65536);
 
-  while (api.QueryDataAvailable(hRequest, &bytesAvailable) && bytesAvailable > 0) {
-    std::vector<char> buffer(bytesAvailable);
+  while (true) {
+    DWORD bytesAvailable = 0;
+    if (!api.QueryDataAvailable(hRequest, &bytesAvailable) || bytesAvailable == 0) {
+      break;
+    }
+    DWORD toRead = std::min<DWORD>(bytesAvailable, static_cast<DWORD>(buffer.size()));
     DWORD bytesRead = 0;
-    if (api.ReadData(hRequest, buffer.data(), bytesAvailable, &bytesRead) && bytesRead > 0) {
+    if (api.ReadData(hRequest, buffer.data(), toRead, &bytesRead) && bytesRead > 0) {
       dest_file.WriteAtCurrentPos(base::as_bytes(base::span(buffer).first(bytesRead)));
       totalBytesRead += bytesRead;
 
@@ -259,28 +268,13 @@ bool DownloadFile(const WinHttpApi& api,
   api.CloseHandle(hRequest);
   api.CloseHandle(hConnect);
   api.CloseHandle(hSession);
-  return totalBytesRead > 0;
-}
 
-bool LaunchSilentInstaller(const base::FilePath& installer_path) {
-  base::CommandLine cmd(installer_path);
-  cmd.AppendArg("/VERYSILENT");
-  cmd.AppendArg("/SUPPRESSMSGBOXES");
-  cmd.AppendArg("/NORESTART");
-  cmd.AppendArg("/SP-");
-
-  base::LaunchOptions options;
-  options.start_hidden = true;
-  base::Process process = base::LaunchProcess(cmd, options);
-  if (!process.IsValid()) {
+  if (contentLength > 0 && totalBytesRead < contentLength) {
+    base::DeleteFile(dest_path);
     return false;
   }
 
-  int exit_code = 0;
-  if (process.WaitForExitWithTimeout(base::Minutes(5), &exit_code)) {
-    return (exit_code == 0);
-  }
-  return false;
+  return totalBytesRead > 0;
 }
 
 bool IsRemoteVersionNewer(const std::string& current_ver, const std::string& remote_tag) {
@@ -385,8 +379,20 @@ UpdateCheckResultInfo PerformUpdateWorkflow(
     if (!asset_dict) continue;
     const std::string* name = asset_dict->FindString("name");
     const std::string* dl_url = asset_dict->FindString("browser_download_url");
-    if (name && dl_url) {
-      if (base::EndsWith(*name, ".exe", base::CompareCase::INSENSITIVE_ASCII)) {
+    if (name && dl_url && base::EndsWith(*name, ".exe", base::CompareCase::INSENSITIVE_ASCII)) {
+      if (name->find("Rinswa-Browser-Setup") != std::string::npos) {
+        asset_url = *dl_url;
+        break;
+      }
+    }
+  }
+  if (asset_url.empty()) {
+    for (const auto& asset : *assets) {
+      const base::DictValue* asset_dict = asset.GetIfDict();
+      if (!asset_dict) continue;
+      const std::string* name = asset_dict->FindString("name");
+      const std::string* dl_url = asset_dict->FindString("browser_download_url");
+      if (name && dl_url && base::EndsWith(*name, ".exe", base::CompareCase::INSENSITIVE_ASCII)) {
         asset_url = *dl_url;
         break;
       }
@@ -474,10 +480,6 @@ class VersionUpdaterBasic : public VersionUpdater {
   StatusCallback callback_;
   base::WeakPtrFactory<VersionUpdaterBasic> weak_factory_;
 };
-
-void RinswaBackgroundUpdateTask() {
-  // Silent background auto-updates that kill running processes are intentionally disabled.
-}
 
 }  // namespace
 
