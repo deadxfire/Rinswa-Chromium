@@ -499,11 +499,16 @@
   let modeBtnSelect = null;
   let modeBtnFull = null;
 
+  let lastShortcutTime = 0;
+
   // Keyboard shortcut listener (Ctrl+Shift+S)
   window.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 's' || e.key === 'S' || e.code === 'KeyS')) {
       e.preventDefault();
       e.stopPropagation();
+      const now = Date.now();
+      if (now - lastShortcutTime < 500) return;
+      lastShortcutTime = now;
       openScreenshotEngine();
     } else if (e.key === 'Escape' && hostEl) {
       e.preventDefault();
@@ -532,7 +537,9 @@
    */
   async function openScreenshotEngine(passedDataUrl) {
     if (hostEl) {
-      closeScreenshotEngine();
+      if (passedDataUrl && capturedImg) {
+        capturedImg.src = passedDataUrl;
+      }
       return;
     }
 

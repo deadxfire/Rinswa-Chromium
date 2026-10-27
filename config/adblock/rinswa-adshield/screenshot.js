@@ -148,6 +148,225 @@
       color: #94a3b8;
       cursor: pointer;
       transition: all 0.15s ease;
+    }
+
+    .rinswa-close-btn svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .rinswa-close-btn:hover {
+      background: rgba(239, 68, 68, 0.18);
+      color: #f87171;
+    }
+
+    /* Minimalist Selection Box */
+    .rinswa-selection-box {
+      position: absolute;
+      border: 1.5px solid #38bdf8;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), 0 0 14px rgba(56, 189, 248, 0.28);
+      box-sizing: border-box;
+      cursor: move;
+      z-index: 5;
+      pointer-events: auto;
+    }
+
+    /* Minimalist Dimension Tag */
+    .rinswa-dimensions-tag {
+      position: absolute;
+      top: -24px;
+      left: 0;
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(8px);
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 10px;
+      font-weight: 500;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      padding: 2px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+      pointer-events: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .rinswa-dimensions-tag.flip-down {
+      top: 6px;
+    }
+
+    /* Minimalist Circular Micro-Handles */
+    .rinswa-handle {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      background: #ffffff;
+      border: 1.5px solid #0284c7;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      z-index: 6;
+      box-sizing: border-box;
+    }
+
+    .rinswa-handle-tl { top: -4px; left: -4px; cursor: nwse-resize; }
+    .rinswa-handle-tr { top: -4px; right: -4px; cursor: nesw-resize; }
+    .rinswa-handle-bl { bottom: -4px; left: -4px; cursor: nesw-resize; }
+    .rinswa-handle-br { bottom: -4px; right: -4px; cursor: nwse-resize; }
+    .rinswa-handle-t  { top: -4px; left: 50%; transform: translateX(-50%); cursor: ns-resize; }
+    .rinswa-handle-b  { bottom: -4px; left: 50%; transform: translateX(-50%); cursor: ns-resize; }
+    .rinswa-handle-l  { left: -4px; top: 50%; transform: translateY(-50%); cursor: ew-resize; }
+    .rinswa-handle-r  { right: -4px; top: 50%; transform: translateY(-50%); cursor: ew-resize; }
+
+    /* Floating Minimalist Action Capsule */
+    .rinswa-action-bar {
+      position: absolute;
+      bottom: -40px;
+      right: 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(13, 17, 23, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      padding: 4px 6px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      z-index: 10;
+      animation: rinswaFadePop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: auto;
+    }
+
+    @keyframes rinswaFadePop {
+      from { opacity: 0; transform: scale(0.94); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .rinswa-action-bar.flip-up {
+      bottom: auto;
+      top: -40px;
+    }
+
+    .rinswa-action-bar.flip-inside {
+      bottom: 8px;
+      right: 8px;
+    }
+
+    .rinswa-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 500;
+      border-radius: 9999px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .rinswa-action-btn svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* Copied badge/button */
+    .rinswa-btn-copied {
+      background: rgba(16, 185, 129, 0.14);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .rinswa-btn-copied:hover {
+      background: rgba(16, 185, 129, 0.22);
+    }
+
+    .rinswa-btn-copied.pulse {
+      animation: rinswaSoftPulse 0.3s ease-out;
+    }
+
+    @keyframes rinswaSoftPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Save button */
+    .rinswa-btn-save {
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(14, 165, 233, 0.25);
+    }
+
+    .rinswa-btn-save:hover {
+      opacity: 0.94;
+      transform: translateY(-0.5px);
+      box-shadow: 0 3px 10px rgba(14, 165, 233, 0.35);
+    }
+
+    /* Close/dismiss icon button in action bar */
+    .rinswa-btn-mini-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      background: transparent;
+      border: none;
+      border-radius: 50%;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .rinswa-btn-mini-close svg {
+      width: 11px;
+      height: 11px;
+    }
+
+    .rinswa-btn-mini-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    /* Floating CleanShot-Style Fullscreen Preview Pill */
+    .rinswa-fullscreen-modal {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(13, 17, 23, 0.88);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      padding: 8px 12px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 1px rgba(255, 255, 255, 0.2);
+      z-index: 20;
+      animation: rinswaCardSlideUp 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes rinswaCardSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .rinswa-fs-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .rinswa-fs-thumb {
+      width: 52px;
+      height: 34px;
+      background: #020617;
+      border-radius: 5px;
       border: 1px solid rgba(255, 255, 255, 0.1);
       overflow: hidden;
       display: flex;
@@ -280,11 +499,16 @@
   let modeBtnSelect = null;
   let modeBtnFull = null;
 
+  let lastShortcutTime = 0;
+
   // Keyboard shortcut listener (Ctrl+Shift+S)
   window.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 's' || e.key === 'S' || e.code === 'KeyS')) {
       e.preventDefault();
       e.stopPropagation();
+      const now = Date.now();
+      if (now - lastShortcutTime < 500) return;
+      lastShortcutTime = now;
       openScreenshotEngine();
     } else if (e.key === 'Escape' && hostEl) {
       e.preventDefault();
@@ -313,7 +537,9 @@
    */
   async function openScreenshotEngine(passedDataUrl) {
     if (hostEl) {
-      closeScreenshotEngine();
+      if (passedDataUrl && capturedImg) {
+        capturedImg.src = passedDataUrl;
+      }
       return;
     }
 
@@ -390,9 +616,9 @@
           ${ICONS.crop}
           <span>Area</span>
         </button>
-        <button class="rinswa-mode-btn" id="mode-fullscreen" title="Capture Complete Webpage in High Quality (Full Page)">
+        <button class="rinswa-mode-btn" id="mode-fullscreen" title="Capture Full Screen">
           ${ICONS.fullscreen}
-          <span>Full Webpage</span>
+          <span>Fullscreen</span>
         </button>
       </div>
       <div class="rinswa-divider"></div>
@@ -429,3 +655,526 @@
       const handleEl = document.createElement('div');
       handleEl.className = `rinswa-handle rinswa-handle-${h}`;
       handleEl.dataset.handle = h;
+      selectionBox.appendChild(handleEl);
+    });
+
+    // Floating Minimalist Action Capsule attached to selection
+    actionBar = document.createElement('div');
+    actionBar.className = 'rinswa-action-bar';
+    actionBar.innerHTML = `
+      <button class="rinswa-action-btn rinswa-btn-copied pulse" id="act-copied" title="Autocopied! Click to re-copy">
+        ${ICONS.check}
+        <span id="txt-copied">Copied</span>
+      </button>
+      <button class="rinswa-action-btn rinswa-btn-save" id="act-save" title="Save screenshot as PNG file">
+        ${ICONS.save}
+        <span>Save</span>
+      </button>
+      <button class="rinswa-btn-mini-close" id="act-cancel" title="Close">
+        ${ICONS.close}
+      </button>
+    `;
+    selectionBox.appendChild(actionBar);
+
+    const btnCopied = actionBar.querySelector('#act-copied');
+    const btnSave = actionBar.querySelector('#act-save');
+    const btnCancel = actionBar.querySelector('#act-cancel');
+
+    btnCopied.addEventListener('click', (e) => {
+      e.stopPropagation();
+      copyCurrentSelection(true);
+    });
+    btnSave.addEventListener('click', (e) => {
+      e.stopPropagation();
+      saveCurrentSelection();
+    });
+    btnCancel.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeScreenshotEngine();
+    });
+
+    shadowRoot.appendChild(selectionBox);
+
+    // CleanShot-Style Floating Fullscreen Preview Card
+    fullscreenModal = document.createElement('div');
+    fullscreenModal.className = 'rinswa-fullscreen-modal';
+    fullscreenModal.style.display = 'none';
+    shadowRoot.appendChild(fullscreenModal);
+
+    // Minimalist Toast element
+    toastEl = document.createElement('div');
+    toastEl.className = 'rinswa-toast';
+    toastEl.style.display = 'none';
+    shadowRoot.appendChild(toastEl);
+
+    // Attach to DOM
+    (document.body || document.documentElement).appendChild(hostEl);
+
+    // Attach Event Handlers
+    window.addEventListener('resize', handleWindowResize);
+    shadowRoot.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
+    // Draw initial dimmed backdrop
+    drawBackdrop();
+  }
+
+  /**
+   * Resize Canvas
+   */
+  function resizeBackdrop() {
+    if (!backdropCanvas) return;
+    const dpr = window.devicePixelRatio || 1;
+    backdropCanvas.width = window.innerWidth * dpr;
+    backdropCanvas.height = window.innerHeight * dpr;
+    backdropCtx.scale(dpr, dpr);
+  }
+
+  function handleWindowResize() {
+    if (!hostEl) return;
+    resizeBackdrop();
+    drawBackdrop();
+    if (selW > 0 && selH > 0) {
+      updateSelectionUI();
+    }
+  }
+
+  /**
+   * Switch between Area and Fullscreen modes
+   */
+  function switchMode(mode) {
+    currentMode = mode;
+    if (mode === 'select') {
+      modeBtnSelect.classList.add('active');
+      modeBtnFull.classList.remove('active');
+      if (fullscreenModal) fullscreenModal.style.display = 'none';
+      backdropCanvas.style.cursor = 'crosshair';
+    } else {
+      modeBtnFull.classList.add('active');
+      modeBtnSelect.classList.remove('active');
+      if (selectionBox) selectionBox.style.display = 'none';
+      selW = 0; selH = 0;
+      drawBackdrop();
+    }
+  }
+
+  /**
+   * Draw canvas backdrop with clear hole cut out for selection
+   */
+  function drawBackdrop() {
+    if (!backdropCtx) return;
+    const dpr = window.devicePixelRatio || 1;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    backdropCtx.save();
+    backdropCtx.setTransform(1, 0, 0, 1, 0, 0);
+    backdropCtx.clearRect(0, 0, backdropCanvas.width, backdropCanvas.height);
+    backdropCtx.scale(dpr, dpr);
+
+    // Refined translucent dark veil
+    backdropCtx.fillStyle = 'rgba(8, 12, 20, 0.42)';
+    backdropCtx.fillRect(0, 0, w, h);
+
+    // Cut out selection rectangle
+    if (selW > 0 && selH > 0 && currentMode === 'select') {
+      backdropCtx.clearRect(selX, selY, selW, selH);
+    }
+    backdropCtx.restore();
+  }
+
+  /**
+   * Mouse Event Handlers
+   */
+  function handleMouseDown(e) {
+    if (currentMode !== 'select') return;
+
+    // Check if clicked inside resize handle
+    if (e.target && e.target.classList.contains('rinswa-handle')) {
+      isResizing = true;
+      activeHandle = e.target.dataset.handle;
+      startX = e.clientX;
+      startY = e.clientY;
+      initialSel = { x: selX, y: selY, w: selW, h: selH };
+      e.preventDefault();
+      return;
+    }
+
+    // Check if clicked inside selection box to move it
+    if (e.target === selectionBox) {
+      isMoving = true;
+      moveStartX = e.clientX - selX;
+      moveStartY = e.clientY - selY;
+      e.preventDefault();
+      return;
+    }
+
+    // Ignore clicks on topbar, action bar, or modals
+    if (e.composedPath().some(el => el.classList && (
+      el.classList.contains('rinswa-top-bar') ||
+      el.classList.contains('rinswa-action-bar') ||
+      el.classList.contains('rinswa-fullscreen-modal')
+    ))) {
+      return;
+    }
+
+    // Starting new selection
+    isSelecting = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    selX = startX;
+    selY = startY;
+    selW = 0;
+    selH = 0;
+
+    selectionBox.style.display = 'none';
+    actionBar.style.display = 'none';
+    drawBackdrop();
+  }
+
+  function handleMouseMove(e) {
+    if (!hostEl) return;
+
+    if (isSelecting) {
+      const curX = Math.max(0, Math.min(window.innerWidth, e.clientX));
+      const curY = Math.max(0, Math.min(window.innerHeight, e.clientY));
+
+      selX = Math.min(startX, curX);
+      selY = Math.min(startY, curY);
+      selW = Math.abs(curX - startX);
+      selH = Math.abs(curY - startY);
+
+      updateSelectionUI(true);
+      drawBackdrop();
+    } else if (isResizing && initialSel) {
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+
+      let newX = initialSel.x;
+      let newY = initialSel.y;
+      let newW = initialSel.w;
+      let newH = initialSel.h;
+
+      if (activeHandle.includes('r')) newW = Math.max(20, initialSel.w + dx);
+      if (activeHandle.includes('b')) newH = Math.max(20, initialSel.h + dy);
+      if (activeHandle.includes('l')) {
+        const potentialW = initialSel.w - dx;
+        if (potentialW >= 20) {
+          newX = initialSel.x + dx;
+          newW = potentialW;
+        }
+      }
+      if (activeHandle.includes('t')) {
+        const potentialH = initialSel.h - dy;
+        if (potentialH >= 20) {
+          newY = initialSel.y + dy;
+          newH = potentialH;
+        }
+      }
+
+      selX = Math.max(0, newX);
+      selY = Math.max(0, newY);
+      selW = Math.min(window.innerWidth - selX, newW);
+      selH = Math.min(window.innerHeight - selY, newH);
+
+      updateSelectionUI(true);
+      drawBackdrop();
+    } else if (isMoving) {
+      selX = Math.max(0, Math.min(window.innerWidth - selW, e.clientX - moveStartX));
+      selY = Math.max(0, Math.min(window.innerHeight - selH, e.clientY - moveStartY));
+
+      updateSelectionUI(true);
+      drawBackdrop();
+    }
+  }
+
+  async function handleMouseUp() {
+    if (isSelecting || isResizing || isMoving) {
+      isSelecting = false;
+      isResizing = false;
+      isMoving = false;
+      activeHandle = null;
+
+      if (selW >= 15 && selH >= 15) {
+        updateSelectionUI(false);
+        drawBackdrop();
+
+        // AUTONOMOUSLY COPY IMMEDIATELY ON SELECTION
+        await copyCurrentSelection(false);
+      } else {
+        selW = 0; selH = 0;
+        selectionBox.style.display = 'none';
+        drawBackdrop();
+      }
+    }
+  }
+
+  /**
+   * Update Selection Box position, dimensions label, and action bar
+   */
+  function updateSelectionUI(isDraggingNow = false) {
+    if (!selectionBox) return;
+
+    selectionBox.style.display = 'block';
+    selectionBox.style.left = `${selX}px`;
+    selectionBox.style.top = `${selY}px`;
+    selectionBox.style.width = `${selW}px`;
+    selectionBox.style.height = `${selH}px`;
+
+    // Dimensions text
+    const dpr = window.devicePixelRatio || 1;
+    const naturalW = Math.round(selW * (capturedImg ? (capturedImg.naturalWidth / window.innerWidth) : dpr));
+    const naturalH = Math.round(selH * (capturedImg ? (capturedImg.naturalHeight / window.innerHeight) : dpr));
+    dimensionsTag.textContent = `${naturalW} × ${naturalH}`;
+
+    // Dimension tag positioning
+    if (selY < 28) {
+      dimensionsTag.classList.add('flip-down');
+    } else {
+      dimensionsTag.classList.remove('flip-down');
+    }
+
+    // Action bar positioning
+    if (isDraggingNow) {
+      actionBar.style.display = 'none';
+    } else {
+      actionBar.style.display = 'flex';
+      actionBar.classList.remove('flip-up', 'flip-inside');
+
+      // Check overflow bottom
+      if (selY + selH + 46 > window.innerHeight) {
+        if (selY >= 46) {
+          actionBar.classList.add('flip-up');
+        } else {
+          actionBar.classList.add('flip-inside');
+        }
+      }
+    }
+  }
+
+  /**
+   * Crop image from captured screen buffer with High DPI precision
+   */
+  function getCroppedCanvas(cropRegion = null) {
+    if (!capturedImg) return null;
+
+    const scaleX = capturedImg.naturalWidth / window.innerWidth;
+    const scaleY = capturedImg.naturalHeight / window.innerHeight;
+
+    let sx, sy, sw, sh;
+    if (cropRegion) {
+      sx = Math.round(cropRegion.x * scaleX);
+      sy = Math.round(cropRegion.y * scaleY);
+      sw = Math.round(cropRegion.w * scaleX);
+      sh = Math.round(cropRegion.h * scaleY);
+    } else {
+      sx = Math.round(selX * scaleX);
+      sy = Math.round(selY * scaleY);
+      sw = Math.round(selW * scaleX);
+      sh = Math.round(selH * scaleY);
+    }
+
+    sw = Math.max(1, Math.min(sw, capturedImg.naturalWidth - sx));
+    sh = Math.max(1, Math.min(sh, capturedImg.naturalHeight - sy));
+
+    const cropCanvas = document.createElement('canvas');
+    cropCanvas.width = sw;
+    cropCanvas.height = sh;
+    const ctx = cropCanvas.getContext('2d');
+    ctx.drawImage(capturedImg, sx, sy, sw, sh, 0, 0, sw, sh);
+
+    return cropCanvas;
+  }
+
+  /**
+   * Autocopy or manually copy selected region to clipboard
+   */
+  async function copyCurrentSelection(isManualClick = false) {
+    if (selW < 10 || selH < 10) return;
+
+    const canvas = getCroppedCanvas();
+    if (!canvas) return;
+
+    return new Promise((resolve) => {
+      canvas.toBlob(async (blob) => {
+        if (!blob) {
+          resolve(false);
+          return;
+        }
+        cachedBlob = blob;
+
+        try {
+          const item = new ClipboardItem({ 'image/png': blob });
+          await navigator.clipboard.write([item]);
+
+          // Flash UI confirmation
+          const btnCopied = shadowRoot.querySelector('#act-copied');
+          if (btnCopied) {
+            btnCopied.classList.add('pulse');
+            const txt = shadowRoot.querySelector('#txt-copied');
+            if (txt) txt.textContent = 'Copied';
+            setTimeout(() => {
+              if (btnCopied) btnCopied.classList.remove('pulse');
+            }, 350);
+          }
+
+          showToast('Copied to clipboard');
+          resolve(true);
+        } catch (err) {
+          console.warn('[Rinswa Capture] Clipboard write failed:', err);
+          if (isManualClick) {
+            showToast('Click again to permit clipboard');
+          }
+          resolve(false);
+        }
+      }, 'image/png');
+    });
+  }
+
+  /**
+   * Save screenshot as high-res PNG file
+   */
+  function saveCurrentSelection() {
+    let canvas = null;
+    if (currentMode === 'fullscreen') {
+      canvas = getCroppedCanvas({ x: 0, y: 0, w: window.innerWidth, h: window.innerHeight });
+    } else {
+      canvas = getCroppedCanvas();
+    }
+
+    if (!canvas) return;
+
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const now = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+      const timestamp = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+      const filename = `Rinswa_Screenshot_${timestamp}.png`;
+
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+
+      showToast(`Saved to Downloads`);
+    }, 'image/png');
+  }
+
+  /**
+   * Capture Entire Screen / Viewport (CleanShot Floating Card)
+   */
+  async function captureFullScreen() {
+    if (!capturedImg) return;
+
+    const fullCanvas = getCroppedCanvas({ x: 0, y: 0, w: window.innerWidth, h: window.innerHeight });
+    if (!fullCanvas) return;
+
+    // Autocopy full screen immediately
+    fullCanvas.toBlob(async (blob) => {
+      if (blob) {
+        cachedBlob = blob;
+        try {
+          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+        } catch (err) {
+          console.debug('[Rinswa Capture] Fullscreen autocopy notice:', err);
+        }
+      }
+    }, 'image/png');
+
+    // Switch host to non-intrusive floating card mode
+    if (hostEl) {
+      hostEl.classList.add('rinswa-fs-mode');
+    }
+
+    // Show CleanShot-style Floating Preview Card
+    const thumbDataUrl = fullCanvas.toDataURL('image/png');
+    fullscreenModal.innerHTML = `
+      <div class="rinswa-fs-card">
+        <div class="rinswa-fs-thumb">
+          <img src="${thumbDataUrl}" alt="Preview">
+        </div>
+        <div class="rinswa-fs-info">
+          <div class="rinswa-fs-title">Full Screen Captured</div>
+          <div class="rinswa-fs-status">${ICONS.check} Copied to clipboard</div>
+        </div>
+        <div class="rinswa-fs-actions">
+          <button class="rinswa-action-btn rinswa-btn-save" id="btn-modal-save" title="Save PNG">
+            ${ICONS.save}
+            <span>Save</span>
+          </button>
+          <button class="rinswa-btn-mini-close" id="btn-modal-close" title="Close">
+            ${ICONS.close}
+          </button>
+        </div>
+      </div>
+    `;
+
+    fullscreenModal.style.display = 'block';
+
+    fullscreenModal.querySelector('#btn-modal-save').addEventListener('click', () => {
+      saveCurrentSelection();
+    });
+    fullscreenModal.querySelector('#btn-modal-close').addEventListener('click', closeScreenshotEngine);
+
+    const scheduleDismiss = () => {
+      clearTimeout(fsDismissTimer);
+      fsDismissTimer = setTimeout(() => {
+        if (fullscreenModal && hostEl) {
+          fullscreenModal.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+          fullscreenModal.style.opacity = '0';
+          fullscreenModal.style.transform = 'translateY(12px) scale(0.96)';
+          setTimeout(() => closeScreenshotEngine(), 250);
+        }
+      }, 4500);
+    };
+
+    fullscreenModal.addEventListener('mouseenter', () => clearTimeout(fsDismissTimer));
+    fullscreenModal.addEventListener('mouseleave', scheduleDismiss);
+    scheduleDismiss();
+
+    showToast('Copied to clipboard');
+  }
+
+  /**
+   * Show smooth Cyber-Glass minimalist toast
+   */
+  function showToast(text) {
+    if (!toastEl) return;
+    toastEl.innerHTML = `<span class="rinswa-toast-icon">${ICONS.check}</span><span>${text}</span>`;
+    toastEl.style.display = 'flex';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      if (toastEl) toastEl.style.display = 'none';
+    }, 2400);
+  }
+
+  /**
+   * Close & Tear down Overlay
+   */
+  function closeScreenshotEngine() {
+    clearTimeout(fsDismissTimer);
+    clearTimeout(toastTimer);
+    window.removeEventListener('resize', handleWindowResize);
+    window.removeEventListener('mousemove', handleMouseMove);
+    window.removeEventListener('mouseup', handleMouseUp);
+
+    if (hostEl && hostEl.parentNode) {
+      hostEl.parentNode.removeChild(hostEl);
+    }
+
+    hostEl = null;
+    shadowRoot = null;
+    capturedImg = null;
+    cachedBlob = null;
+    selW = 0; selH = 0;
+    isSelecting = false;
+    isResizing = false;
+    isMoving = false;
+  }
+
+})();

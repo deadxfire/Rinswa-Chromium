@@ -4,19 +4,27 @@
  * Developed by Arindam Makar for Rinswa Chromium
  */
 
+let lastCommandTime = 0;
+
 // Listen for global command shortcut (Ctrl+Shift+S)
 chrome.commands.onCommand.addListener(async (command) => {
   if (command === 'capture-screenshot') {
+    const now = Date.now();
+    if (now - lastCommandTime < 400) return;
+    lastCommandTime = now;
+
     try {
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
       if (!tab || !tab.id) return;
 
-      // Capture visible tab before showing overlay
-      chrome.tabs.captureVisibleTab(tab.windowId, { format: 'png' }, (dataUrl) => {
+      // Capture visible tab (null windowId defaults to current active window)
+      chrome.tabs.captureVisibleTab(null, { format: 'png' }, (dataUrl) => {
         if (chrome.runtime.lastError || !dataUrl) {
           console.warn('[Rinswa ScreenCapture] captureVisibleTab notice:', chrome.runtime.lastError);
-          // If capture failed or restricted, ask content script to open capture mode
-          chrome.tabs.sendMessage(tab.id, { action: 'startScreenshot' }).catch(() => {});
+          // If capture failed or restricted, ask content script to open capture mode with fallback
+          chrome.tabs.sendMessage(tab.id, { action: 'startScreenshot' }).catch(() => {
+            injectAndStart(tab.id, null);
+          });
           return;
         }
 
