@@ -251,7 +251,9 @@ void VersionUI::AddVersionDetailStrings(content::WebUIDataSource* html_source) {
 #ifndef RINSWA_VERSION
 #define RINSWA_VERSION "2.0"
 #endif
-  html_source->AddString(version_ui::kVersion, RINSWA_VERSION);
+  std::string rinswa_version_full =
+      std::string(RINSWA_VERSION) + " (Chromium " + std::string(version_info::GetVersionNumber()) + ")";
+  html_source->AddString(version_ui::kVersion, rinswa_version_full);
   html_source->AddString(version_ui::kVersionSuffix,
                          GetVersionInformationalSuffix());
 
@@ -344,9 +346,11 @@ std::u16string VersionUI::GetAnnotatedVersionStringForUi() {
 #ifndef RINSWA_VERSION
 #define RINSWA_VERSION "2.0"
 #endif
+  std::string full_ver =
+      std::string(RINSWA_VERSION) + " (Chromium " + std::string(version_info::GetVersionNumber()) + ")";
   return l10n_util::GetStringFUTF16(
       IDS_SETTINGS_ABOUT_PAGE_BROWSER_VERSION,
-      base::UTF8ToUTF16(std::string_view(RINSWA_VERSION)),
+      base::UTF8ToUTF16(full_ver),
       base::UTF8ToUTF16(GetVersionInformationalSuffix()),
       l10n_util::GetStringUTF16(version_info::IsOfficialBuild()
                                     ? IDS_VERSION_UI_OFFICIAL

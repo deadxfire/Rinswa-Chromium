@@ -85,6 +85,15 @@ export class CrProfileAvatarSelectorElement extends CrLitElement {
 
     if (changedProperties.has('avatars') ||
         changedProperties.has('selectedAvatar')) {
+      const gaiaAvatar = this.avatars.find(a => a.isGaiaAvatar);
+      if (gaiaAvatar) {
+        if (!this.customAvatarUrl_) {
+          this.customAvatarUrl_ = gaiaAvatar.url;
+        }
+        if (gaiaAvatar.selected && !this.selectedAvatar) {
+          this.selectedAvatar = gaiaAvatar;
+        }
+      }
       const selectedAvatar =
           this.avatars.find(avatar => this.isAvatarSelected_(avatar));
       this.tabFocusableAvatar_ = selectedAvatar ? selectedAvatar.index : -1;
@@ -114,8 +123,11 @@ export class CrProfileAvatarSelectorElement extends CrLitElement {
   }
 
   protected isAvatarSelected_(avatarItem: AvatarIcon): boolean {
-    return avatarItem.selected ||
-        (!!this.selectedAvatar &&
+    if (avatarItem.isGaiaAvatar) {
+      return !!this.customAvatarUrl_ && (avatarItem.selected || (!!this.selectedAvatar && this.selectedAvatar.isGaiaAvatar));
+    }
+    return (!this.customAvatarUrl_ && avatarItem.selected) ||
+        (!!this.selectedAvatar && !this.selectedAvatar.isGaiaAvatar &&
          this.selectedAvatar.index === avatarItem.index);
   }
 
@@ -125,7 +137,8 @@ export class CrProfileAvatarSelectorElement extends CrLitElement {
     // component.
     const target = e.currentTarget as HTMLElement;
     const index = Number(target.dataset['index']);
-    this.selectedAvatar = this.avatars[index]!;
+    const nonGaiaAvatars = this.avatars.filter(a => !a.isGaiaAvatar);
+    this.selectedAvatar = nonGaiaAvatars[index] || this.avatars[index]!;
 
     // Autoscroll to selected avatar if it is not completely visible.
     const avatarList =
@@ -137,6 +150,13 @@ export class CrProfileAvatarSelectorElement extends CrLitElement {
   }
 
   protected onChooseFileClick_() {
+    if (this.customAvatarUrl_) {
+      const gaiaAvatar = this.avatars.find(a => a.isGaiaAvatar);
+      if (gaiaAvatar) {
+        this.selectedAvatar = gaiaAvatar;
+        this.fire('selected-avatar-changed', {value: gaiaAvatar});
+      }
+    }
     const input = this.shadowRoot.querySelector<HTMLInputElement>('#customAvatarFileInput');
     if (input) {
       input.click();

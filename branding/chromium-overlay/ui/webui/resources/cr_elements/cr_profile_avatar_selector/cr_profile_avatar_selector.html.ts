@@ -34,7 +34,7 @@ export function getHtml(this: CrProfileAvatarSelectorElement) {
     </cr-tooltip>
   </div>
 
-  ${this.avatars.map((item, index) => html`
+  ${this.avatars.filter(item => !item.isGaiaAvatar).map((item, index) => html`
     <!-- Wrapper div is needed so that only a single node is slotted in
         cr-grid for each avatar. -->
     <div>
