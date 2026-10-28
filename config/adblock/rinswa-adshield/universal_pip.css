@@ -18,14 +18,14 @@
                 transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
     opacity: 0 !important;
     pointer-events: none !important;
-    transform: translate(-100%, 0) scale(0.92) !important;
+    transform: translate(-100%, -50%) scale(0.92) !important;
 }
 
 .rinswa-pip-overlay-btn.rinswa-visible {
     opacity: 1 !important;
     pointer-events: auto !important;
     visibility: visible !important;
-    transform: translate(-100%, 0) scale(1) !important;
+    transform: translate(-100%, -50%) scale(1) !important;
 }
 
 .rinswa-action-btn {

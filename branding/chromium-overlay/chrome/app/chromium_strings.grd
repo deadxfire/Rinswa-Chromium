@@ -608,26 +608,26 @@ New bookmarks can’t be saved in your account until you delete some. If you sig
       </if>
       <!-- Default Browser messages -->
       <message name="IDS_FR_CUSTOMIZE_DEFAULT_BROWSER" desc="Default browser checkbox label">
-        Make Chromium the default browser
+        Make Rinswa the default browser
       </message>
       <message name="IDS_DEFAULT_BROWSER_CHANGED_MESSAGE" desc="Body of the notification shown when Chrome is no longer the default browser.">
-        Chromium is no longer your default browser. Make Chromium the default browser?
+        Rinswa is no longer your default browser. Make Rinswa the default browser?
       </message>
       <if expr="is_win">
         <message name="IDS_DEFAULT_BROWSER_VISUAL_GUIDED_SETTER_PAGE_TITLE" desc="Title of the default browser visual guided setter page.">
-          Set Chromium as your default browser
+          Set Rinswa as your default browser
         </message>
         <message name="IDS_DEFAULT_BROWSER_VISUAL_GUIDED_SETTER_HEADER_TITLE" desc="Header text of the default browser visual guided setter.">
-          Set Chromium as your default browser
+          Set Rinswa as your default browser
         </message>
         <message name="IDS_DEFAULT_BROWSER_VISUAL_GUIDED_SETTER_CONTENT_TITLE" desc="Content title of the default browser visual guided setter.">
-          Set Chromium as your default browser
+          Set Rinswa as your default browser
         </message>
         <message name="IDS_DEFAULT_BROWSER_VISUAL_GUIDED_SETTER_CONTENT_DESCRIPTION" desc="Body text of the default browser visual guided setter.">
-          Keep your passwords, bookmarks, and history perfectly synced across devices by setting Chromium as your default browser.
+          Keep your passwords, bookmarks, and history perfectly synced across devices by setting Rinswa as your default browser.
         </message>
         <message name="IDS_DEFAULT_BROWSER_VISUAL_GUIDED_SETTER_INSTRUCTION_STEP_2" desc="Instruction step 2 of the default browser visual guided setter. $1 is the bold button name.">
-          Click <ph name="BEGIN_BOLD">&lt;strong&gt;</ph>Yes<ph name="END_BOLD">&lt;/strong&gt;</ph> in the Windows notification to pin Chromium to your taskbar for quick access.
+          Click <ph name="BEGIN_BOLD">&lt;strong&gt;</ph>Yes<ph name="END_BOLD">&lt;/strong&gt;</ph> in the Windows notification to pin Rinswa to your taskbar for quick access.
         </message>
       </if>
       <if expr="use_titlecase">
@@ -857,57 +857,57 @@ Chromium is unable to recover your settings.
       </if>
 
       <message name="IDS_DEFAULT_BROWSER_INFOBAR_TEXT" desc="Text to show in an infobar when Chromium is not the current default browser.">
-        Chromium isn't your default browser
+        Rinswa isn't your default browser
       </message>
       <message name="IDS_DEFAULT_BROWSER_PIN_INFOBAR_TEXT" desc="Text to show in an infobar when Chromium is not the current default browser and can be pinned to the taskbar.">
-        Set Chromium as your default browser and pin it to your taskbar
+        Set Rinswa as your default browser and pin it to your taskbar
       </message>
       <if expr="not is_android and not is_chromeos">
         <message name="IDS_DEFAULT_BROWSER_MODAL_TITLE_WITH_SETTINGS_ILLUSTRATION" desc="Title of the default browser modal with settings illustration.">
-          Set Chromium as your default browser
+          Set Rinswa as your default browser
         </message>
         <message name="IDS_DEFAULT_BROWSER_MODAL_BODY_WITH_SETTINGS_ILLUSTRATION" desc="Body text of the default browser modal with settings illustration.">
-          Keep your passwords, bookmarks, and history perfectly synced across devices. Easily access the features you know and love by updating your default browser to Chromium.
+          Keep your passwords, bookmarks, and history perfectly synced across devices. Easily access the features you know and love by updating your default browser to Rinswa.
         </message>
         <message name="IDS_DEFAULT_BROWSER_MODAL_BODY_WITH_SETTINGS_ILLUSTRATION_UNPINNED" desc="Body text of the default browser modal with settings illustration when Chromium is not pinned to the taskbar.">
-          Keep your passwords, bookmarks, and history perfectly synced across devices. Easily access the features you know and love by updating your default browser to Chromium. Chromium will be pinned to your taskbar for quick access.
+          Keep your passwords, bookmarks, and history perfectly synced across devices. Easily access the features you know and love by updating your default browser to Rinswa. Rinswa will be pinned to your taskbar for quick access.
         </message>
         <message name="IDS_DEFAULT_BROWSER_MODAL_TITLE_WITHOUT_SETTINGS_ILLUSTRATION" desc="Title of the default browser modal without settings illustration.">
-          Set Chromium as your default browser
+          Set Rinswa as your default browser
         </message>
         <message name="IDS_DEFAULT_BROWSER_MODAL_BODY_WITHOUT_SETTINGS_ILLUSTRATION" desc="Body text of the default browser modal without settings illustration.">
-          Keep your passwords, bookmarks, and history perfectly synced across devices. Easily access the features you know and love by updating your default browser to Chromium.
+          Keep your passwords, bookmarks, and history perfectly synced across devices. Easily access the features you know and love by updating your default browser to Rinswa.
         </message>
         <message name="IDS_DEFAULT_BROWSER_MODAL_BODY_WITHOUT_SETTINGS_ILLUSTRATION_UNPINNED" desc="Body text of the default browser modal without settings illustration when Chromium is not pinned to the taskbar.">
-          Keep your passwords, bookmarks, and history perfectly synced across devices. Easily access the features you know and love by updating your default browser to Chromium. Chromium will be pinned to your taskbar for quick access.
+          Keep your passwords, bookmarks, and history perfectly synced across devices. Easily access the features you know and love by updating your default browser to Rinswa. Rinswa will be pinned to your taskbar for quick access.
         </message>
         <message name="IDS_DEFAULT_BROWSER_BUBBLE_DIALOG_TITLE" desc="Title of the dialog prompting the user to set Chromium as the default browser.">
-          Set Chromium as your default browser
+          Set Rinswa as your default browser
         </message>
         <message name="IDS_DEFAULT_BROWSER_BUBBLE_DIALOG_BODY" desc="Main explanatory text in the default browser dialog.">
-          Get easy access to the features you know, love, and trust by setting Chromium as your default browser.
+          Get easy access to the features you know, love, and trust by setting Rinswa as your default browser.
         </message>
         <message name="IDS_DEFAULT_BROWSER_SUCCESS_TOAST_BODY" desc="Body text of the toast shown when Chromium is successfully set as the default browser.">
-          Chromium is now your default browser
+          Rinswa is now your default browser
         </message>
         <message name="IDS_DEFAULT_BROWSER_BUBBLE_DIALOG_STEPS_PINNED_COMBINED" desc="Numbered instructions. $1, $2 and $3 are the bold button names.">
-          1. Click <ph name="BUTTON_LABEL">$1<ex>Open settings</ex></ph> below&#xA;2. Click <ph name="BUTTON_2">$2<ex>Set default</ex></ph> in your Windows settings&#xA;3. Click <ph name="BUTTON_3">$3<ex>Yes</ex></ph> in the Windows notification to pin Chromium to your taskbar for quick access
+          1. Click <ph name="BUTTON_LABEL">$1<ex>Open settings</ex></ph> below&#xA;2. Click <ph name="BUTTON_2">$2<ex>Set default</ex></ph> in your Windows settings&#xA;3. Click <ph name="BUTTON_3">$3<ex>Yes</ex></ph> in the Windows notification to pin Rinswa to your taskbar for quick access
         </message>
       </if>
       <if expr="is_win or is_macosx">
         <message name="IDS_PDF_INFOBAR_TEXT" desc="Text to show in an infobar when Chromium is not the default PDF viewer.">
-          Set Chromium as your default PDF viewer
+          Set Rinswa as your default PDF viewer
         </message>
       </if>
       <if expr="enable_pdf">
         <message name="IDS_PDF_GLIC_SUMMARIZE_IPH_TEXT" desc="Text of the In Product Help message shown for the button to summarize PDF.">
-          Get a quick overview of this document and ask questions with Gemini in Chromium
+          Get a quick overview of this document and ask questions with Gemini in Rinswa
         </message>
         <message name="IDS_PDF_GLIC_SUMMARIZE_IPH_TEXT_NEW" desc="Text of the In Product Help message shown for the button to summarize PDF.">
-          Share this document with Gemini in Chromium to get a quick overview and ask follow-up questions
+          Share this document with Gemini in Rinswa to get a quick overview and ask follow-up questions
         </message>
         <message name="IDS_PDF_GLIC_SUMMARIZE_IPH_TEXT_NEW_SCREENREADER" desc="The screenreader text of the In Product Help message shown for the button to summarize PDF." is_accessibility_with_no_ui="true">
-          Click the Summarize button to share this document with Gemini in Chromium to get a quick overview and ask follow-up questions
+          Click the Summarize button to share this document with Gemini in Rinswa to get a quick overview and ask follow-up questions
         </message>
       </if>
       <!-- Download Bubble Items -->
@@ -1712,7 +1712,7 @@ Chromium is unable to recover your settings.
       <!-- Mac First-run dialog messages -->
       <if expr="is_macosx">
         <message name="IDS_FIRSTRUN_DLG_MAC_SET_DEFAULT_BROWSER_LABEL" desc="Label for checkbox that sets the default browser">
-          Set Chromium as your default browser
+          Set Rinswa as your default browser
         </message>
       </if>
 

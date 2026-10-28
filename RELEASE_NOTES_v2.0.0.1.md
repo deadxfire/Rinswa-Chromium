@@ -13,6 +13,12 @@
   - Asynchronous favicon querying via `FaviconService` and `HistoryUiFaviconRequestHandler`.
   - Comprehensive brand fallbacks for Wikipedia, WhatsApp, X, GitHub, Reddit, Facebook, ChatGPT, Netflix, and dynamic color hashing.
 
+- 🎬 **Video PiP & Downloader Positioning**:
+  - Repositioned the floating transparent Cyber-Glass video popout & downloader pill to the right middle of the video with vertical centering (`translate(-100%, -50%)`).
+
+- 📄 **Brand String Refinements**:
+  - Rebranded master default PDF viewer and browser strings to Rinswa (`Set Rinswa as your default PDF viewer`, default browser toasts, dialogs, and Gemini integration).
+
 - 🏷️ **Version 2.0.0.1 Engine, UI & Setup**:
   - Stamped version `2.0.0.1` across the browser About page (`chrome://version`, `chrome://settings/help`), New Tab page, extension manifests, and setup files.
   - Packaged standalone offline installer `Rinswa-Browser-Setup-x64-v2.0.0.1.exe`.

@@ -208,7 +208,8 @@
             return;
         }
 
-        const topY = Math.max(12, Math.min(window.innerHeight - 44, vRect.top + 12));
+        const centerY = vRect.top + (vRect.height / 2);
+        const topY = Math.max(24, Math.min(window.innerHeight - 24, centerY));
         const targetRight = Math.max(70, Math.min(window.innerWidth - 12, vRect.right - 12));
 
         floatingPiPBtn.style.top = `${topY}px`;
